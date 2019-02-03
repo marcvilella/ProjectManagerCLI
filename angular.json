@@ -61,7 +61,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ProjectManager-CLI:build"
+            "browserTarget": "ProjectManager-CLI:build",
+	          "ssl": false,
+            "sslKey": "PM_CLIENT_private_key.key",
+            "sslCert": "PM_CA_cert.crt",
+            "aot": true
           },
           "configurations": {
             "production": {

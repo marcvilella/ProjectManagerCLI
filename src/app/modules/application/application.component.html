@@ -1,0 +1,21 @@
+<mat-sidenav-container class="example-container" (backdropClick)="close()">
+  
+  <mat-sidenav #sidenav (keydown.escape)="close()" disableClose>
+      <p><button mat-button>Toggle</button></p>
+  </mat-sidenav> 
+
+  <mat-sidenav-content>
+    
+      <mat-toolbar color="primary">
+          <mat-toolbar-row>
+            <button mat-icon-button (click)="sidenav.open()">
+              <mat-icon svgIcon="list"></mat-icon>
+            </button>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<router-outlet></router-outlet>

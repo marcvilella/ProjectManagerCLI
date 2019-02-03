@@ -1,0 +1,134 @@
+<div id="sign-up">
+      <aside class="sidebar">
+            <div class="slogan-container">
+                  <h1 class="slogan-title">{{ 'HOME.SignUp.Slogan-title' | translate }}</h1>
+                  <h2 class="slogan-subtitle">{{ 'HOME.SignUp.Slogan-subtitle' | translate }}</h2>
+            </div>
+      </aside>
+
+      <div class="main">
+            <div class="content">
+                  <header class="header">
+                        <div class="logo"></div>
+                        <span class="title">{{ 'HOME.SignUp.Title' | translate }}</span>
+                        <span class="subtitle">{{ 'HOME.SignUp.Subtitle' | translate }}</span>
+                  </header>
+                  <form class="form" (ngSubmit)="onSubmit()" autocomplete="off">
+                        <div class="form-group">
+                              <mat-icon class="icon-form" svgIcon="user"></mat-icon>
+                              <div class="input">
+                                    <div class="column" style="padding-right:10px;">
+                                          <mat-form-field style="display: block;">
+                                                <mat-label><strong>{{ 'HOME.SignUp.Name' | translate }}</strong></mat-label>
+                                                <input matInput name="name" spellcheck="false" [formControl]="nameFormControl">
+                                                <mat-error style="font-size: 10px;">
+                                                      {{ 'HOME.Common.Nonempty-error' | translate }}
+                                                </mat-error>
+                                          </mat-form-field>
+                                    </div>
+                                    <div class="column">
+                                          <mat-form-field style="display: block;">
+                                                <mat-label><strong>{{ 'HOME.SignUp.Surname' | translate }}</strong></mat-label>
+                                                <input matInput name="surname" spellcheck="false" [formControl]="surnameFormControl">
+                                                <mat-error style="font-size: 10px;">
+                                                      {{ 'HOME.Common.Nonempty-error' | translate }}
+                                                </mat-error>
+                                          </mat-form-field>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="form-group">
+                              <mat-icon class="icon-form" svgIcon="business"></mat-icon>
+                              <div class="input">
+                                    <mat-form-field style="display: block;">
+                                          <mat-label><strong>{{ 'HOME.SignUp.Company' | translate }}</strong></mat-label>
+                                          <input matInput spellcheck="false" [formControl]="companyFormControl">
+                                          <mat-error style="font-size: 10px;">
+                                                {{ 'HOME.Common.Nonempty-error' | translate }}
+                                          </mat-error>
+                                    </mat-form-field>
+                              </div>
+                        </div>
+                        <div class="form-group">      
+                              <mat-icon class="icon-form" svgIcon="email"></mat-icon>
+                              <div class="input">
+                                    <mat-form-field style="display: block;">
+                                          <mat-label><strong>{{ 'HOME.Common.Email' | translate }}</strong></mat-label>
+                                          <input matInput #email name="email" type="email" spellcheck="false" [formControl]="emailFormControl">
+                                          <mat-error style="font-size: 10px;" *ngIf="emailFormControl.hasError('pattern')">     
+                                                {{ 'HOME.Common.Email-error' | translate }}
+                                          </mat-error>
+                                          <mat-error style="font-size: 10px;" *ngIf="emailFormControl.hasError('required')">     
+                                                {{ 'HOME.Common.Nonempty-error' | translate }}
+                                          </mat-error>
+                                          <mat-error style="font-size: 10px;" *ngIf="emailFormControl.hasError('notUnique')">     
+                                                {{ 'HOME.Server.Email-error' | translate }}
+                                          </mat-error>
+                                    </mat-form-field>
+                              </div>
+                        </div>
+                        <div class="form-group">
+                              <mat-icon class="icon-form" svgIcon="vpn_key"></mat-icon>
+                              <div class="input">
+                                    <mat-form-field style="display: block;"> 
+                                          <mat-label><strong>{{ 'HOME.Common.Password' | translate }}</strong></mat-label>
+                                          <input matInput name="password" type="password" [formControl]="passwordFormControl">
+                                          <mat-error style="font-size: 10px;">
+                                                {{ 'HOME.SignUp.Password-error' | translate }}
+                                          </mat-error>
+                                    </mat-form-field>
+                              </div>
+                        </div>
+                        <div class="form-group">
+                              <div class="icon-form"></div>
+                              <div class="input">
+                                    <mat-form-field style="display: block;"> 
+                                          <mat-label><strong>{{ 'HOME.SignUp.ConfirmPassword' | translate }}</strong></mat-label>
+                                          <input matInput type="password" [formControl]="confirmPasswordFormControl">
+                                          <mat-error style="font-size: 10px;" *ngIf="confirmPasswordFormControl.hasError('errorMatchingPasswords')">
+                                                {{ 'HOME.SignUp.ConfirmPassword-error' | translate }}
+                                          </mat-error>
+                                          <mat-error style="font-size: 10px;" *ngIf="confirmPasswordFormControl.hasError('required') && !confirmPasswordFormControl.hasError('errorMatchingPasswords')">     
+                                                {{ 'HOME.Common.Nonempty-error' | translate }}
+                                          </mat-error>
+                                    </mat-form-field>
+                              </div>
+                        </div>
+                        <div class="form-group" style="height: 110%; margin-bottom: 0rem;">
+                              <mat-checkbox (change)="termsChange()">{{ 'HOME.SignUp.AcceptTerms-text' | translate }} <a href="/terms-and-conditions" target="_blank">{{ 'HOME.SignUp.AcceptTerms-link' | translate }}</a></mat-checkbox>
+                              <mat-error style="font-size: 10px;" *ngIf="!termsAccepted && termsAccepted!=null">     
+                                    {{ 'HOME.Common.Nonempty-error' | translate }}
+                              </mat-error>
+                        </div>
+                        <div class="form-group">
+                              <button mat-raised-button color="primary" [disabled]="request" style="width: 100%; height: 36px; margin-top: 10px; overflow: hidden;">
+                                    <div [@btnLabelTranslateX]="{value: request ? 'open' : 'closed', params:{labelTransform: labelTransform}}" #buttonLabel class="btnLabelTranslateX">  
+                                          {{ 'HOME.SignUp.SignUpButton' | translate }}
+                                    </div> 
+                                    <div [@btnSpinnerTranslateX]="{value:'', params:{spinnerPadding: spinnerPadding}}" *ngIf="request"  class="btnSpinnerTranslateX" [ngStyle]="{'padding-left': spinnerPadding + 'px'}"> 
+                                          <mat-spinner color="warn" diameter="25" ></mat-spinner>
+                                    </div> 
+                              </button>
+                        </div>
+                  </form>
+
+                  <footer class="footer">
+                        <nav>
+                              <div class="item">
+                                    <a class="item" [routerLink]="['../log-in']">
+                                          {{ 'HOME.SignUp.LogInRedirect' | translate }}						
+                                    </a>
+                              </div>
+                              <div class="language-selector">
+                                    <mat-divider style="padding-bottom: 5px;"></mat-divider>
+                                    <mat-form-field class="no-line">
+                                          <mat-select [(value)]="languageSelected" (selectionChange)="onLanguageChange(languageSelected)">
+                                                <mat-option class="file-list-item" *ngFor="let lang of languages" [value]="lang.file" style="font-size: 12px; line-height: 12px;">{{lang.name}}</mat-option>
+                                          </mat-select>
+                                    </mat-form-field>
+                              </div>
+                        </nav>
+                  </footer>
+            </div>
+      </div>
+</div>

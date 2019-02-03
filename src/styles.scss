@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* No yellow background when autocomplete is used */
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset;
+}

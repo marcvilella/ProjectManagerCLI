@@ -1,0 +1,82 @@
+{
+    "HOME": {
+		"Common": {
+			"Nonempty-error": "Este campo es necesario",
+			"Account-NotFound-error": "No se ha podido encontrar su cuenta",
+            "Email": "Correo electrónico",
+			"Email-input": "Introduzca su correo electrónico",
+			"Email-error": "Inserte un correo electrónico válido",
+			"Email-DataMatching-error": "No se ha podido encontrar ninguna cuenta con estos datos",
+            "Password": "Contraseña",
+            "Password-input": "Introduzca su contraseña",
+			"Password-error": "Introduzca una contraseña válida",
+			"Password-NotMatch-error": "Contraseña incorrecta. Pruebe otra vez o vaya a contraseña olvidada para resetearla"
+		},
+        "LogIn": {
+            "Title": "Iniciar sesión",
+            "Subtitle": "con tu cuenta de ProjectManager",		
+            "LogInButton": "INICIAR SESIÓN",
+            "ForgotPassword": "¿Ha olvidado su contraseña?",
+            "Trial-text": "¿No tienes una cuenta aún?",
+            "Trial-link": "Obtener periodo gratuito de prueba",
+            "Slogan-title":"Ayudando a las PYMES a trabajar más eficientemente",
+            "Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
+			"WarningDialog": {
+				"Title": "Verificando su cuenta",
+				"Content": "Cuenta verificada"
+			}
+        },
+		"SignUp": {
+			"Title": "Regístrese",
+			"Subtitle": "y únase a ProjectManager",
+			"Name": "Nombre",
+			"Surname": "Apellido",
+			"Company": "Compañía",
+			"ConfirmPassword": "Confirmar contraseña",
+			"AcceptTerms-text": "Aceptar las",
+			"AcceptTerms-link": "condiciones de uso",
+			"Password-error": "La longitud tiene que ser entre 8 y 20 carácteres",
+			"ConfirmPassword-error": "Las contraseñas no coinciden",
+			"SignUpButton": "REGISTRARSE",
+			"LogInRedirect": "Inicie sesión con su cuenta de ProjectManager",
+			"Slogan-title":"Ayudando a las PYMES a trabajar más eficientemente",
+			"Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
+			"WarningDialog": {
+				"Title": "Hola",
+				"Content": "Por favor, verifique su cuenta."
+			}
+        },
+		"RequestPasswordReset": {
+			"Title": "Recuperación de la cuenta",
+			"Subtitle": "Introduzca su nombre completo y correo electrónico y recibirá más información.",
+			"FullName": "Nombre completo",
+			"FullName-input": "Introduzca su nombre completo",
+			"RequestPasswordResetButton": "RESTABLECER CONTRASEÑA",
+			"LogInRedirect": "Volver a inicio de sesión",
+			"Slogan-title":"Ayudando a las PYMES a trabajar más eficientemente",
+			"Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
+			"WarningDialog": {
+				"Title": "Recuperación de la cuenta",
+				"Content": "Hello {{ Name }}"
+			}
+		},
+		"PasswordReset": {
+			"Title": "Account recovery",
+			"Subtitle": "Introduzca su nueva contraseña.",			
+			"Password-error": "La longitud tiene que ser entre 8 y 20 carácteres",
+			"ConfirmPassword": "Confirmar contraseña",
+			"ConfirmPassword-error": "Las contraseñas no coinciden",
+			"PasswordResetButton": "RESTABLECER CONTRASEÑA",
+			"Slogan-title": "Ayudando a las PYMES a trabajar más eficientemente",
+			"Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
+			"WarningDialog": {
+				"Title": "Account recovery",
+				"Content": "Hello {{ Name }}"
+			}
+		}
+    },
+	"SERVER":{
+		"Internal-error": "No se ha podido contactar con el servidor, por favor, contacte con atención al cliente",
+		"Parameter-missing": "Por favor, rellene todos los campos"
+	}
+}
