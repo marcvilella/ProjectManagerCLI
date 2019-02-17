@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import {MatIconRegistry} from '@angular/material';
 })
 export class AppComponent {  
 
-  constructor(private translate: TranslateService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {  
+  constructor(private translate: TranslateService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private userAuth: AuthService) {  
 
     iconRegistry.addSvgIcon(
       'business',
@@ -32,12 +33,20 @@ export class AppComponent {
     iconRegistry.addSvgIcon(
       'vpn_key',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/vpn_key-icon.svg')
+    );    
+  }
+
+  logOut(){
+
+    console.log('Entrying')
+    this.userAuth.logOut('1').subscribe(
+      response => {
+        console.log(response)
+      },
+      error => {
+        console.log(error)
+      }
     );
-    iconRegistry.addSvgIcon(
-      'list',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/list-icon.svg')
-    );
-    
   }
   
 }

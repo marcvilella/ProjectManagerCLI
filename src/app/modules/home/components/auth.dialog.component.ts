@@ -1,9 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { TranslateService } from '@ngx-translate/core';
 
 import { AuthService } from '../../../shared/services/auth.service'
-import { Title } from '@angular/platform-browser';
 
 @Component({
       selector: 'auth-dialog',
@@ -18,17 +16,28 @@ import { Title } from '@angular/platform-browser';
 
       title: string;
       content: string;
-      params: Array<object>;
+      params: any;
 
-      constructor( public dialogRef: MatDialogRef<AuthDialog>, public translate: TranslateService, private userAuth: AuthService, 
-        @Inject(MAT_DIALOG_DATA) public data: { mode: number, title: string, content:string, params:object[] }) {
+      constructor( public dialogRef: MatDialogRef<AuthDialog>, private userAuth: AuthService, 
+        @Inject(MAT_DIALOG_DATA) public data: { mode: number, title: string, content:string, params:any }) {
 
-            this.title = this.data.title;//this.translate.instant(this.data.initial + ".Title");
-            this.content = this.data.content//this.translate.instant(this.data.initial + ".Content");
+          console.log(this.data)
+            this.title = this.data.title;
+            this.content = this.data.content
             this.params = this.data.params;
 
             if(this.data.mode == 1){
-              this.userAuth.verifyEmail(JSON.stringify(this.params[0]));
+              let cont = this.content;
+              this.content = "";
+              //Create loading
+              this.userAuth.verifyEmail(JSON.stringify(this.params)).subscribe(
+                response => {
+                  this.content = cont; 
+                },
+                error => {}
+              );
+
+              
             }
         }
   }

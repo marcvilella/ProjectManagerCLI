@@ -1,21 +1,66 @@
-<mat-sidenav-container class="example-container" (backdropClick)="close()">
+<div fxLayout="column" style="height: 100vh;">
+  <mat-toolbar fxFlex="40px" color="primary">
+    <button mat-icon-button (click)="isExpanded = !isExpanded">
+      <mat-icon svgIcon="list" class="header-icon"></mat-icon>
+    </button>
+
+    <div fxLayout="row" class="header-user">
+        <button mat-icon-button class="button" [matMenuTriggerFor]="userMenu">
+            <ngx-avatar name="John Doe" size="30"></ngx-avatar>    
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <span mat-menu-item disabled="true">John Doe</span>
+          <mat-divider></mat-divider>
+          <button mat-menu-item class="mat-menu-item" [routerLink]="['./profile']">{{ 'APPLICATION.HUD.Profile' | translate }}</button>
+          <button mat-menu-item class="mat-menu-item" [routerLink]="['./activity']">{{ 'APPLICATION.HUD.Activity' | translate }}</button>
+          <button mat-menu-item class="mat-menu-item" [routerLink]="['./projects']">{{ 'APPLICATION.HUD.Projects' | translate }}</button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item class="mat-menu-item" (click)="logOut()">{{ 'APPLICATION.HUD.LogOut' | translate }}</button>
+        </mat-menu> 
+    </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container fxFlex="auto">
+    <mat-sidenav #sideNav mode="side" opened="true" [@onSideNavChange]="isExpanded" class="application-sidenav" autosize>
+      <mat-nav-list>
+          <mat-list-item (click)="toggleActive($event)" class="application-menu-item" [routerLink]="['./dashboard']">
+            <mat-icon matListIcon svgIcon="dashboard" class="application-menu-item-icon"></mat-icon>
+            <p matLine *ngIf="isExpanded">{{ 'APPLICATION.HUD.Dashboard' | translate }}</p>
+          </mat-list-item>
+          
+          <mat-divider></mat-divider>
   
-  <mat-sidenav #sidenav (keydown.escape)="close()" disableClose>
-      <p><button mat-button>Toggle</button></p>
-  </mat-sidenav> 
+          <mat-list-item (click)="toggleActive($event)" class="application-menu-item">
+            <mat-icon matListIcon svgIcon="calendar" class="application-menu-item-icon"></mat-icon>
+            <p matLine *ngIf="isExpanded">Calendar</p>
+          </mat-list-item>
 
-  <mat-sidenav-content>
-    
-      <mat-toolbar color="primary">
-          <mat-toolbar-row>
-            <button mat-icon-button (click)="sidenav.open()">
-              <mat-icon svgIcon="list"></mat-icon>
-            </button>
-          </mat-toolbar-row>
-        </mat-toolbar>
-        
+          <mat-list-item (click)="toggleActive($event)" class="application-menu-item" [routerLink]="['./board']">
+            <mat-icon matListIcon svgIcon="todo" class="application-menu-item-icon"></mat-icon>
+            <p matLine *ngIf="isExpanded">{{ 'APPLICATION.HUD.Boards' | translate }}</p>
+          </mat-list-item>
 
-  </mat-sidenav-content>
-</mat-sidenav-container>
+          <mat-list-item (click)="toggleActive($event)" class="application-menu-item">
+            <mat-icon matListIcon svgIcon="support" class="application-menu-item-icon"></mat-icon>
+            <p matLine *ngIf="isExpanded">Tickets</p>
+          </mat-list-item>
 
-<router-outlet></router-outlet>
+          <mat-list-item (click)="toggleActive($event)" class="application-menu-item">
+            <mat-icon matListIcon svgIcon="time" class="application-menu-item-icon"></mat-icon>
+            <p matLine *ngIf="isExpanded">Timesheets</p>
+          </mat-list-item>
+  
+          <mat-divider></mat-divider>
+  
+          <mat-list-item (click)="toggleActive($event)" class="application-menu-item">
+            <mat-icon matListIcon svgIcon="settings" class="application-menu-item-icon"></mat-icon>
+            <p matLine *ngIf="isExpanded">Settings</p>
+          </mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav> 
+
+    <mat-sidenav-content fxFlex="auto">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

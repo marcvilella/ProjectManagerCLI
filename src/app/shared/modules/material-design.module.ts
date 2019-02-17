@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 
 import { MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatCheckboxModule, MatDividerModule, 
-  MatSnackBarModule, MatDialogModule, MatProgressSpinnerModule, MatToolbarModule, MatSidenavModule} from '@angular/material';
+  MatSnackBarModule, MatDialogModule, MatProgressSpinnerModule, MatToolbarModule, MatSidenavModule, MatListModule, MatCardModule,
+MatMenuModule} from '@angular/material';
 
 //Lista iconos: https://material.io/tools/icons/
 
@@ -20,7 +21,10 @@ import { MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, Mat
       MatDialogModule,
       MatProgressSpinnerModule,
       MatToolbarModule,
-      MatSidenavModule
+      MatSidenavModule,
+      MatListModule,
+      MatCardModule,
+      MatMenuModule
   ]
 })
 export class MaterialDesignModule {}

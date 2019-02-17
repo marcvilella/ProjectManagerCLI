@@ -1,7 +1,156 @@
-.example-container {
+$toolbarheight: 40px;
+
+/*#region SideNav/Header */
+
+.application-sidenav {
+      min-width:62px; 
+      background: gray;
+}
+
+.header-icon{
+      width: 30px;
+      height: 30px;
+}
+
+.header-user{
       position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-    }
+      top: 0px;
+      right: 20px;
+      height: 40px;
+      align-items: center;
+}
+
+.header-user .button{
+      width: 30px;
+}
+
+.header-user .user-card{
+      background: transparent;
+      top: -11px;
+}
+
+.application-menu-item{
+      height: auto !important; 
+      padding-top: 5px !important; 
+      padding-bottom: 5px !important; 
+}
+
+.application-menu-item .application-menu-item-icon{
+      font-size: unset !important; 
+      width: 24px !important; 
+      height: 24px !important;
+}
+
+.mat-menu-item {
+      line-height: 35px;
+      height: auto;
+}
+
+/*#endregion SideNav/Header */
+
+/*#region Board*/
+
+.application-child{
+      height: calc(100vh - #{$toolbarheight});
+      background: rgb(88, 166, 255);
+}
+
+.board-item{
+      padding-left: 5px;
+      padding-right: 5px;
+}
+
+.item-card{
+      padding-top: 0px; 
+      padding-bottom: 5px; 
+      overflow: hidden;
+}
+
+.board-item .board-title-item{
+      padding-top: 3px;
+      padding-bottom: 5px;
+}
+
+.board-item .board-title-item .textarea{
+      width: 245px;
+      height: 27px;
+      font-weight: bold;
+      border: transparent;
+      resize: none;
+      overflow: hidden;
+}
+
+.board-item .board-subitem{
+      padding-top: 3px;
+      padding-bottom: 3px;
+}
+
+.task-card{
+      cursor: pointer; 
+      padding-top: 5px;
+      padding-bottom: 5px;
+}
+
+.edit{
+      position: absolute;
+      right: 10px;
+      width: 24px; 
+      height: 24px;
+      align-items: center;
+      opacity: 0.7;
+}
+
+.edit:hover{
+      border-radius: 10px;
+      background: lightgray;
+      opacity: 0.9;
+}
+
+.edit-icon{
+      margin-left: 4px; 
+      width: 16px; 
+}
+
+.add-task-card{
+      cursor: pointer; 
+      padding-top: 10px;
+      padding-bottom: 12px;
+      margin-left: -10px;
+      margin-right: -10px;
+}
+
+.add-list-card{
+      padding-top: 0px; 
+      overflow: hidden;
+}
+
+.add-list-card .label{
+      width: 280px;
+      padding-left: 4px;
+      margin-top: 2px; 
+}
+
+.add-list-card .textarea-title{
+      margin-left: 3px;
+      padding-left: 8px;
+      width: 265px;
+      height: 27px;
+      border: transparent;
+      resize: none;
+      overflow: hidden;
+}
+
+.add-list-card .list-button{
+      width: 44%;
+}
+
+/*#endregion Board */
+
+/*
+transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
+    transition-property: background, opacity, border-color;
+    transition-duration: 85ms, 40ms, 85ms;
+    transition-timing-function: ease-in, ease-in, ease-in;
+    transition-delay: 0s, 0s, 0s;
+
+*/

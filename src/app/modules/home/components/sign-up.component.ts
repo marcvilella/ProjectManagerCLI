@@ -117,22 +117,20 @@ export class SignUpComponent{
                     case 400:
                         //Delete data of the wrong field and select it, also show error
                         if( JSON.parse(error._body).message.charAt(0) == 1)
-                            this.emailFormControl.setErrors({notMatch: true});
+                            this.emailFormControl.setErrors({pattern: true});
                         else{
-                            this.passwordFormControl.reset();
-                            this.passwordFormControl.setErrors({notMatch: true});
+                            this.passwordFormControl.setErrors({pattern: true});
                             this.confirmPasswordFormControl.reset();
                             this.confirmPasswordFormControl.setErrors(null);
                         }
+                    break;
+                    case 401:
+                        this.emailFormControl.setErrors({notUnique: true});
                     break;
                     case 409:
                         //All parameters needed
                         this.snackBar.open(this.translate.instant("SERVER.Parameter-missing"), "", {duration: 5000});
                     break; 
-                    case 500:
-                        //Internal error
-                        this.snackBar.open(this.translate.instant("SERVER.Internal-error"), "", {duration: 5000});
-                    break;
                     default:
                         this.snackBar.open(this.translate.instant("SERVER.Internal-error"), "", {duration: 5000});
                     break;

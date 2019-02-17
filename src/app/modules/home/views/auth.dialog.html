@@ -9,5 +9,23 @@
 </div>
 
 <div *ngIf="data.mode == 1">
-  
+  <h1 mat-dialog-title>{{title}}</h1>
+  <div mat-dialog-content>
+    <span class="line-breaker">
+      {{content}}
+    </span>
+  </div>
+</div>
+
+<div *ngIf="data.mode == 2">
+  <h1 mat-dialog-title>{{title}}</h1>
+  <div mat-dialog-content>
+    <span class="line-breaker">
+      {{content}}
+    </span>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+  </div>
 </div>

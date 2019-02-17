@@ -13,12 +13,12 @@
 			"Password-NotMatch-error": "Contraseña incorrecta. Pruebe otra vez o vaya a contraseña olvidada para resetearla"
 		},
         "LogIn": {
-            "Title": "Iniciar sesión",
+            "Title": "Inicia sesión",
             "Subtitle": "con tu cuenta de ProjectManager",		
             "LogInButton": "INICIAR SESIÓN",
-            "ForgotPassword": "¿Ha olvidado su contraseña?",
-            "Trial-text": "¿No tienes una cuenta aún?",
-            "Trial-link": "Obtener periodo gratuito de prueba",
+            "ForgotPassword": "¿Has olvidado tu contraseña?",
+            "Trial-text": "¿Aún no tienes cuenta?",
+            "Trial-link": "Obtén un periodo de prueba gratuito",
             "Slogan-title":"Ayudando a las PYMES a trabajar más eficientemente",
             "Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
 			"WarningDialog": {
@@ -27,18 +27,18 @@
 			}
         },
 		"SignUp": {
-			"Title": "Regístrese",
-			"Subtitle": "y únase a ProjectManager",
+			"Title": "Regístrate",
+			"Subtitle": "y únete a ProjectManager",
 			"Name": "Nombre",
 			"Surname": "Apellido",
-			"Company": "Compañía",
+			"Company": "Empresa",
 			"ConfirmPassword": "Confirmar contraseña",
 			"AcceptTerms-text": "Aceptar las",
 			"AcceptTerms-link": "condiciones de uso",
 			"Password-error": "La longitud tiene que ser entre 8 y 20 carácteres",
 			"ConfirmPassword-error": "Las contraseñas no coinciden",
 			"SignUpButton": "REGISTRARSE",
-			"LogInRedirect": "Inicie sesión con su cuenta de ProjectManager",
+			"LogInRedirect": "Inicia sesión con tu cuenta de ProjectManager",
 			"Slogan-title":"Ayudando a las PYMES a trabajar más eficientemente",
 			"Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
 			"WarningDialog": {
@@ -48,9 +48,9 @@
         },
 		"RequestPasswordReset": {
 			"Title": "Recuperación de la cuenta",
-			"Subtitle": "Introduzca su nombre completo y correo electrónico y recibirá más información.",
+			"Subtitle": "Introduce tu nombre completo y correo electrónico y recibirás más información.",
 			"FullName": "Nombre completo",
-			"FullName-input": "Introduzca su nombre completo",
+			"FullName-input": "Introduce tu nombre completo",
 			"RequestPasswordResetButton": "RESTABLECER CONTRASEÑA",
 			"LogInRedirect": "Volver a inicio de sesión",
 			"Slogan-title":"Ayudando a las PYMES a trabajar más eficientemente",
@@ -62,7 +62,7 @@
 		},
 		"PasswordReset": {
 			"Title": "Account recovery",
-			"Subtitle": "Introduzca su nueva contraseña.",			
+			"Subtitle": "Introduce tu nueva contraseña.",			
 			"Password-error": "La longitud tiene que ser entre 8 y 20 carácteres",
 			"ConfirmPassword": "Confirmar contraseña",
 			"ConfirmPassword-error": "Las contraseñas no coinciden",
@@ -75,6 +75,37 @@
 			}
 		}
     },
+		"APPLICATION":{
+		"HUD": {
+			"Dashboard": "Panel",
+			"Boards": "Tarjetas",
+			"Profile": "Perfil",
+			"Activity": "Actividades",
+			"Projects": "Proyectos",
+			"LogOut": "Cerrar sesión"
+		},
+		"Dashoard": {},
+		"Boards": {
+			"AddCard": "Añadir tarjeta...",
+			"ListActions": {
+				"CopyList": "Copiar lista...",
+				"MoveList": "Añadir lista...",
+				"SortBy": "Ordenar por...",
+				"SortByOptions": {
+					"CardName": "Nombre de la tarjeta (Alfabéticamente)",
+					"DateCreatedD": "Fecha de creación (Descendiente)",
+					"DateCreatedA": "Fecha de creación (Ascendente)"
+				},
+				"MoveCards": "Mover todas las tarjetas de la lista...",
+				"ArchiveCards": "Archivar todas las tarjetas de la lista...",
+				"ArchiveCardsDialog": {
+					"Text": "This will remove all the cards in this list from the board. To view archived cards and bring them back to the board, click “Menu” > “Archived Items.”",
+					"Button": "Archivar todo"
+				},
+				"ArchiveList": "Archivar lista"
+			}
+		}
+	},
 	"SERVER":{
 		"Internal-error": "No se ha podido contactar con el servidor, por favor, contacte con atención al cliente",
 		"Parameter-missing": "Por favor, rellene todos los campos"

@@ -1,0 +1,74 @@
+<div class="application-child" fxLayout="column">
+      <mat-toolbar fxFlex="40px" color="transparent" class="transparent">
+            Hola
+            <button (click)="settings = !settings">Opp</button>
+      </mat-toolbar>
+
+      <mat-sidenav-container fxFlex="auto" class="transparent">
+            <mat-sidenav #sideNavSettings mode="side" [(opened)]="settings" position="end" autosize>
+                 Hola
+            </mat-sidenav> 
+            <mat-sidenav-content fxLayout="row">
+                  <div *ngFor="let card of cards; index as listIndex" fxFlex="300px" class="board-item">
+                        <mat-card class="item-card">
+                              <mat-card-actions fxLayout="column">
+                                    <div fxLayout="row" class="board-title-item">
+                                          <textarea matInput spellcheck="false" class="textarea">{{card}}</textarea>
+                                          <div class="edit">
+                                                <mat-icon mat-icon-button svgIcon="menu" class="edit-icon" [matMenuTriggerFor]="listActions"></mat-icon> 
+                                          </div>
+                                          <mat-menu #listActions="matMenu">
+                                                <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.CopyList' | translate }}</button>
+                                                <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.MoveList' | translate }}</button>
+                                                <mat-divider></mat-divider>
+                                                <button mat-menu-item class="mat-menu-item" [matMenuTriggerFor]="sortOptions">{{ 'APPLICATION.Boards.ListActions.SortBy' | translate }}</button>
+                                                <mat-divider></mat-divider>
+                                                <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.MoveCards' | translate }}</button>
+                                                <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.ArchiveCards' | translate }}</button>
+                                                <mat-divider></mat-divider>
+                                                <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.ArchiveList' | translate }}</button>
+                                          </mat-menu> 
+                                          <mat-menu #sortOptions="matMenu">
+                                                <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.SortByOptions.CardName' | translate }}</button>
+                                                <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedD' | translate }}</button>
+                                                <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedA' | translate }}</button>
+                                          </mat-menu>
+                                    </div>
+                                    <div *ngFor="let card of cards; index as itemIndex" class="board-subitem">
+                                          <mat-card class="task-card" (mouseenter)='mouseenter($event, listIndex, itemIndex)' (mouseleave)="mouseleave($event)">
+                                                <mat-card-content fxLayout="row">
+                                                      {{card}}
+                                                      <div class="edit" *ngIf="itemIndex == CurrentItem && listIndex == CurrentList">
+                                                            <mat-icon mat-icon-button svgIcon="edit" class="edit-icon"></mat-icon> 
+                                                      </div>
+                                                </mat-card-content>
+                                          </mat-card>                                    
+                                    </div>
+                                    <div class="board-subitem">
+                                          <mat-card class="add-task-card" (mouseenter)='mouseenter($event)' (mouseleave)="mouseleave($event)">
+                                                <mat-card-content>
+                                                      Add new card
+                                                </mat-card-content>
+                                          </mat-card>  
+                                    </div>
+                              </mat-card-actions>
+                        </mat-card>
+                  </div>
+                  <div class="board-item" fxFlex="300px">
+                        <mat-card class="add-list-card" (click)="editable = true">
+                              <mat-card-actions fxLayout="column">
+                                    <div fxLayout="row" class="board-title-item" *ngIf="!editable">
+                                          <mat-icon mat-icon-button svgIcon="add" class="edit-icon"></mat-icon>
+                                          <div class="label">{{ 'APPLICATION.Boards.AddList' | translate }}</div>
+                                    </div>
+                                    <div class="board-title-item"  *ngIf="editable">
+                                          <textarea matInput spellcheck="false" class="textarea-title" placeholder="{{ 'APPLICATION.Boards.AddList-input' | translate }}"></textarea>
+                                          <button mat-raised-button color="primary" class="list-button">Add</button>
+                                          <button mat-raised-button color="warn" class="list-button">Cancel</button>
+                                    </div>
+                              </mat-card-actions>
+                        </mat-card>
+                  </div>
+            </mat-sidenav-content>
+      </mat-sidenav-container>
+</div>

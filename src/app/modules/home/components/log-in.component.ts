@@ -71,8 +71,10 @@ export class LogInComponent{
             this.dialog.open(AuthDialog, {
                 width: '500px',
                 data: {
-                    mode: 0,
-                    initial: "HOME.PasswordReset.WarningDialog"
+                    mode: 1,
+                    title: this.translate.instant("HOME.LogIn.WarningDialog.Title"),
+                    content: this.translate.instant("HOME.LogIn.WarningDialog.Content"),
+                    params: token,
                 }
             });
 
@@ -86,7 +88,7 @@ export class LogInComponent{
 
     //#endregion
 
-    //#region Functions
+    //#region Function
 
     onSubmit(){
 
@@ -104,7 +106,6 @@ export class LogInComponent{
         this.userAuth.logIn(this.emailFormControl.value, this.passwordFormControl.value).subscribe(
             response => {
                 this.request = false;
-
                 this.userAuth.setToken(response.token);
                 this.router.navigate(['../app']);
             },
@@ -122,8 +123,10 @@ export class LogInComponent{
                         this.dialog.open(AuthDialog, {
                             width: '500px',
                             data: {
-                                title: this.translate.instant("HOME.EmailConfirmationRequired.Title") + " " + this.emailFormControl.value, 
-                                content: this.translate.instant("HOME.EmailConfirmationRequired.Content")
+                                mode: 0,
+                                title: this.translate.instant("HOME.LogIn.RequestDialog.Title"),
+                                content: this.translate.instant("HOME.LogIn.RequestDialog.Content"),
+                                params: this.translate.instant("HOME.LogIn.RequestDialog.Url"),
                             }
                         });
                     break;

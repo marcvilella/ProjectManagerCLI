@@ -12,6 +12,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 export function tokenGetter() {
+  console.log(localStorage.getItem('access_token'))
   return localStorage.getItem('access_token');
 }
 
@@ -32,13 +33,14 @@ export function tokenGetter() {
          },
          isolate: false
        }),
-       JwtModule.forRoot({
-        config: {
-          tokenGetter: tokenGetter,
-          //whitelistedDomains: ['localhost:3000/api/login'],
-          blacklistedRoutes: ['localhost:3000/api/auth/']
-        }
-      })
+      //  JwtModule.forRoot({
+      //   config: {
+      //     tokenGetter: tokenGetter,
+      //     whitelistedDomains: new Array(new RegExp('^null$'))
+      //     //whitelistedDomains: ['localhost:3000'],
+      //     //blacklistedRoutes: ['localhost:3000/api/auth/']
+      //   }
+      // })
     ],
     exports: [
       CommonModule,

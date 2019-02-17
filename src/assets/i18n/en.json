@@ -16,14 +16,19 @@
 			"Title": "Log in",
 			"Subtitle": "into your ProjectManager account",
 			"LogInButton": "LOG IN",
-			"ForgotPassword": "¿Forgot password?",
-			"Trial-text": "¿Do not you have an account?",
+			"ForgotPassword": "Forgot password?",
+			"Trial-text": "Do not you have an account?",
 			"Trial-link": "Get a free trial account",
 			"Slogan-title": "Helping PYMES to work more efficiently",
 			"Slogan-subtitle": "CRM, project manager and billing in a single application",
 			"WarningDialog": {
 				"Title": "Verifying your account",
 				"Content": "Account verified"
+			},
+			"RequestDialog": {
+				"Title": "Verify your account",
+				"Content": "You need to verify your account. Please, check your email. \nIf you have not received any email, click in the next link to resend a verification email.",
+				"Url":"Send verification e-mail"
 			}
 		},
 		"SignUp": {
@@ -35,6 +40,7 @@
 			"ConfirmPassword": "Confirm password",
 			"AcceptTerms-text": "Accept",
 			"AcceptTerms-link": "terms of use",
+			"Email-error": "Email address already in use",
 			"Password-error": "The length must be between 8 and 20 characters",
 			"ConfirmPassword-error": "The passwords do not match",
 			"SignUpButton": "SIGN UP",
@@ -71,6 +77,39 @@
 			"Slogan-subtitle": "CRM, project manager and billing in a single application",
 			"WarningDialog": {
 				"Content": "Password changed succesfully."
+			}
+		}
+	},
+	"APPLICATION":{
+		"HUD": {
+			"Dashboard": "Dashboard",
+			"Boards": "Boards",
+			"Profile": "Profile",
+			"Activity": "Activity",
+			"Projects": "Projects",
+			"LogOut": "Log out"
+		},
+		"Dashoard": {},
+		"Boards": {
+			"AddCard": "Add another card...",
+			"AddList": "Add another list...",
+			"AddList-input": "Enter the list title...",
+			"ListActions": {
+				"CopyList": "Copy list...",
+				"MoveList": "Add list...",
+				"SortBy": "Sort by...",
+				"SortByOptions": {
+					"CardName": "Card name (Alphabetically)",
+					"DateCreatedD": "Date created (Descending)",
+					"DateCreatedA": "Date created (Ascending)"
+				},
+				"MoveCards": "Move all cards in this list...",
+				"ArchiveCards": "Archive all cards in this list...",
+				"ArchiveCardsDialog": {
+					"Text": "This will remove all the cards in this list from the board. To view archived cards and bring them back to the board, click “Menu” > “Archived Items.”",
+					"Button": "Archive All"
+				},
+				"ArchiveList": "Archive this list"
 			}
 		}
 	},
