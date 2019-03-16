@@ -1,0 +1,36 @@
+<div class="create-board">
+
+      <span class="title">Creator</span>
+
+      <mat-divider></mat-divider>
+
+      <form class="form" (submit)="createBoard()" autocomplete="off">
+            <mat-form-field class="block-component"> 
+                  <input matInput placeholder="Type board title" [formControl]="boardTitleFormControl" (input)="titleChanged()"/>
+            </mat-form-field>
+            <mat-form-field class="block-component">
+                  <mat-select #mySelect placeholder="Select privacy" [(value)]="privacyMode" (selectionChange)="modeChanged()" style="min-width: auto;">
+                        <mat-option value="private" class="select-option">
+                              <div class="title">Private</div>
+                              <div class="description" *ngIf="mySelect.panelOpen">Only board members can see this board.</div>
+                        </mat-option>
+                        <mat-option value="shared" class="select-option">
+                              <div class="title">Shared</div>
+                              <div class="description" *ngIf="mySelect.panelOpen">Anyone with the board link can see this board.<br>Only board members can edit.</div>
+                        </mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <span class=placeholder>Select a board color</span>
+            <mat-grid-list cols="4">
+                  <mat-grid-tile *ngFor="let color of listColors" class="grid-element" (click)="colorChanged(color)">
+                        <div class="color-dot" [style.background]="color.colorLight">
+                              <div *ngIf="isColorSelected(color)"><mat-icon svgIcon="check"></mat-icon></div>
+                        </div>
+                  </mat-grid-tile>
+            </mat-grid-list>
+            <br>
+            <button class="button" mat-raised-button color="primary" [disabled]="boardTitleFormControl.value == ''" >
+                  Create
+            </button>
+      </form>
+</div>

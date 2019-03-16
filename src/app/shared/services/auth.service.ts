@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
 import { Router, CanLoad } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { Config, AuthURLs } from './config.service';
+import { Config, AuthURLs } from '../models/config';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user';
+import { User, IUser } from '../models/user';
+import { Observable } from 'rxjs';
 
 @Injectable()//{
       // we declare that this service should be created
@@ -20,6 +19,9 @@ export class AuthService{
             this.url = Config.authUrl;
       }
 
+      getUsers(): Observable<IUser[]> {
+            return this.http.get<IUser[]>(this.url + 'getUsers');
+      }
 
       setToken(token: string) : boolean{
             if(!this.jwtHelper.isTokenExpired(token)){
@@ -52,7 +54,7 @@ export class AuthService{
             return this.http.post<response>(this.url + AuthURLs.LogIn, params)
       }
 
-      logOut(id: string){
+      logOut(id: number){
             let params = {'id': id};
 
             return this.http.post(this.url + AuthURLs.LogOut, params);
@@ -95,4 +97,4 @@ export class response{
           public token: string,
           public user: JSON
       ){}
-  }
+}

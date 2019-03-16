@@ -84,6 +84,14 @@
 		"HUD": {
 			"Dashboard": "Dashboard",
 			"Boards": "Boards",
+			"Boards-list":{
+				"Find-hint": "Find boards by name...",
+				"Starred": "Starred Boards",
+				"Recent": "Recent Boards",
+				"Personal": "Personal Boards",
+				"Shared": "Shared Boards",
+				"Create": "Create new board..."
+			},
 			"Profile": "Profile",
 			"Activity": "Activity",
 			"Projects": "Projects",
@@ -100,8 +108,10 @@
 				"SortBy": "Sort by...",
 				"SortByOptions": {
 					"CardName": "Card name (Alphabetically)",
+					"DateCreatedA": "Date created (Ascending)",
 					"DateCreatedD": "Date created (Descending)",
-					"DateCreatedA": "Date created (Ascending)"
+					"DateModifiedA": "Date modified (Ascending)",
+					"DateModifiedD": "Date modified (Descending)"
 				},
 				"MoveCards": "Move all cards in this list...",
 				"ArchiveCards": "Archive all cards in this list...",
@@ -109,7 +119,8 @@
 					"Text": "This will remove all the cards in this list from the board. To view archived cards and bring them back to the board, click “Menu” > “Archived Items.”",
 					"Button": "Archive All"
 				},
-				"ArchiveList": "Archive this list"
+				"ArchiveList": "Archive this list",
+				"DeleteList": "Delete this list"
 			}
 		}
 	},

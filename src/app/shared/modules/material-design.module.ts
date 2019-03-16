@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 
 import { MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatCheckboxModule, MatDividerModule, 
   MatSnackBarModule, MatDialogModule, MatProgressSpinnerModule, MatToolbarModule, MatSidenavModule, MatListModule, MatCardModule,
-MatMenuModule} from '@angular/material';
+  MatMenuModule, MatExpansionModule, MatGridListModule} from '@angular/material';
+
+import {DragDropModule} from '@angular/cdk/drag-drop'; 
+import { OverlayModule } from '@angular/cdk/overlay';
+
 
 //Lista iconos: https://material.io/tools/icons/
 
@@ -24,7 +28,12 @@ MatMenuModule} from '@angular/material';
       MatSidenavModule,
       MatListModule,
       MatCardModule,
-      MatMenuModule
+      MatMenuModule,
+      MatExpansionModule,
+      MatGridListModule,
+      
+      DragDropModule,
+      OverlayModule
   ]
 })
 export class MaterialDesignModule {}

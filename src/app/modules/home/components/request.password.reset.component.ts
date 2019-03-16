@@ -7,7 +7,7 @@ import { MatSnackBar, MatDialog } from '@angular/material'
 import { buttonLabelTranslateX, buttonSpinnerTranslateX, computeButtonTranslateX } from '../../../shared/modules/animations';
 import { AuthService } from '../../../shared/services/auth.service';
 
-import { LanguagesList } from '../../../shared/services/languages';
+import { LanguagesList } from '../../../shared/models/languages';
 import { AuthDialog } from './auth.dialog.component';
 
 @Component({

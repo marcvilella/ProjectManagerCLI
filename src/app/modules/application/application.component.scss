@@ -1,16 +1,56 @@
 $toolbarheight: 40px;
+$applicationColor: rgb(26, 35, 126);
+$beforeHoverBackground: rgb(235, 235, 235);
+$beforeHoverBorder: rgb(210, 210, 210);
+$hoverBackground: rgb(224, 224, 224);
 
 /*#region SideNav/Header */
 
-.application-sidenav {
-      min-width:62px; 
-      background: gray;
+/*#region HeaderComponentBoards*/
+
+.header-component-helper{
+      width: auto;
+      margin-left: 15px;
 }
 
-.header-icon{
-      width: 30px;
-      height: 30px;
+.header-component-mat-content-menu-custom {
+      padding-left: 8px;
+      padding-right: 8px;
 }
+
+.header-component-mat-content-menu-custom .textarea{
+      width: 200px;
+      height: 29px;
+      font-size: 14px;
+      font-weight: 400;
+      background: $beforeHoverBackground;
+      border: 1px solid $beforeHoverBorder;
+      border-radius: 4px;
+      resize: none;
+      overflow: hidden;
+}
+
+.header-component-mat-content-menu-custom .textarea:hover{
+      background: $hoverBackground;
+}
+
+.header-component-mat-content-expander-title{
+      margin-left: 8px;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+}
+
+.header-component-mat-content-expander-title .icon{
+      width: 17px;
+      height: 17px;
+      position: absolute;
+      left: 10px;
+}
+
+/*#endregion HeaderComponentBoards */
+
+/*#region HeaderUser*/
 
 .header-user{
       position: absolute;
@@ -29,6 +69,20 @@ $toolbarheight: 40px;
       top: -11px;
 }
 
+/*#endregion HeaderUser*/
+
+/*#region LeftMenu*/
+
+.application-sidenav {
+      min-width:62px; 
+      background: gray;
+}
+
+.header-icon{
+      width: 30px;
+      height: 30px;
+}
+
 .application-menu-item{
       height: auto !important; 
       padding-top: 5px !important; 
@@ -41,21 +95,55 @@ $toolbarheight: 40px;
       height: 24px !important;
 }
 
-.mat-menu-item {
-      line-height: 35px;
-      height: auto;
-}
-
 /*#endregion SideNav/Header */
 
 /*#region Board*/
+
+.toolbar{
+      height: $toolbarheight;
+      color: white;
+}
+
+.toolbar .item{
+      margin: auto 4px;
+}
+
+.toolbar .list-label{
+      cursor: pointer;
+      width: fit-content;
+      max-width: 500px;
+      padding-left: 5px;
+      padding-right: 9px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+}
+.toolbar .list-label:hover{
+      background: red;
+}
+
+.toolbar .list-textarea{
+      height: 32px;
+      padding-left: 4px;
+      
+}
+
+.toolbar .button-icon{
+      line-height: normal;
+}
+
+
 
 .application-child{
       height: calc(100vh - #{$toolbarheight});
       background: rgb(88, 166, 255);
 }
 
+.container{
+      padding-top: 5px;
+}
+
 .board-item{
+      height: fit-content;
       padding-left: 5px;
       padding-right: 5px;
 }
@@ -66,18 +154,46 @@ $toolbarheight: 40px;
       overflow: hidden;
 }
 
-.board-item .board-title-item{
-      padding-top: 3px;
-      padding-bottom: 5px;
+.board-item .list-label{
+      cursor: pointer; 
+      height: 27px;
+      width: 245px;
+      margin-left: 0px;
+      margin-top: 2px; 
+      margin-bottom: 4px; 
+      padding-left: 3px;
+      user-select: none;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
 }
 
-.board-item .board-title-item .textarea{
+.board-item .list-textarea{
       width: 245px;
-      height: 27px;
+      height: 26px;
+      margin-left: 0px;
+      margin-bottom: 7px; 
+      padding-left: 3px;
+      padding-bottom: 0px; 
       font-weight: bold;
       border: transparent;
-      resize: none;
       overflow: hidden;
+}
+
+.board-item  .list-edit{
+      cursor: pointer; 
+      position: absolute;
+      right: 10px;
+      width: 24px; 
+      height: 24px;
+      align-items: center;
+      opacity: 0.7;
+}
+
+.board-item .list-edit:hover{
+      border-radius: 10px;
+      background: lightgray;
+      opacity: 0.9;
 }
 
 .board-item .board-subitem{
@@ -90,6 +206,12 @@ $toolbarheight: 40px;
       padding-top: 5px;
       padding-bottom: 5px;
 }
+
+.task-card .title{
+      max-width: 250px;
+      overflow-wrap: break-word;
+}
+
 
 .edit{
       position: absolute;
@@ -119,7 +241,24 @@ $toolbarheight: 40px;
       margin-right: -10px;
 }
 
+.add-task-card .textarea-title{
+      padding-left: 8px;
+      width: 265px;
+      border: transparent;
+      resize: inherit;
+      overflow: hidden;
+}
+
+.add-task-card .task-button{
+      display: inline-block;
+      width: 46%;
+      margin-top: 7px;
+      margin-left: 5px;
+      margin-right: 5px;     
+}
+
 .add-list-card{
+      cursor: pointer; 
       padding-top: 0px; 
       overflow: hidden;
 }
@@ -128,12 +267,13 @@ $toolbarheight: 40px;
       width: 280px;
       padding-left: 4px;
       margin-top: 2px; 
+      user-select: none;
 }
 
 .add-list-card .textarea-title{
       margin-left: 3px;
-      padding-left: 8px;
-      width: 265px;
+      padding-left: 6px;
+      width: 266px;
       height: 27px;
       border: transparent;
       resize: none;
@@ -142,6 +282,61 @@ $toolbarheight: 40px;
 
 .add-list-card .list-button{
       width: 44%;
+      margin-top: 7px;
+}
+
+/*#region Create Board*/
+
+.create-board .title{
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+}
+
+.create-board .form{
+      margin-top: 10px;
+}
+
+.create-board .button{
+      width: 100%; 
+}
+
+.create-board .darkComponent{
+      padding: 10px; 
+      padding-bottom: 12px;
+}
+
+.create-board .lightComponent{
+      padding: 10px; 
+      min-width:150px;
+}
+
+/*#endregion Create Board*/
+
+.cdk-drag-preview {
+      box-sizing: border-box;
+      border-radius: 4px;
+      // box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+      //             0 8px 10px 1px rgba(0, 0, 0, 0.14),
+      //             0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+      opacity: 0;
+}
+    
+.cdk-drag-animating {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .board-subitem:not(.cdk-drag-placeholder) {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+      background: #ccc;
+      border: dotted 1px #999;
+      transition: transform 500ms ease;
 }
 
 /*#endregion Board */
@@ -154,3 +349,83 @@ transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-
     transition-delay: 0s, 0s, 0s;
 
 */
+
+/*#region CommonComponents*/
+
+.block-component{
+      display: block;
+}
+
+.mat-content-menu-custom {
+      padding-left: 8px;
+      padding-right: 8px;
+}
+
+.mat-content-menu-custom .mat-menu-text{
+      text-align: justify;
+      font-size: 0.85rem;
+      padding-bottom: 8px;
+}
+
+.mat-content-menu-custom .mat-menu-button{
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+}
+
+.mat-menu-item {
+      line-height: 35px;
+      height: auto;
+}
+
+/*#region Form*/
+
+.select-option{
+      height: auto !important;
+      padding-top: 5px;      
+      padding-bottom: 8px;
+}
+
+.select-option .title{
+      font-weight: 700;
+      font-size: 16px; 
+      line-height: 25px;
+}
+
+.select-option .description{
+      font-size: 12px; 
+      line-height: 14px;
+}
+
+.grid-element{
+      cursor: pointer;
+}
+
+.grid-element:hover{
+      background: $hoverBackground;
+}
+
+.placeholder{
+      font-size: 12px;
+      font-weight: 100;
+      font-family: Arial;
+      color: rgb(117,117,117);
+}
+
+.color-dot {
+      height: 40px;
+      width: 40px;
+      background-color: #bbb;
+      border-radius: 50%;
+}
+
+.color-dot .mat-icon{
+      color: #FFF;
+      position: absolute;
+      left: 10px;
+      top: 8.25px;
+}
+
+/*#endregion Form*/
+
+/*#endregion CommonComponents*/

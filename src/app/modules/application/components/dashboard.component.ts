@@ -11,7 +11,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class DashboardComponent{
 
     //#region Properties  
-    
+    selected: boolean;
     //#endregion
 
     //#region FormControls
@@ -21,7 +21,7 @@ export class DashboardComponent{
     //#region Constructor
 
     constructor(private router: Router, public translate: TranslateService) {
-
+this.selected = false;
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
               (<any>window).ga('set', 'page', event.urlAfterRedirects);

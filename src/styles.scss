@@ -1,5 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/theming';
+@include mat-core();
+
+$theme-app-primary: mat-palette($mat-indigo, 900);
+$theme-app-accent:  mat-palette($mat-indigo, A200);
+$theme-app-warn:    mat-palette($mat-red);
+$app-theme: mat-light-theme($theme-app-primary, $theme-app-accent, $theme-app-warn);
+
+@include angular-material-theme($app-theme);
 
 /* No yellow background when autocomplete is used */
 input:-webkit-autofill {
@@ -9,4 +17,14 @@ input:-webkit-autofill {
 /* No border when click a button */
 button:focus{
     outline: 0;
+}
+
+/* Dialog with custom borders for forms, up to within content */
+.form-dialog-container .mat-dialog-container {
+    padding: 10px 20px;
+}
+
+/* Dialog with no borders, up to within content */
+.noborder-dialog-container .mat-dialog-container {
+    padding: 0px;
 }

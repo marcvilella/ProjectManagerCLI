@@ -1,9 +1,8 @@
-<!-- <div fxLayout="column" style="height: 100vh;">
-      <div fxFlex="50px" style="background: black; width: 100vw;"></div>
-            
-      <div fxFill style="background: red; width: 100vw;"></div>
-</div> -->
-<!-- 
-<button (click)="logOut()">CLick</button> -->
+<!-- <tr>USERS</tr>
 
+<tr *ngFor="let user of users | async">
+      <td>{{ user.name }}</td>
+</tr>
+
+<tr>ROUTER</tr> -->
 <router-outlet></router-outlet>

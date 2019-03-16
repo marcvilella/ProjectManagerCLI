@@ -93,16 +93,19 @@
 				"SortBy": "Ordenar por...",
 				"SortByOptions": {
 					"CardName": "Nombre de la tarjeta (Alfabéticamente)",
+					"DateCreatedA": "Fecha de creación (Ascendente)",
 					"DateCreatedD": "Fecha de creación (Descendiente)",
-					"DateCreatedA": "Fecha de creación (Ascendente)"
+					"DateModifiedA": "Fecha de modificación (Ascendente)",
+					"DateModifiedD": "Fecha de modificación (Descendiente)"
 				},
 				"MoveCards": "Mover todas las tarjetas de la lista...",
 				"ArchiveCards": "Archivar todas las tarjetas de la lista...",
 				"ArchiveCardsDialog": {
-					"Text": "This will remove all the cards in this list from the board. To view archived cards and bring them back to the board, click “Menu” > “Archived Items.”",
+					"Text": "Esta operación quitará del tablero todas las tarjetas de esta lista. Para visualizar tarjetas archivadas y devolverlas al tablero, haga clic en Menú > Elementos archivados.",
 					"Button": "Archivar todo"
 				},
-				"ArchiveList": "Archivar lista"
+				"ArchiveList": "Archivar esta lista",
+				"DeleteList": "Eliminar esta lista"
 			}
 		}
 	},

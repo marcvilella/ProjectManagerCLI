@@ -8,7 +8,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-import { LanguagesList } from '../../../shared/services/languages';
+import { LanguagesList } from '../../../shared/models/languages';
 import { AuthDialog } from './auth.dialog.component';
 
 @Component({

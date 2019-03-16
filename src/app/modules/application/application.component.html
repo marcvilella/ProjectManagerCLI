@@ -4,19 +4,73 @@
       <mat-icon svgIcon="list" class="header-icon"></mat-icon>
     </button>
 
+    <!-- Boads Menu -->
+    <div fxLayout="row">
+      <button mat-icon-button class="header-component-helper" [matMenuTriggerFor]="boardsMenu">
+        <mat-icon svgIcon="boards" class="header-icon"></mat-icon>
+        {{ 'APPLICATION.HUD.Boards' | translate }}
+      </button>
+      <mat-menu #boardsMenu="matMenu">
+        <div class="header-component-mat-content-menu-custom" (click)="$event.stopPropagation()">
+          <textarea matInput autoFocus spellcheck="false" class="textarea" placeholder="{{ 'APPLICATION.HUD.Boards-list.Find-hint' | translate }}"></textarea>       
+        </div>
+        <mat-accordion (click)="$event.stopPropagation()">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'">
+              <mat-panel-title class="header-component-mat-content-expander-title">
+                <mat-icon svgIcon="star" class="icon"></mat-icon>
+                {{ 'APPLICATION.HUD.Boards-list.Starred' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <tr *ngFor="let board of boards | async">
+              <td>{{ board.name }}</td>
+            </tr>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'">
+              <mat-panel-title class="header-component-mat-content-expander-title">
+                <mat-icon svgIcon="star" class="icon"></mat-icon>
+                {{ 'APPLICATION.HUD.Boards-list.Recent' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'">
+              <mat-panel-title class="header-component-mat-content-expander-title">
+                <mat-icon svgIcon="star" class="icon"></mat-icon>
+                {{ 'APPLICATION.HUD.Boards-list.Personal' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'">
+              <mat-panel-title class="header-component-mat-content-expander-title">
+                <mat-icon svgIcon="star" class="icon"></mat-icon>
+                {{ 'APPLICATION.HUD.Boards-list.Shared' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </mat-accordion>
+        
+        
+        <button mat-menu-item class="mat-menu-item" (click)="openDialog()">{{ 'APPLICATION.HUD.Boards-list.Create' | translate }}</button>
+      </mat-menu> 
+    </div>
+
+    <!-- User Menu -->
     <div fxLayout="row" class="header-user">
-        <button mat-icon-button class="button" [matMenuTriggerFor]="userMenu">
-            <ngx-avatar name="John Doe" size="30"></ngx-avatar>    
-        </button>
-        <mat-menu #userMenu="matMenu">
-          <span mat-menu-item disabled="true">John Doe</span>
-          <mat-divider></mat-divider>
-          <button mat-menu-item class="mat-menu-item" [routerLink]="['./profile']">{{ 'APPLICATION.HUD.Profile' | translate }}</button>
-          <button mat-menu-item class="mat-menu-item" [routerLink]="['./activity']">{{ 'APPLICATION.HUD.Activity' | translate }}</button>
-          <button mat-menu-item class="mat-menu-item" [routerLink]="['./projects']">{{ 'APPLICATION.HUD.Projects' | translate }}</button>
-          <mat-divider></mat-divider>
-          <button mat-menu-item class="mat-menu-item" (click)="logOut()">{{ 'APPLICATION.HUD.LogOut' | translate }}</button>
-        </mat-menu> 
+      <button mat-icon-button class="button" [matMenuTriggerFor]="userMenu">
+          <ngx-avatar name="{{user.name}} {{user.surname}}" size="30"></ngx-avatar>    
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <span mat-menu-item disabled="true">{{user.name}} {{user.surname}}</span>
+        <mat-divider></mat-divider>
+        <button mat-menu-item class="mat-menu-item" [routerLink]="['./profile']">{{ 'APPLICATION.HUD.Profile' | translate }}</button>
+        <button mat-menu-item class="mat-menu-item" [routerLink]="['./activity']">{{ 'APPLICATION.HUD.Activity' | translate }}</button>
+        <button mat-menu-item class="mat-menu-item" [routerLink]="['./projects']">{{ 'APPLICATION.HUD.Projects' | translate }}</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item class="mat-menu-item" (click)="logOut()">{{ 'APPLICATION.HUD.LogOut' | translate }}</button>
+      </mat-menu> 
     </div>
   </mat-toolbar>
 
@@ -60,6 +114,13 @@
     </mat-sidenav> 
 
     <mat-sidenav-content fxFlex="auto">
+      <tr *ngFor="let board of boards$ | async">
+        <td>{{ board.name }}</td>
+      </tr>
+      <tr *ngFor="let user of users$ | async">
+        <td>{{ user.name }}</td>
+      </tr>
+
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
