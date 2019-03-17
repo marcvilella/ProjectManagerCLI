@@ -3,14 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ApplicationComponent } from './application.component';
 import { DashboardComponent } from './components/dashboard.component';
-import { BoardComponent } from './components/board.component';
+import { BoardContainerComponent } from './components/board-components/board-container/board.container';
 
 
 const applicationRoutes: Routes = [
     {path: '', component: ApplicationComponent, children: [
         {path: '', component: DashboardComponent},
         {path: 'dashboard', redirectTo: '',  pathMatch: 'full'},
-        {path: 'board', component: BoardComponent}
+        {path: 'board', component: BoardContainerComponent}
     ]},
     {path: '', redirectTo: '', pathMatch: 'full'}
 ];

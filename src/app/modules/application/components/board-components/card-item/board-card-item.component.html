@@ -1,0 +1,8 @@
+<mat-card class="card-item" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)">
+      <mat-card-content fxLayout="row">
+            <span class="title">{{card.name}}</span>
+            <div class="edit" *ngIf="showEditable">
+                  <mat-icon mat-icon-button svgIcon="edit" class="edit-icon"></mat-icon> 
+            </div>
+      </mat-card-content>
+</mat-card>      

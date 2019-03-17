@@ -31,8 +31,8 @@ export class BoardsService {
     return this.getBoardsSuccess$;
   }
 
-  getBoard() {
-    this.socket.emit(EBoardActions.GetBoard);
+  getBoard(id: number) {
+    this.socket.emit(EBoardActions.GetBoard, id);
     return this.getBoardSuccess$;
   }
 

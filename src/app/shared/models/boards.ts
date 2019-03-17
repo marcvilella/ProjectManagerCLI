@@ -50,6 +50,8 @@ export class BoardSettings implements IBoardSettings{
       color: IColor;
       group: IUser[];
       users: IUser[];
+      colorLight: string;
+      colorDark: string;
 
       userSettings: BoardSettingsUser;
       
@@ -67,8 +69,9 @@ export class BoardSettings implements IBoardSettings{
 
 export interface IBoardSettings{
       
-      mode: string;
-      color: IColor;
+      mode: string; 
+      colorLight: string;
+      colorDark: string;
       group: IUser[];
       users: IUser[];
 
@@ -96,15 +99,13 @@ export interface IBoardSettingsUser{
 
 //#region List of Cards
 
-export class CardList implements ICardsList{
+export class CardList implements ICardList{
       id: number;
       name: string;
       cards: Array<Card>;
       createdOn: Date;
       modifiedOn: Date;
       version: number;
-      isListEditable: boolean;
-      isCardAddible: boolean;
 
       constructor(name: string, cards: Array<Card> = new Array<Card>()){
             //this.id = 0;
@@ -114,8 +115,6 @@ export class CardList implements ICardsList{
             this.createdOn = new Date();
             this.modifiedOn = new Date();
             this.version = 1;
-            this.isListEditable = false;
-            this.isCardAddible = false;
       }
 
       public sortBy(option:number): void{
@@ -172,14 +171,12 @@ export class CardList implements ICardsList{
       }
 }
 
-export interface ICardsList{
+export interface ICardList{
       id: number;
       name: string;
       cards: Array<Card>;
       createdOn: Date;
       modifiedOn: Date;
-      isListEditable: boolean;
-      isCardAddible: boolean;
 
       sortBy(option: number): void;
 }

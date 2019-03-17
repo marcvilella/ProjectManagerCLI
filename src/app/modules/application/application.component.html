@@ -22,8 +22,8 @@
                 {{ 'APPLICATION.HUD.Boards-list.Starred' | translate }}
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <tr *ngFor="let board of boards | async">
-              <td>{{ board.name }}</td>
+            <tr *ngFor="let board of boards$ | async">
+              <button (click)="selectBoard(board)">{{ board.name }}</button>
             </tr>
           </mat-expansion-panel>
           <mat-expansion-panel>
@@ -114,13 +114,6 @@
     </mat-sidenav> 
 
     <mat-sidenav-content fxFlex="auto">
-      <tr *ngFor="let board of boards$ | async">
-        <td>{{ board.name }}</td>
-      </tr>
-      <tr *ngFor="let user of users$ | async">
-        <td>{{ user.name }}</td>
-      </tr>
-
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

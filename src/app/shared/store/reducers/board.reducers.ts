@@ -6,16 +6,19 @@ export function boardReducers (
       action : BoardActions
 ): IBoardState {
       switch(action.type){
-            case EBoardActions.GetBoardSuccess: {
-                  return {
-                        ...state,
-                        selectedBoard: action.payload
-                  };
-            }
             case EBoardActions.GetBoardsSuccess: {
                   return {
                         ...state,
                         boards: action.payload
+                  };
+            }
+            case EBoardActions.GetBoardSuccess: {
+                  return {
+                        ...state,
+                        boards: state.boards.map(
+                              board => board._id === action.payload._id ? action.payload : board
+                        ),
+                        selectedBoard: action.payload
                   };
             }
             case EBoardActions.AddBoardSuccess: {

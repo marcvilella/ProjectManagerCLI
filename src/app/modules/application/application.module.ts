@@ -25,6 +25,9 @@ import { ApplicationComponent } from './application.component';
 import { DashboardComponent } from './components/dashboard.component';
 import { BoardComponent } from './components/board.component';
 import { BoardCreateDialog, BoardCardDialog, BoardCreateDataService } from './components/board.create.component';
+import { BoardContainerComponent } from './components/board-components/board-container/board.container';
+import { BoardCardListComponent } from './components/board-components/card-list/board-card-list.component'
+import { BoardCardItemComponent } from './components/board-components/card-item/board-card-item.component'
 
 //Directives
 import { AutoFocusDirective, ClickOutsideDirective, ClickInsideDirective, AutoSizeInputDirective } from 'src/app/shared/modules/directives';
@@ -32,14 +35,23 @@ import { AutoFocusDirective, ClickOutsideDirective, ClickInsideDirective, AutoSi
 import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
 
 
+
 @NgModule({
   declarations: [
     ApplicationComponent,
     DashboardComponent,
+
+    //#region Board
+
     BoardComponent,
     BoardCreateDialog,
     BoardCardDialog,
-        
+    BoardContainerComponent,
+    BoardCardListComponent,
+    BoardCardItemComponent,    
+
+    //#endregion Board
+
     //Directives
     AutoFocusDirective,
     ClickOutsideDirective,

@@ -21,21 +21,17 @@ import { BoardsService } from '../../services/boards.service';
 export class BoardEffects {
       
       @Effect()
-      getBoard$: Observable<Action> = this._actions$.pipe(
-            ofType<GetBoard>(EBoardActions.GetBoard),
-            map(action => action.payload),
-            withLatestFrom(this._store.pipe(select(selectBoardList))),
-            switchMap(([id, boards]) => {
-                  let selectedBoard = boards.filter(board => board._id === +id)[0];
-                  return of(new GetBoardSuccess(selectedBoard));
-            })
-      );
-
-      @Effect()
       getBoards$: Observable<Action> = this._actions$.pipe(
             ofType<GetBoards>(EBoardActions.GetBoards),
             switchMap(() => this._boardsService.getBoards()),
             switchMap((boards: IBoard[]) => of(new GetBoardsSuccess(boards)))
+      );
+
+      @Effect()
+      getBoard$: Observable<Action> = this._actions$.pipe(
+            ofType<GetBoard>(EBoardActions.GetBoard),
+            switchMap(action => this._boardsService.getBoard(action.payload)),
+            switchMap((board: IBoard) => of(new GetBoardSuccess(board)))
       );
 
       @Effect()

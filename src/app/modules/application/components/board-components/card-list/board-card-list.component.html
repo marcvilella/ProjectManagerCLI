@@ -1,0 +1,65 @@
+
+<mat-card class="card-list">
+      <mat-card-actions fxLayout="column">
+            <!-- Title Bar -->
+            <div fxLayout="row">
+                  <div *ngIf="!isListTitleEditable" class="label" (click)="ChangeListTitleState()" cdkDragHandle>{{list.name}}</div>
+                  <input *ngIf="isListTitleEditable" spellcheck="false" class="textarea" [formControl]="listTitleFormControl" (blur)="updateListName(listIndex)" autoFocus>
+                  <div class="edit" cdkDragHandle>
+                        <mat-icon mat-icon-button svgIcon="menu" class="edit-icon" [matMenuTriggerFor]="listActions"></mat-icon> 
+                  </div>
+                  <mat-menu #listActions="matMenu">
+                        <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.CopyList' | translate }}</button>
+                        <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.MoveList' | translate }}</button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item class="mat-menu-item" [matMenuTriggerFor]="sortOptions">{{ 'APPLICATION.Boards.ListActions.SortBy' | translate }}</button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item class="mat-menu-item" [matMenuTriggerFor]="moveOptions">{{ 'APPLICATION.Boards.ListActions.MoveCards' | translate }}</button>
+                        <button mat-menu-item class="mat-menu-item" [matMenuTriggerFor]="archiveCardsConfirmation">{{ 'APPLICATION.Boards.ListActions.ArchiveCards' | translate }}</button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.ArchiveList' | translate }}</button>
+                        <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.DeleteList' | translate }}</button>
+                  </mat-menu> 
+                  <mat-menu #sortOptions="matMenu">
+                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(0)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.CardName' | translate }}</button>
+                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(1)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedA' | translate }}</button>
+                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(2)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedD' | translate }}</button>
+                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(3)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedA' | translate }}</button>
+                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(4)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedD' | translate }}</button>
+                  </mat-menu>
+                  <mat-menu #moveOptions="matMenu">
+                        <div *ngFor="let movingItem of listTracker; index as moveIndex">
+                              <button mat-menu-item class="mat-menu-item" *ngIf="movingItem != list.name" (click)="moveListTo(listIndex, moveIndex)">{{movingItem}}</button>
+                        </div>
+                  </mat-menu>
+                  <mat-menu #archiveCardsConfirmation="matMenu">
+                        <div class="mat-content-menu-custom">
+                              <div (click)="$event.stopPropagation()" class="mat-menu-text">{{ 'APPLICATION.Boards.ListActions.ArchiveCardsDialog.Text' | translate }}</div>
+                              <button mat-raised-button color="warn" class="mat-menu-button">{{ 'APPLICATION.Boards.ListActions.ArchiveCardsDialog.Button' | translate }}</button>
+                        </div>
+                  </mat-menu>
+            </div>
+            <!-- Cards -->
+            <div style="min-height: 10px;" cdkDropList [id]="list.name" [cdkDropListData]="list.cards" [cdkDropListConnectedTo]="listTracker" (cdkDropListDropped)="dropCard($event)">
+                  <div *ngFor="let card of list.cards; index as itemIndex" class="card-item-space" cdkDrag>
+                        <board-card-item [card]="card" [index]="itemIndex"></board-card-item>                              
+                  </div>
+            </div>
+            <!-- Add Card -->
+            <div class="card-item-space">
+                  <mat-card class="add-card-item" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)" (clickOutside)="isNewCardAddible = false;">
+                        <mat-card-content (clickInside)="isNewCardAddible = true;">
+                              <div fxLayout="row" *ngIf="!isNewCardAddible">
+                                    <mat-icon mat-icon-button svgIcon="add" class="edit-icon"></mat-icon>
+                                    <div class="label">{{ 'APPLICATION.Boards.AddCard' | translate }}</div>
+                              </div>
+                              <div *ngIf="isNewCardAddible">
+                                    <textarea matInput spellcheck="false" class="textarea" [formControl]="newCardFormControl" placeholder="{{ 'APPLICATION.Boards.AddList-input' | translate }}" autoFocus>{{newTitle}}</textarea>
+                                    <button mat-raised-button color="primary" class="button" disabled="{{!newCardFormControl.valid}}" (click)="newCard()">Add</button>
+                                    <button mat-raised-button color="warn" class="button" (click)="cancelCard(listIndex);$event.stopPropagation()">Cancel</button>
+                              </div>
+                        </mat-card-content>
+                  </mat-card>  
+            </div>
+      </mat-card-actions>
+</mat-card>

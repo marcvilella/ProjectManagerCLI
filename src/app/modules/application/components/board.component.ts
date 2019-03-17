@@ -1,77 +1,48 @@
-import { Component, Renderer2 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { FormControl, Validators, FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import { moveItemInArray, CdkDragDrop} from '@angular/cdk/drag-drop';
+import { Store, select } from '@ngrx/store';
 
-import { moveItemInArray, transferArrayItem, CdkDragDrop} from '@angular/cdk/drag-drop';
-import { CardList, Card, Board } from 'src/app/shared/models/boards';
-import { ComponentSocketService } from 'src/app/shared/services/component.socket.service';
+import { CardList, Card, Board, IBoard } from 'src/app/shared/models/boards';
+import { IAppState } from 'src/app/shared/store/state/app.state';
+
 
 @Component({
     selector: 'board',
     templateUrl: '../views/board.html',
-    styleUrls: ['../application.component.scss', '../../../app.component.scss'], 
+    styleUrls: ['../styles/board.component.scss', '../../../app.component.scss'], 
 })
 export class BoardComponent{
 
     //#region Properties  
+
+    @Input() board: IBoard;
+
     settings: boolean;
 
     isBoardTitleEditable: boolean;
-    isTitleEditable: boolean;
-    isNewTitleEditable:boolean;
-
-    CurrentItem: number;
-    CurrentList: number;
-
-    board: Board;
+    isNewCardListAddible: boolean;
 
     //#endregion
 
     //#region FormControls
     boardTitleForm: FormControl;
-    listsTitleForm: FormGroup;
-    newTitleFormControl: FormControl;
-    newCardFormControl: FormControl;
+    newCardListFormControl: FormControl;
     //#endregion
     
     //#region Constructor
     
     constructor(
         private router: Router, 
-        public translate: TranslateService, 
-        private renderer2: Renderer2, 
-        private formBuilder: FormBuilder) 
-        //private socketService: ComponentSocketService) 
+        private _store: Store<IAppState>) 
         {
             this.settings = false;
             this.isBoardTitleEditable = false;
-            this.isTitleEditable = false;
-            this.isNewTitleEditable = false;
+            this.isNewCardListAddible = false;
 
-            this.listsTitleForm= this.formBuilder.group({
-                lists: this.formBuilder.array([])
-            });
-
-            this.testingCreate();
-
-            this.boardTitleForm = new FormControl(this.board.name, Validators.required);
-            this.newTitleFormControl = new FormControl('', Validators.required);
-            this.newCardFormControl = new FormControl('', Validators.required);
-
-            
-            
-            // this.socketService.initSocket();
-
-            // this.socketService.onMessage('message1').subscribe((message: any) => {
-            //     console.log(message)
-            //     this.board.lists[0].cards.push(new Card('1'));
-            // });
-
-            // this.socketService.onMessage('message2').subscribe((message: any) => {
-            //     console.log(message)
-            //     this.board.lists[0].cards.push(new Card('2'));
-            // });
+            this.boardTitleForm = new FormControl('', Validators.required);
+            this.newCardListFormControl = new FormControl('', Validators.required);
 
             this.router.events.subscribe(event => {
                 if (event instanceof NavigationEnd) {
@@ -85,6 +56,11 @@ export class BoardComponent{
 
     //#region Board
 
+    changeBoardTitleState(){
+        this.boardTitleForm.setValue(this.board.name);
+        this.isBoardTitleEditable = true;
+    }
+
     updateBoardName(): void{
         this.isBoardTitleEditable = false;
         if(this.boardTitleForm.valid)
@@ -97,89 +73,22 @@ export class BoardComponent{
 
     addibleListHandler(show: boolean): void{
         if(show)
-            this.isNewTitleEditable = true;
+            this.isNewCardListAddible = true;
         else
-            this.isNewTitleEditable = false;
+            this.isNewCardListAddible = false;
     }
 
     newCardList(): void {
-        this.board.lists.push(new CardList(this.newTitleFormControl.value));
+        this.board.lists.push(new CardList(this.newCardListFormControl.value));
 
-        let listsArray =  <FormArray>this.listsTitleForm.controls['lists'];
-        listsArray.push(this.formBuilder.group({
-            name: [this.newTitleFormControl.value, [Validators.required]]
-        }));
-
-        this.newTitleFormControl.reset();
+        this.newCardListFormControl.reset();
     }
 
-    updateListName(index: number): void{
-        this.board.lists[index].isListEditable = false;
-        let newTitleFormControl = <FormControl>(<FormGroup>(<FormArray>this.listsTitleForm.controls['lists']).controls[index]).controls['name'];
-        if(newTitleFormControl.valid)
-            this.board.lists[index].name = newTitleFormControl.value;
-    }
-
-    removeListCard(index: number): void {
-        let listsArray = <FormArray>this.listsTitleForm.controls['lists'];
-        if (listsArray.length > 1) {
-            listsArray.removeAt(index);
-        }
-    }
-
-    moveListTo(currentIndex: number, index: number): void{
-        this.board.lists[currentIndex].cards.forEach((card) => {
-            this.board.lists[index].cards.push(card);
-        });
-        this.board.lists[currentIndex].cards = new Array<Card>();
-    }
-
-    //#endregion
-
-    //#region Cards
-
-    addibleCardHandler(show: boolean, index: number): void{
-        if(show){
-            this.board.lists[index].isCardAddible = true;
-        }
-        else{
-            this.board.lists[index].isCardAddible = false;
-            if(this.newCardFormControl.valid)
-                this.newCard(this.board.lists.findIndex(m => m.isCardAddible == true));
-            else
-                this.newCardFormControl.reset();
-        }
-    }
     
-    newCard(index: number): void {
-        this.board.lists[index].cards.push(new Card(this.newCardFormControl.value));
-        
-        this.newCardFormControl.reset();
-        this.board.lists[index].isCardAddible = false;
-    }
-
-    cancelCard(index: number): void{
-        this.board.lists[index].isCardAddible = false;
-        this.newCardFormControl.reset();
-    }
 
     //#endregion
 
     //#region Drag and Drop
-
-    cardenter (event: MouseEvent, indexList: number, indexItem: number): void {
-        this.CurrentList = indexList;
-        this.CurrentItem = indexItem;
-        this.renderer2.addClass(event.target, 'mat-elevation-z5');
-        this.renderer2.setStyle(event.target, 'background', 'rgb(224, 224, 224)') 
-    }
-
-    cardleave (event: MouseEvent): void {
-       this.CurrentList = -1;
-       this.CurrentItem = -1;
-       this.renderer2.removeClass(event.target, 'mat-elevation-z5')
-       this.renderer2.removeStyle(event.target, 'background')
-    }
 
     get trackCardListNames(): string[] {
         return this.board.lists.map(cardlist => cardlist.name);
@@ -188,17 +97,6 @@ export class BoardComponent{
     drop(event: CdkDragDrop<CardList[]>): void {
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        }
-    }
-
-    dropCard(event: CdkDragDrop<Card[]>): void {
-        if (event.previousContainer === event.container) {
-            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        } else {
-            transferArrayItem(event.previousContainer.data,
-                            event.container.data,
-                            event.previousIndex,
-                            event.currentIndex);
         }
     }
 
@@ -220,16 +118,5 @@ export class BoardComponent{
         this.board.addCardList(new CardList('TODO', array));
         this.board.addCardList(new CardList('Done', array2));
         this.board.addCardList(new CardList('Perfect', array3));
-
-        let listsArray=  <FormArray>this.listsTitleForm.controls['lists'];
-        listsArray.push(this.formBuilder.group({
-            name: ['TODO', [Validators.required]]
-        }));
-        listsArray.push(this.formBuilder.group({
-            name: ['Done', [Validators.required]]
-        }));
-        listsArray.push(this.formBuilder.group({
-            name: ['Perfect', [Validators.required]]
-        }));
     }
 }

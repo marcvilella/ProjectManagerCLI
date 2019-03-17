@@ -73,7 +73,7 @@ export class ApplicationComponent {
 
       this._store.dispatch(new GetUsers());
       this._store.dispatch(new GetBoards());
-      
+      this._store.dispatch(new GetBoard(Number('xxx')));
 
       //#region SVG 
       iconRegistry.addSvgIcon(
@@ -175,6 +175,11 @@ export class ApplicationComponent {
       position: {top: '40px'},
       panelClass: 'form-dialog-container',
     });
+  }
+
+  selectBoard(board: IBoard): void{
+    console.log(board);
+    this._store.dispatch(new GetBoard(board._id));
   }
 
   logOut(){

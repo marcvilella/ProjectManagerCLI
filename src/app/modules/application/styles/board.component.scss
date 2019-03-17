@@ -1,0 +1,349 @@
+/*#region Member*/
+
+$toolbarheight: 40px;
+$applicationColor: rgb(26, 35, 126);
+$beforeHoverBackground: rgb(235, 235, 235);
+$beforeHoverBorder: rgb(210, 210, 210);
+$hoverBackground: rgb(224, 224, 224);
+
+/*#endregion Member*/
+
+/*#region Board Window*/
+
+.application-child{
+      height: calc(100vh - #{$toolbarheight});
+      background: rgb(88, 166, 255);
+}
+
+.container{
+      padding-top: 5px;
+}
+
+.board-column{
+      height: fit-content;
+      padding-left: 5px;
+      padding-right: 5px;
+}
+
+.add-card-list{
+      cursor: pointer; 
+      padding-top: 0px; 
+      overflow: hidden;
+}
+
+.add-card-list .label{
+      width: 280px;
+      padding-left: 4px;
+      margin-top: 2px; 
+      user-select: none;
+}
+
+.add-card-list .textarea{
+      margin-left: 3px;
+      padding-left: 6px;
+      width: 266px;
+      height: 27px;
+      border: transparent;
+      resize: none;
+      overflow: hidden;
+}
+
+.add-card-list .button{
+      width: 44%;
+      margin-top: 7px;
+}
+
+/*#endregion Board Window*/
+
+/*#region Toolbar*/
+
+.toolbar{
+      height: $toolbarheight;
+      color: white;
+}
+
+.toolbar .item{
+      margin: auto 4px;
+}
+
+.toolbar .list-label{
+      cursor: pointer;
+      width: fit-content;
+      max-width: 500px;
+      padding-left: 5px;
+      padding-right: 9px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+}
+
+.toolbar .list-label:hover{
+      background: red;
+}
+
+.toolbar .list-textarea{
+      height: 32px;
+      padding-left: 4px;
+      
+}
+
+.toolbar .button-icon{
+      line-height: normal;
+}
+
+/*#endregion Toolbar*/
+
+/*#region Card List Component*/
+
+.card-list{
+      padding-top: 0px; 
+      padding-bottom: 5px; 
+      overflow: hidden;
+}
+
+.card-list .label{
+      cursor: pointer; 
+      height: 27px;
+      width: 245px;
+      margin-left: 0px;
+      margin-top: 2px; 
+      margin-bottom: 4px; 
+      padding-left: 3px;
+      user-select: none;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+}
+
+.card-list .textarea{
+      width: 245px;
+      height: 26px;
+      margin-left: 0px;
+      margin-bottom: 7px; 
+      padding-left: 3px;
+      padding-bottom: 0px; 
+      font-weight: bold;
+      border: transparent;
+      overflow: hidden;
+}
+
+.card-list .edit{
+      cursor: pointer; 
+      position: absolute;
+      right: 10px;
+      width: 24px; 
+      height: 24px;
+      align-items: center;
+      opacity: 0.7;
+}
+
+.card-list .edit:hover{
+      border-radius: 10px;
+      background: lightgray;
+      opacity: 0.9;
+}
+
+.card-list .card-item-space{
+      padding-top: 3px;
+      padding-bottom: 3px;
+}
+
+.add-card-item{
+      cursor: pointer; 
+      padding-top: 10px;
+      padding-bottom: 12px;
+      margin-left: -10px;
+      margin-right: -10px;
+}
+
+.add-card-item .textarea{
+      padding-left: 8px;
+      width: 265px;
+      border: transparent;
+      resize: inherit;
+      overflow: hidden;
+}
+
+.add-card-item .button{
+      display: inline-block;
+      width: 46%;
+      margin-top: 7px;
+      margin-left: 5px;
+      margin-right: 5px;     
+}
+
+/*#endregion Card List Component*/
+
+/*#region Card Item Component*/
+
+.card-item{
+      cursor: pointer; 
+      padding-top: 5px;
+      padding-bottom: 5px;
+}
+
+.card-item .title{
+      max-width: 250px;
+      overflow-wrap: break-word;
+}
+
+.card-item .edit{
+      position: absolute;
+      right: 10px;
+      width: 24px; 
+      height: 24px;
+      align-items: center;
+      opacity: 0.7;
+}
+
+.card-item .edit:hover{
+      border-radius: 10px;
+      background: lightgray;
+      opacity: 0.9;
+}
+
+/*#endregion Card Item Component*/
+
+/*#region Create Board*/
+
+/*#region Form*/
+
+.select-option{
+      height: auto !important;
+      padding-top: 5px;      
+      padding-bottom: 8px;
+}
+
+.select-option .title{
+      font-weight: 700;
+      font-size: 16px; 
+      line-height: 25px;
+}
+
+.select-option .description{
+      font-size: 12px; 
+      line-height: 14px;
+}
+
+.grid-element{
+      cursor: pointer;
+}
+
+.grid-element:hover{
+      background: $hoverBackground;
+}
+
+.placeholder{
+      font-size: 12px;
+      font-weight: 100;
+      font-family: Arial;
+      color: rgb(117,117,117);
+}
+
+.color-dot {
+      height: 40px;
+      width: 40px;
+      background-color: #bbb;
+      border-radius: 50%;
+}
+
+.color-dot .mat-icon{
+      color: #FFF;
+      position: absolute;
+      left: 10px;
+      top: 8.25px;
+}
+
+/*#endregion Form*/
+
+/*#region Overlay*/
+
+.create-board .title{
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+}
+
+.create-board .form{
+      margin-top: 10px;
+}
+
+.create-board .button{
+      width: 100%; 
+}
+
+.create-board .darkComponent{
+      padding: 10px; 
+      padding-bottom: 12px;
+}
+
+.create-board .lightComponent{
+      padding: 10px; 
+      min-width:150px;
+}
+
+/*#endregion Overlay*/
+
+/*#endregion Create Board*/
+
+/*#region CommonComponents*/
+
+.edit-icon{
+      margin-left: 4px; 
+      width: 16px; 
+}
+
+/*#region Menu*/
+
+.mat-content-menu-custom {
+      padding-left: 8px;
+      padding-right: 8px;
+}
+
+.mat-content-menu-custom .mat-menu-text{
+      text-align: justify;
+      font-size: 0.85rem;
+      padding-bottom: 8px;
+}
+
+.mat-content-menu-custom .mat-menu-button{
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+}
+
+.mat-menu-item {
+      line-height: 35px;
+      height: auto;
+}
+
+/*#endregion Menu*/
+
+/*#region Drag and Drop*/
+
+.cdk-drag-preview {
+      box-sizing: border-box;
+      border-radius: 4px;
+}
+
+.cdk-drag-placeholder {
+      opacity: 0;
+}
+    
+.cdk-drag-animating {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .board-subitem:not(.cdk-drag-placeholder) {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+      background: #ccc;
+      border: dotted 1px #999;
+      transition: transform 500ms ease;
+}
+
+/*#endregion Drag and Drop*/
+
+/*#endregion CommonComponents*/
+

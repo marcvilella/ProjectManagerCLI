@@ -7,14 +7,13 @@ import { FormControl } from '@angular/forms';
 import { IAppState } from 'src/app/shared/store/state/app.state';
 import { IColor, Colors } from '../../../shared/models/colors';
 import { AddBoard } from 'src/app/shared/store/actions/board.actions';
-import { IBoard } from 'src/app/shared/models/boards';
 import { IUser } from 'src/app/shared/models/user';
 import { selectSelectedUser } from 'src/app/shared/store/selectors/user.selectors';
 
 @Component({
     selector: 'board-create',
     templateUrl: '../views/board.create.html',
-    styleUrls: ['../application.component.scss']
+    styleUrls: ['../styles/board.component.scss']
 })
 export class BoardCreateDialog {
 
@@ -113,7 +112,7 @@ export class BoardCreateDialog {
       {{title}}
     </div> 
   </div>`,
-  styleUrls: ['../application.component.scss']
+  styleUrls: ['../styles/board.component.scss']
 })
 export class BoardCardDialog {
 
