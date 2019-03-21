@@ -26,6 +26,7 @@ import { UserEffects } from './shared/store/effects/user.effects';
 import { BoardEffects } from './shared/store/effects/board.effects';
 import { BoardsService } from './shared/services/boards.service';
 import { SocketService } from './shared/services/socket.service';
+import { UsersService } from './shared/services/users.service';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -55,7 +56,7 @@ export function tokenGetter() {
       maxAge: 25, // Retains last 25 states
     }) : []
   ],
-  providers: [AuthService, AuthGuard, BoardsService, SocketService],
+  providers: [AuthService, AuthGuard, UsersService, BoardsService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

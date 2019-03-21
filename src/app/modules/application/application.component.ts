@@ -12,14 +12,16 @@ import { TranslateService } from '@ngx-translate/core';
 
 //
 import { IAppState } from '../../shared/store/state/app.state';
-import { GetUsers } from '../../shared/store/actions/user.actions';
-import { selectUserList } from '../../shared/store/selectors/user.selectors';
+import { GetCurrentUser } from '../../shared/store/actions/user.actions';
+import { selectAllUsersItems } from '../../shared/store/selectors/user.selectors';
 import { User, IUser } from '../../shared/models/user' 
 import { BoardCreateDialog } from './components/board.create.component';
-import { selectBoardList, selectSelectedBoard } from 'src/app/shared/store/selectors/board.selectors';
+import { selectAllBoardsItems } from 'src/app/shared/store/selectors/board.selectors';
 import { GetBoards, GetBoard } from 'src/app/shared/store/actions/board.actions';
 import { IBoard } from 'src/app/shared/models/boards';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'application-root',
@@ -46,6 +48,13 @@ export class ApplicationComponent {
 
   users$: Observable<IUser[]>;
   boards$: Observable<IBoard[]>;
+  boardsRecent$: Observable<IBoard[]>;
+  boardsStarred$: Observable<IBoard[]>;
+  boardsPersonal$: Observable<IBoard[]>;
+  boardsShared$: Observable<IBoard[]>;
+
+  boardSearcher: FormControl;
+
   isExpanded: boolean;
   element: HTMLElement;
   user: User;
@@ -68,12 +77,14 @@ export class ApplicationComponent {
         this.router.navigate(['../auth/log-in']);
       this.user = new User(decoded.sub, decoded.name, decoded.surname, decoded.name + ' ' + decoded.surname, decoded.email, '', decoded.role, '');
 
-      this.users$ = this._store.pipe(select(selectUserList));
-      this.boards$ = this._store.pipe(select(selectBoardList));
+      this.boardSearcher = new FormControl('');
+      this.users$ = this._store.pipe(select(selectAllUsersItems));
+      this.boards$ = this._store.pipe(select(selectAllBoardsItems));
+      this.boardSearcherUpdated();
+      
 
-      this._store.dispatch(new GetUsers());
       this._store.dispatch(new GetBoards());
-      this._store.dispatch(new GetBoard(Number('xxx')));
+      this._store.dispatch(new GetCurrentUser());
 
       //#region SVG 
       iconRegistry.addSvgIcon(
@@ -148,6 +159,10 @@ export class ApplicationComponent {
         'add',
         sanitizer.bypassSecurityTrustResourceUrl('assets/svg/add-icon.svg')
       );
+      iconRegistry.addSvgIcon(
+        'archive',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/archive-icon.svg')
+      );
 
       //#endregion
 
@@ -171,15 +186,17 @@ export class ApplicationComponent {
   }
 
   openDialog(): void {
-    let newBoardDialog = this.dialog.open(BoardCreateDialog, {
+    this.dialog.open(BoardCreateDialog, {
       position: {top: '40px'},
-      panelClass: 'form-dialog-container',
+      panelClass: 'form-dialog-container'
     });
   }
 
-  selectBoard(board: IBoard): void{
-    console.log(board);
-    this._store.dispatch(new GetBoard(board._id));
+  boardSearcherUpdated(){
+    this.boardsStarred$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.starred && m.name.match(new RegExp(this.boardSearcher.value, 'i')))))
+    this.boardsRecent$ = this.boards$.pipe(map(boards => boards.filter(m => m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
+    this.boardsPersonal$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.mode == 'private' && m.name.match(new RegExp(this.boardSearcher.value, 'i')))))
+    this.boardsShared$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.mode == 'shared' && m.name.match(new RegExp(this.boardSearcher.value, 'i')))))
   }
 
   logOut(){

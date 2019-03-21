@@ -1,3 +1,5 @@
+import { IBoard } from './boards';
+
 export class User implements IUser{
     
     _id: number;
@@ -9,6 +11,7 @@ export class User implements IUser{
     password: string;
     role: string;
     image: string;
+    boards: IBoard[];
     
     constructor( id: number, name: string, surname: string, fullname: string, email: string, company: string, role: string, image: string){
         this._id = id;
@@ -31,5 +34,6 @@ export interface IUser{
     company: string,
     password: string,
     role: string,
-    image: string
+    image: string,
+    boards: IBoard[]
 }

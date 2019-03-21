@@ -26,6 +26,7 @@
     "@auth0/angular-jwt": "^2.1.0",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^7.3.0",
+    "@ngrx/entity": "^7.3.0",
     "@ngrx/router-store": "^7.3.0",
     "@ngrx/store": "^7.3.0",
     "@ngrx/store-devtools": "^7.3.0",
@@ -38,6 +39,7 @@
     "ngx-cookie-service": "^2.1.0",
     "rxjs": "~6.3.3",
     "socket.io-client": "^2.2.0",
+    "sweetalert": "^2.1.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.28"
   },

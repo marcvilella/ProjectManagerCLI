@@ -1,3 +1,5 @@
+/*#region Material Declaration*/
+
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
 @include mat-core();
@@ -9,6 +11,10 @@ $app-theme: mat-light-theme($theme-app-primary, $theme-app-accent, $theme-app-wa
 
 @include angular-material-theme($app-theme);
 
+/*#endregion */
+
+/*#region Custom Predefined Classes*/
+
 /* No yellow background when autocomplete is used */
 input:-webkit-autofill {
     box-shadow: 0 0 0px 1000px white inset;
@@ -19,6 +25,24 @@ button:focus{
     outline: 0;
 }
 
+div.mat-expansion-panel-body{
+    padding: 0px 10px 10px 10px;
+}
+
+button.mat-menu-item {
+    line-height: 35px;
+    height: auto;
+}
+
+// svg {
+//     overflow: hidden;
+//     vertical-align: unset;
+// }
+
+/*#endregion */
+
+/*#region Dialog Classes*/
+
 /* Dialog with custom borders for forms, up to within content */
 .form-dialog-container .mat-dialog-container {
     padding: 10px 20px;
@@ -28,3 +52,5 @@ button:focus{
 .noborder-dialog-container .mat-dialog-container {
     padding: 0px;
 }
+
+/*#endregion */

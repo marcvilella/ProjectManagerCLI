@@ -19,10 +19,6 @@ export class AuthService{
             this.url = Config.authUrl;
       }
 
-      getUsers(): Observable<IUser[]> {
-            return this.http.get<IUser[]>(this.url + 'getUsers');
-      }
-
       setToken(token: string) : boolean{
             if(!this.jwtHelper.isTokenExpired(token)){
                   localStorage.setItem('access_token', token);

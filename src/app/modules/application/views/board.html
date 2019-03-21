@@ -3,12 +3,12 @@
       <mat-toolbar fxFlex="40px" [style.background]="board.settings.colorDark" >
             <div fxLayout="row" class="toolbar">
                   <div class="item">
-                        <div *ngIf="!isBoardTitleEditable" class="list-label" (click)="changeBoardTitleState">{{board.name}}</div>
+                        <div *ngIf="!isBoardTitleEditable" class="list-label" (click)="changeBoardTitleState()">{{board.name}}</div>
                         <input *ngIf="isBoardTitleEditable" class="list-textarea" type="text" [formControl]="boardTitleForm" (blur)="updateBoardName()" [extraWidth]="10" [maxWidth]="500" spellcheck="false" autoFocus AutoSizeInput>
                   </div>
-                  <!-- <button mat-icon-button class="button-icon" (click)="board.settings.userSettings.starred = !board.settings.userSettings.starred">
-                        <animated-icon  [isChecked]="board.settings.userSettings.starred" [icons]="'star-border,star'"></animated-icon>
-                  </button> -->
+                  <button mat-icon-button class="button-icon" (click)="changeStarredStatus()">
+                        <animated-icon [isChecked]="board.settings.starred" [icons]="'star-border,star'"></animated-icon>
+                  </button>
             </div>
       </mat-toolbar>
 

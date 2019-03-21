@@ -9,14 +9,12 @@ export interface IAppState {
       socket: ISocketState;
       users: IUserState;
       boards: IBoardState;
-      // error: string;
 }
 
 export const initialAppState: IAppState = {
       socket: initialSocketState,
       users: initialUserState,
       boards: initialBoardState
-      // error: null
 }
 
 export function getInitialState(): IAppState{

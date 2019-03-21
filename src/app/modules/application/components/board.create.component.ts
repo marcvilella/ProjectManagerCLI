@@ -1,6 +1,8 @@
-import { Component, ChangeDetectorRef, Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
+import { Router, RouterEvent, NavigationStart } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+import { filter, tap, take } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 
@@ -8,7 +10,7 @@ import { IAppState } from 'src/app/shared/store/state/app.state';
 import { IColor, Colors } from '../../../shared/models/colors';
 import { AddBoard } from 'src/app/shared/store/actions/board.actions';
 import { IUser } from 'src/app/shared/models/user';
-import { selectSelectedUser } from 'src/app/shared/store/selectors/user.selectors';
+import { selectCurrentUser } from 'src/app/shared/store/selectors/user.selectors';
 
 @Component({
     selector: 'board-create',
@@ -30,12 +32,18 @@ export class BoardCreateDialog {
   //#region Constructor
 
   constructor(
-    public dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef,
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<BoardCreateDialog>,
+    private router: Router,
     private _store: Store<IAppState>,
     private boardData: BoardCreateDataService) {
 
-      
+      this.router.events.pipe(
+        filter((event: RouterEvent) => event instanceof NavigationStart),
+        tap(() => this.dialogRef.close()),
+        take(1),
+      ).subscribe();
+
       let board = this.dialog.open(BoardCardDialog, {
         position: {top: '370px'},
         panelClass: 'noborder-dialog-container',
@@ -43,11 +51,12 @@ export class BoardCreateDialog {
         autoFocus: false
       });
 
+    
       this.dialogRef.beforeClosed().subscribe(() => {
         board.close()
       })
 
-      this._store.pipe(select(selectSelectedUser)).subscribe((user: IUser) => this.user = user);
+      this._store.pipe(select(selectCurrentUser)).subscribe((user: IUser) => this.user = user);
       this.boardTitleFormControl = new FormControl('');
       this.privacyMode = 'private';
       this.listColors = Colors;
@@ -74,7 +83,6 @@ export class BoardCreateDialog {
   }
 
   modeChanged(): void{
-    this.changeDetectorRef.detectChanges();
     this.boardData.changeMode(this.privacyMode);
   }
 
@@ -91,8 +99,6 @@ export class BoardCreateDialog {
           users: users
         }
       };
-      
-      console.log(params)
 
       this._store.dispatch(new AddBoard(params));
     }
@@ -150,7 +156,10 @@ export class BoardCreateDataService {
   constructor() { }
 
   changeTitle(title: string) {
-    this.titleSource.next(title)
+    if(title === '')
+      this.titleSource.next('Board title...');
+    else
+      this.titleSource.next(title)
   }
 
   changeColor(color: IColor) {
@@ -158,10 +167,7 @@ export class BoardCreateDataService {
   }
 
   changeMode(mode: string) {
-    if(mode === '')
-      this.modeSource.next('Board title...');
-    else
-      this.modeSource.next(mode)
+    this.modeSource.next(mode)
   }
 
 }

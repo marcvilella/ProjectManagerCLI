@@ -6,6 +6,7 @@ import { Store, select } from '@ngrx/store';
 
 import { CardList, Card, Board, IBoard } from 'src/app/shared/models/boards';
 import { IAppState } from 'src/app/shared/store/state/app.state';
+import { GetBoard, UpdateBoard, UpdateBoardStarred } from 'src/app/shared/store/actions/board.actions';
 
 
 @Component({
@@ -62,9 +63,14 @@ export class BoardComponent{
     }
 
     updateBoardName(): void{
+        console.log('name: '+ this.board.name + '     form: ' + this.boardTitleForm.value)
         this.isBoardTitleEditable = false;
-        if(this.boardTitleForm.valid)
-            this.board.name = this.boardTitleForm.value;
+        if(this.boardTitleForm.valid && this.board.name != this.boardTitleForm.value)
+            this._store.dispatch(new UpdateBoard({id: this.board._id, name: this.boardTitleForm.value}));
+    }
+
+    changeStarredStatus(): void{
+        this._store.dispatch(new UpdateBoardStarred({id: this.board._id, starred: !this.board.settings.starred}));
     }
 
     //#endregion
@@ -81,10 +87,9 @@ export class BoardComponent{
     newCardList(): void {
         this.board.lists.push(new CardList(this.newCardListFormControl.value));
 
+        this.isNewCardListAddible = false;
         this.newCardListFormControl.reset();
     }
-
-    
 
     //#endregion
 

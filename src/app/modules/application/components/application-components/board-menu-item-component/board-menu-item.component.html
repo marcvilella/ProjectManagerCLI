@@ -1,0 +1,9 @@
+<mat-card class="board-item" [style.background]="board.settings.colorLight" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)" (click)="openBoard()">
+      <mat-card-content fxLayout="row">
+            <span class="title">{{board.name}}</span>
+            <div class="configuration" [style.background]="board.settings.colorDark" [@onConfigurationChange]="showConfiguration" (click)="$event.stopPropagation();">
+                  <mat-icon mat-icon-button svgIcon="archive" class="icon" (click)="archiveBoard()"></mat-icon>
+                  <animated-icon [isChecked]="board.settings.starred" [icons]="'star-border,star'" [styles]="stylesObj" (click)="changeStarredStatus()"></animated-icon>
+            </div>
+      </mat-card-content>
+</mat-card>      

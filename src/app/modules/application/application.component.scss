@@ -4,7 +4,7 @@ $hoverBackground: rgb(224, 224, 224);
 
 /*#region SideNav/Header */
 
-/*#region HeaderComponentBoards*/
+/*#region HeaderBoards*/
 
 .header-component-helper{
       width: auto;
@@ -46,7 +46,44 @@ $hoverBackground: rgb(224, 224, 224);
       left: 10px;
 }
 
-/*#endregion HeaderComponentBoards */
+.board-item{
+      cursor: pointer;
+      padding: 5px;
+      margin: 5px 0px;
+      overflow: hidden;
+}
+
+.board-item .title{
+      max-width: inherit;
+      overflow-wrap: break-word;
+}
+
+.board-item .configuration{
+      cursor: default;
+      position: absolute;
+      height: 100%;
+      top: 0px;
+      right: 0px;
+      padding: 0px 3px;
+      align-items: center;
+      opacity: 0.7;
+}
+
+.board-item .configuration .icon{
+      cursor: pointer;
+      transform: translateY(+25%);
+      margin: 0px 3px;
+      height: 18px; 
+      width: 18px;
+}
+
+.board-item .configuration .icon:hover{
+      border-radius: 14px;
+      background: lightgray;
+      opacity: 0.9;
+}
+
+/*#endregion*/
 
 /*#region HeaderUser*/
 
@@ -67,7 +104,7 @@ $hoverBackground: rgb(224, 224, 224);
       top: -11px;
 }
 
-/*#endregion HeaderUser*/
+/*#endregion*/
 
 /*#region LeftMenu*/
 
@@ -93,13 +130,9 @@ $hoverBackground: rgb(224, 224, 224);
       height: 24px !important;
 }
 
-/*#endregion SideNav/Header */
+/*#endregion*/
 
 /*#region Custom Menu*/
-
-.block-component{
-      display: block;
-}
 
 .mat-content-menu-custom {
       padding-left: 8px;
@@ -118,12 +151,7 @@ $hoverBackground: rgb(224, 224, 224);
       text-align: center;
 }
 
-.mat-menu-item {
-      line-height: 35px;
-      height: auto;
-}
-
-/*#endregion Custom Menu*/
+/*#endregion*/
 
 /*
 transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;

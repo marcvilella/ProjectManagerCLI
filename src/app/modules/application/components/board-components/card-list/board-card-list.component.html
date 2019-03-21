@@ -9,27 +9,27 @@
                         <mat-icon mat-icon-button svgIcon="menu" class="edit-icon" [matMenuTriggerFor]="listActions"></mat-icon> 
                   </div>
                   <mat-menu #listActions="matMenu">
-                        <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.CopyList' | translate }}</button>
-                        <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.MoveList' | translate }}</button>
+                        <button mat-menu-item>{{ 'APPLICATION.Boards.ListActions.CopyList' | translate }}</button>
+                        <button mat-menu-item>{{ 'APPLICATION.Boards.ListActions.MoveList' | translate }}</button>
                         <mat-divider></mat-divider>
-                        <button mat-menu-item class="mat-menu-item" [matMenuTriggerFor]="sortOptions">{{ 'APPLICATION.Boards.ListActions.SortBy' | translate }}</button>
+                        <button mat-menu-item [matMenuTriggerFor]="sortOptions">{{ 'APPLICATION.Boards.ListActions.SortBy' | translate }}</button>
                         <mat-divider></mat-divider>
-                        <button mat-menu-item class="mat-menu-item" [matMenuTriggerFor]="moveOptions">{{ 'APPLICATION.Boards.ListActions.MoveCards' | translate }}</button>
-                        <button mat-menu-item class="mat-menu-item" [matMenuTriggerFor]="archiveCardsConfirmation">{{ 'APPLICATION.Boards.ListActions.ArchiveCards' | translate }}</button>
+                        <button mat-menu-item [matMenuTriggerFor]="moveOptions">{{ 'APPLICATION.Boards.ListActions.MoveCards' | translate }}</button>
+                        <button mat-menu-item [matMenuTriggerFor]="archiveCardsConfirmation">{{ 'APPLICATION.Boards.ListActions.ArchiveCards' | translate }}</button>
                         <mat-divider></mat-divider>
-                        <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.ArchiveList' | translate }}</button>
-                        <button mat-menu-item class="mat-menu-item">{{ 'APPLICATION.Boards.ListActions.DeleteList' | translate }}</button>
+                        <button mat-menu-item>{{ 'APPLICATION.Boards.ListActions.ArchiveList' | translate }}</button>
+                        <button mat-menu-item>{{ 'APPLICATION.Boards.ListActions.DeleteList' | translate }}</button>
                   </mat-menu> 
                   <mat-menu #sortOptions="matMenu">
-                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(0)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.CardName' | translate }}</button>
-                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(1)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedA' | translate }}</button>
-                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(2)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedD' | translate }}</button>
-                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(3)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedA' | translate }}</button>
-                        <button mat-menu-item class="mat-menu-item" (click)="list.sortBy(4)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedD' | translate }}</button>
+                        <button mat-menu-item (click)="list.sortBy(0)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.CardName' | translate }}</button>
+                        <button mat-menu-item (click)="list.sortBy(1)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedA' | translate }}</button>
+                        <button mat-menu-item (click)="list.sortBy(2)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedD' | translate }}</button>
+                        <button mat-menu-item (click)="list.sortBy(3)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedA' | translate }}</button>
+                        <button mat-menu-item (click)="list.sortBy(4)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedD' | translate }}</button>
                   </mat-menu>
                   <mat-menu #moveOptions="matMenu">
                         <div *ngFor="let movingItem of listTracker; index as moveIndex">
-                              <button mat-menu-item class="mat-menu-item" *ngIf="movingItem != list.name" (click)="moveListTo(listIndex, moveIndex)">{{movingItem}}</button>
+                              <button mat-menu-item *ngIf="movingItem != list.name" (click)="moveListTo(listIndex, moveIndex)">{{movingItem}}</button>
                         </div>
                   </mat-menu>
                   <mat-menu #archiveCardsConfirmation="matMenu">

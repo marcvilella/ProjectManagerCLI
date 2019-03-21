@@ -182,6 +182,7 @@ $hoverBackground: rgb(224, 224, 224);
 }
 
 .card-item .title{
+      padding-left: 3px;
       max-width: 250px;
       overflow-wrap: break-word;
 }
@@ -206,6 +207,10 @@ $hoverBackground: rgb(224, 224, 224);
 /*#region Create Board*/
 
 /*#region Form*/
+
+.block-component{
+      display: block;
+}
 
 .select-option{
       height: auto !important;
@@ -279,6 +284,8 @@ $hoverBackground: rgb(224, 224, 224);
 .create-board .lightComponent{
       padding: 10px; 
       min-width:150px;
+      max-width: 300px;
+      overflow-wrap: break-word;
 }
 
 /*#endregion Overlay*/
@@ -309,11 +316,6 @@ $hoverBackground: rgb(224, 224, 224);
       width: 100%;
       margin: 0 auto;
       text-align: center;
-}
-
-.mat-menu-item {
-      line-height: 35px;
-      height: auto;
 }
 
 /*#endregion Menu*/

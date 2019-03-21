@@ -8,8 +8,8 @@ export class Board implements IBoard{
       _id: number;
       name: string;
       lists: Array<CardList>;
-      createdOn: Date;
-      modifiedOn: Date;
+      createdAt: Date;
+      modifiedAt: Date;
       version: number;
 
       settings: BoardSettings;
@@ -19,8 +19,8 @@ export class Board implements IBoard{
             this._id = Math.floor(Math.random() * 10000);
             this.name = name;
             this.lists = new Array<CardList>();
-            this.createdOn = new Date();
-            this.modifiedOn = new Date();
+            this.createdAt = new Date();
+            this.modifiedAt = new Date();
             this.version = 1;
 
             this.settings = new BoardSettings();
@@ -36,8 +36,8 @@ export interface IBoard{
       _id: number;
       name: string;
       lists: Array<CardList>;
-      createdOn: Date;
-      modifiedOn: Date;
+      createdAt: Date;
+      modifiedAt: Date;
       version: number;
       settings: BoardSettings;
 
@@ -50,19 +50,16 @@ export class BoardSettings implements IBoardSettings{
       color: IColor;
       group: IUser[];
       users: IUser[];
+      starred: boolean;
       colorLight: string;
       colorDark: string;
 
-      userSettings: BoardSettingsUser;
-      
       constructor(){
 
             this.mode = 'private';
             this.color = Colors[0];
             this.group = null;
             this.users = null;
-
-            this.userSettings = new BoardSettingsUser();
       }
 
 }
@@ -72,27 +69,9 @@ export interface IBoardSettings{
       mode: string; 
       colorLight: string;
       colorDark: string;
+      starred: boolean;
       group: IUser[];
       users: IUser[];
-
-      userSettings: BoardSettingsUser;
-}
-
-
-export class BoardSettingsUser implements IBoardSettingsUser{
-
-      starred: boolean;
-      
-      constructor(){
-            this.starred = false;
-      }
-
-}
-
-export interface IBoardSettingsUser{
-      
-      starred: boolean;
-
 }
 
 //#endregion

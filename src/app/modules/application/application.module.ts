@@ -24,6 +24,7 @@ import { BoardsService } from 'src/app/shared/services/boards.service';
 import { ApplicationComponent } from './application.component';
 import { DashboardComponent } from './components/dashboard.component';
 import { BoardComponent } from './components/board.component';
+import { BoardMenuItemComponent } from './components/application-components/board-menu-item-component/board-menu-item.component';
 import { BoardCreateDialog, BoardCardDialog, BoardCreateDataService } from './components/board.create.component';
 import { BoardContainerComponent } from './components/board-components/board-container/board.container';
 import { BoardCardListComponent } from './components/board-components/card-list/board-card-list.component'
@@ -41,9 +42,15 @@ import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
     ApplicationComponent,
     DashboardComponent,
 
+    //#region Application
+
+    BoardMenuItemComponent,
+
+    //#endregion
+
     //#region Board
 
-    BoardComponent,
+    BoardComponent,    
     BoardCreateDialog,
     BoardCardDialog,
     BoardContainerComponent,

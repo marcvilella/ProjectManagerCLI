@@ -3,16 +3,29 @@ import { Action } from '@ngrx/store';
 import { IBoard } from '../../models/boards';
 
 export enum EBoardActions {
+      Failure = '[Board] Failure',
       GetBoards = '[Board] Get Boards',
       GetBoardsSuccess = '[Board] Get Boards Success',
-      GetBoardsFailure = '[Board] Get Boards Failure',
       GetBoard = '[Board] Get Board',
       GetBoardSuccess = '[Board] Get Board Success',
-      GetBoardFailure = '[Board] Get Board Failure',
       AddBoard = '[Board] Add Board',
       AddBoardSuccess = '[Board] Add Board Success',
-      AddBoardFailure = '[Board] Add Board Failure'
+      UpdateBoard = '[Board] Update Board',
+      UpdateBoardSuccess = '[Board] Update Board Success',
+      UpdateBoardStarred = '[Board] Update Board Starred',
+      UpdateBoardStarredSuccess = '[Board] Update Board Starred Success',
+      UpdateBoardsStarredInternal = '[Board] Update Boards Starred Internal'
+      
 }
+
+//#region Failure
+
+export class Failure implements Action {
+      readonly type = EBoardActions.Failure;
+      constructor(public payload: string) {}
+}
+
+//#endregion
 
 //#region Get Boards
 
@@ -23,11 +36,6 @@ export class GetBoards implements Action{
 export class GetBoardsSuccess implements Action{
       public readonly type = EBoardActions.GetBoardsSuccess;
       constructor(public payload: IBoard[]){}
-}
-
-export class GetBoardsFailure implements Action {
-      readonly type = EBoardActions.GetBoardsFailure;
-      constructor(public payload: string) {}
 }
 
 //#endregion
@@ -44,11 +52,6 @@ export class GetBoardSuccess implements Action{
       constructor(public payload: IBoard){}
 }
 
-export class GetBoardFailure implements Action {
-      readonly type = EBoardActions.GetBoardFailure;
-      constructor(public payload: string) {}
-}
-
 //#endregion
 
 //#region Add Board
@@ -63,21 +66,56 @@ export class AddBoardSuccess implements Action{
       constructor(public payload: IBoard){}
 }
 
-export class AddBoardFailure implements Action {
-      readonly type = EBoardActions.AddBoardFailure;
-      constructor(public payload: string) {}
+//#endregion
+
+//#region Update Board
+
+export class UpdateBoard implements Action{
+      public readonly type = EBoardActions.UpdateBoard;
+      constructor(public payload: {id: number, name?: string}) {}
+}
+
+export class UpdateBoardSuccess implements Action{
+      public readonly type = EBoardActions.UpdateBoardSuccess;
+      constructor(public payload: IBoard){}
+}
+
+//#endregion
+
+//#region Update Board Starred
+
+export class UpdateBoardStarred implements Action{
+      public readonly type = EBoardActions.UpdateBoardStarred;
+      constructor(public payload: {id: number, starred: boolean}) {}
+}
+
+export class UpdateBoardStarredSuccess implements Action{
+      public readonly type = EBoardActions.UpdateBoardStarredSuccess;
+      constructor(public payload: IBoard){}
+}
+
+//#endregion
+
+//#region Internal Functions
+
+export class UpdateBoardsStarredInternal implements Action{
+      public readonly type = EBoardActions.UpdateBoardsStarredInternal;
+      constructor(public payload: IBoard[]){}
 }
 
 //#endregion
 
 export type BoardActions = 
+      | Failure 
       | GetBoards 
       | GetBoardsSuccess 
-      | GetBoardsFailure
       | GetBoard 
       | GetBoardSuccess
-      | GetBoardFailure
       | AddBoard
       | AddBoardSuccess
-      | AddBoardFailure
+      | UpdateBoard
+      | UpdateBoardSuccess
+      | UpdateBoardStarred
+      | UpdateBoardStarredSuccess
+      | UpdateBoardsStarredInternal
       ;
