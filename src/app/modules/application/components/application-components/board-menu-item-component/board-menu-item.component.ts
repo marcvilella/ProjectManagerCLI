@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Renderer2, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Store } from '@ngrx/store';
 
 import { IAppState } from 'src/app/shared/store/state/app.state';
 import { IBoard } from 'src/app/shared/models/boards';
-import { UpdateBoardStarred, GetBoard } from 'src/app/shared/store/actions/board.actions';
+import { UpdateBoardStarred, DeleteBoard } from 'src/app/shared/store/actions/board.actions';
 
 @Component({
   selector: 'board-menu-item',
@@ -25,10 +25,10 @@ import { UpdateBoardStarred, GetBoard } from 'src/app/shared/store/actions/board
       ),
       transition('false => true', animate('150ms ease-in')),
       transition('true => false', animate('250ms ease-in')),
-    ]) 
+    ])
   ]
 })
-export class BoardMenuItemComponent {
+export class BoardMenuItemComponent implements OnInit {
 
 //#region Members
 
@@ -42,10 +42,9 @@ stylesObj: any;
 
 constructor(
   private router: Router,
-  private renderer2: Renderer2, 
+  private renderer2: Renderer2,
   private _store: Store<IAppState>
 ) {
-  this.showConfiguration = false;
   this.stylesObj = {
     'cursor': 'pointer',
     'transform': 'translateY(25%);',
@@ -55,20 +54,24 @@ constructor(
   };
 }
 
+ngOnInit() {
+  this.showConfiguration = false;
+}
+
 //#endregion
 
 //#region Functions
 
-openBoard(): void{
+openBoard(): void {
   this.router.navigate(['../app/board'], {queryParams: {id : this.board._id}});
 }
 
-changeStarredStatus(): void{
+changeStarredStatus(): void {
   this._store.dispatch(new UpdateBoardStarred({id: this.board._id, starred: !this.board.settings.starred}));
 }
 
-archiveBoard(): void{
-  
+archiveBoard(): void {
+  this._store.dispatch(new DeleteBoard({id: this.board._id}));
 }
 
 //#endregion
@@ -83,7 +86,7 @@ cardenter (event: MouseEvent): void {
 
 cardleave (event: MouseEvent): void {
   this.showConfiguration = false;
-  this.renderer2.removeClass(event.target, 'mat-elevation-z5')
+  this.renderer2.removeClass(event.target, 'mat-elevation-z5');
 }
 
 //#endregion

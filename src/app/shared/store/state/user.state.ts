@@ -5,7 +5,7 @@ export const userAdapter: EntityAdapter<IUser> = createEntityAdapter<IUser>({
   selectId: user => user._id
 });
 
-export interface IUserState extends EntityState<IUser>{
+export interface IUserState extends EntityState<IUser> {
       selectedUserId: number | null;
       isLoading: boolean;
       error?: any;

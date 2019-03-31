@@ -4,7 +4,7 @@
             <!-- Title Bar -->
             <div fxLayout="row">
                   <div *ngIf="!isListTitleEditable" class="label" (click)="ChangeListTitleState()" cdkDragHandle>{{list.name}}</div>
-                  <input *ngIf="isListTitleEditable" spellcheck="false" class="textarea" [formControl]="listTitleFormControl" (blur)="updateListName(listIndex)" autoFocus>
+                  <input *ngIf="isListTitleEditable" spellcheck="false" class="textarea" [formControl]="listTitleFormControl" (blur)="updateListName()" autoFocus>
                   <div class="edit" cdkDragHandle>
                         <mat-icon mat-icon-button svgIcon="menu" class="edit-icon" [matMenuTriggerFor]="listActions"></mat-icon> 
                   </div>
@@ -18,18 +18,18 @@
                         <button mat-menu-item [matMenuTriggerFor]="archiveCardsConfirmation">{{ 'APPLICATION.Boards.ListActions.ArchiveCards' | translate }}</button>
                         <mat-divider></mat-divider>
                         <button mat-menu-item>{{ 'APPLICATION.Boards.ListActions.ArchiveList' | translate }}</button>
-                        <button mat-menu-item>{{ 'APPLICATION.Boards.ListActions.DeleteList' | translate }}</button>
+                        <button mat-menu-item (click)="removeCardList()">{{ 'APPLICATION.Boards.ListActions.DeleteList' | translate }}</button>
                   </mat-menu> 
                   <mat-menu #sortOptions="matMenu">
-                        <button mat-menu-item (click)="list.sortBy(0)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.CardName' | translate }}</button>
-                        <button mat-menu-item (click)="list.sortBy(1)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedA' | translate }}</button>
-                        <button mat-menu-item (click)="list.sortBy(2)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedD' | translate }}</button>
-                        <button mat-menu-item (click)="list.sortBy(3)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedA' | translate }}</button>
-                        <button mat-menu-item (click)="list.sortBy(4)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedD' | translate }}</button>
+                        <button mat-menu-item (click)="sortBy(0)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.CardName' | translate }}</button>
+                        <button mat-menu-item (click)="sortBy(1)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedA' | translate }}</button>
+                        <button mat-menu-item (click)="sortBy(2)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateCreatedD' | translate }}</button>
+                        <button mat-menu-item (click)="sortBy(3)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedA' | translate }}</button>
+                        <button mat-menu-item (click)="sortBy(4)">{{ 'APPLICATION.Boards.ListActions.SortByOptions.DateModifiedD' | translate }}</button>
                   </mat-menu>
                   <mat-menu #moveOptions="matMenu">
-                        <div *ngFor="let movingItem of listTracker; index as moveIndex">
-                              <button mat-menu-item *ngIf="movingItem != list.name" (click)="moveListTo(listIndex, moveIndex)">{{movingItem}}</button>
+                        <div *ngFor="let movingItem of listNames; index as moveIndex">
+                              <button mat-menu-item *ngIf="movingItem !== list.name" (click)="moveListTo(moveIndex)">{{movingItem}}</button>
                         </div>
                   </mat-menu>
                   <mat-menu #archiveCardsConfirmation="matMenu">
@@ -40,7 +40,7 @@
                   </mat-menu>
             </div>
             <!-- Cards -->
-            <div style="min-height: 10px;" cdkDropList [id]="list.name" [cdkDropListData]="list.cards" [cdkDropListConnectedTo]="listTracker" (cdkDropListDropped)="dropCard($event)">
+            <div style="min-height: 10px;" cdkDropList [id]="list._id" [cdkDropListData]="list.cards" [cdkDropListConnectedTo]="listTracker" (cdkDropListDropped)="dropCard($event)">
                   <div *ngFor="let card of list.cards; index as itemIndex" class="card-item-space" cdkDrag>
                         <board-card-item [card]="card" [index]="itemIndex"></board-card-item>                              
                   </div>
@@ -54,7 +54,7 @@
                                     <div class="label">{{ 'APPLICATION.Boards.AddCard' | translate }}</div>
                               </div>
                               <div *ngIf="isNewCardAddible">
-                                    <textarea matInput spellcheck="false" class="textarea" [formControl]="newCardFormControl" placeholder="{{ 'APPLICATION.Boards.AddList-input' | translate }}" autoFocus>{{newTitle}}</textarea>
+                                    <textarea matInput class="textarea" [formControl]="newCardFormControl" placeholder="{{ 'APPLICATION.Boards.AddList-input' | translate }}" spellcheck="false" maxlength="100" autoSizeTextArea autoFocus>{{newTitle}}</textarea>
                                     <button mat-raised-button color="primary" class="button" disabled="{{!newCardFormControl.valid}}" (click)="newCard()">Add</button>
                                     <button mat-raised-button color="warn" class="button" (click)="cancelCard(listIndex);$event.stopPropagation()">Cancel</button>
                               </div>

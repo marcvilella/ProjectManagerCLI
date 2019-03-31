@@ -156,10 +156,10 @@ $hoverBackground: rgb(224, 224, 224);
 }
 
 .add-card-item .textarea{
-      padding-left: 8px;
       width: 265px;
+      padding-left: 8px;
       border: transparent;
-      resize: inherit;
+      resize: none;
       overflow: hidden;
 }
 

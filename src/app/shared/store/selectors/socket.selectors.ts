@@ -8,4 +8,4 @@ const selectSocket = (state: IAppState) => state.socket;
 export const socketStatus = createSelector(
       selectSocket,
       (state: ISocketState) => state.socketConnected
-)
+);

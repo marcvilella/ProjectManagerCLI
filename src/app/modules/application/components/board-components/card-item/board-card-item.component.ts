@@ -1,6 +1,6 @@
 import { Component, Input, Renderer2 } from '@angular/core';
 
-import { ICard } from 'src/app/shared/models/boards';
+import { ICardItem } from 'src/app/shared/models/boards';
 
 @Component({
   selector: 'board-card-item',
@@ -9,7 +9,7 @@ import { ICard } from 'src/app/shared/models/boards';
 })
 export class BoardCardItemComponent {
 
-  @Input() card: ICard;
+  @Input() card: ICardItem;
   @Input() index: number;
 
   showEditable: boolean;

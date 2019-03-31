@@ -3,36 +3,8 @@ import { IUser } from './user';
 
 //#region Board
 
-export class Board implements IBoard{
-      
-      _id: number;
-      name: string;
-      lists: Array<CardList>;
-      createdAt: Date;
-      modifiedAt: Date;
-      version: number;
+export interface IBoard {
 
-      settings: BoardSettings;
-
-      constructor(name: string){
-            //this.id = 0;
-            this._id = Math.floor(Math.random() * 10000);
-            this.name = name;
-            this.lists = new Array<CardList>();
-            this.createdAt = new Date();
-            this.modifiedAt = new Date();
-            this.version = 1;
-
-            this.settings = new BoardSettings();
-      }
-
-      addCardList(list: CardList): void{
-            this.lists.push(list);
-      }
-}
-
-export interface IBoard{
-      
       _id: number;
       name: string;
       lists: Array<CardList>;
@@ -44,7 +16,45 @@ export interface IBoard{
       addCardList(list: CardList): void;
 }
 
-export class BoardSettings implements IBoardSettings{
+export class Board implements IBoard {
+
+      _id: number;
+      name: string;
+      lists: Array<CardList>;
+      createdAt: Date;
+      modifiedAt: Date;
+      version: number;
+
+      settings: BoardSettings;
+
+      constructor(name: string) {
+            // this.id = 0;
+            this._id = Math.floor(Math.random() * 10000);
+            this.name = name;
+            this.lists = new Array<CardList>();
+            this.createdAt = new Date();
+            this.modifiedAt = new Date();
+            this.version = 1;
+
+            this.settings = new BoardSettings();
+      }
+
+      addCardList(list: CardList): void {
+            this.lists.push(list);
+      }
+}
+
+export interface IBoardSettings {
+
+      mode: string;
+      colorLight: string;
+      colorDark: string;
+      starred: boolean;
+      group: IUser[];
+      users: IUser[];
+}
+
+export class BoardSettings implements IBoardSettings {
 
       mode: string;
       color: IColor;
@@ -54,7 +64,7 @@ export class BoardSettings implements IBoardSettings{
       colorLight: string;
       colorDark: string;
 
-      constructor(){
+      constructor() {
 
             this.mode = 'private';
             this.color = Colors[0];
@@ -64,85 +74,101 @@ export class BoardSettings implements IBoardSettings{
 
 }
 
-export interface IBoardSettings{
-      
-      mode: string; 
-      colorLight: string;
-      colorDark: string;
-      starred: boolean;
-      group: IUser[];
-      users: IUser[];
-}
-
 //#endregion
 
 //#region List of Cards
 
-export class CardList implements ICardList{
-      id: number;
+export interface ICardList {
+      _id: number;
       name: string;
-      cards: Array<Card>;
-      createdOn: Date;
-      modifiedOn: Date;
+      cards: Array<ICardItem>;
+      createdAt: Date;
+      modifiedAt: Date;
       version: number;
+      priority: number;
+      boardId: number;
 
-      constructor(name: string, cards: Array<Card> = new Array<Card>()){
-            //this.id = 0;
-            this.id = Math.floor(Math.random() * 10000);
+      sortBy(option: number): void;
+}
+
+export class CardList implements ICardList {
+      _id: number;
+      name: string;
+      cards: Array<CardItem>;
+      createdAt: Date;
+      modifiedAt: Date;
+      version: number;
+      priority: number;
+      boardId: number;
+
+      constructor(name: string, cards: Array<CardItem> = new Array<CardItem>()) {
+            // this.id = 0;
+            this._id = Math.floor(Math.random() * 10000);
             this.name = name;
             this.cards = cards;
-            this.createdOn = new Date();
-            this.modifiedOn = new Date();
+            this.createdAt = new Date();
+            this.modifiedAt = new Date();
+            this.priority = 0;
             this.version = 1;
       }
 
-      public sortBy(option:number): void{
-            switch(option){
-                  //Alphabetically
+      public sortBy(option: number): void {
+            switch (option) {
+                  // Alphabetically
                   case 0:
                   this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.name.toLocaleLowerCase() > obj2.name.toLocaleLowerCase()) 
+                        if (obj1.name.toLocaleLowerCase() > obj2.name.toLocaleLowerCase()) {
                               return 1;
-                        if (obj1.name.toLocaleLowerCase() < obj2.name.toLocaleLowerCase())
+                        }
+                        if (obj1.name.toLocaleLowerCase() < obj2.name.toLocaleLowerCase()) {
                               return -1;
+                        }
                         return 0;
                   });
                   break;
-                  //CreatedOn
+                  // CreatedOn
                   case 1:
                   this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.createdOn > obj2.createdOn) 
+                        if (obj1.createdAt > obj2.createdAt) {
                               return 1;
-                        if (obj1.createdOn < obj2.createdOn)
+                        }
+                        if (obj1.createdAt < obj2.createdAt) {
                               return -1;
+                        }
                         return 0;
                   });
                   break;
                   case 2:
                   this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.createdOn < obj2.createdOn) 
+                        if (obj1.createdAt < obj2.createdAt) {
                               return 1;
-                        if (obj1.createdOn < obj2.createdOn)
+                        }
+                        if (obj1.createdAt < obj2.createdAt) {
                               return -1;
+                        }
                         return 0;
                   });
                   break;
-                  //UpdatedOn
+                  // UpdatedOn
                   case 3:
                   this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.modifiedOn > obj2.modifiedOn) 
+                        if (obj1.modifiedAt > obj2.modifiedAt) {
                               return 1;
-                        if (obj1.modifiedOn < obj2.modifiedOn)
+                        }
+                        if (obj1.modifiedAt < obj2.modifiedAt) {
                               return -1;
+                        }
                         return 0;
                   });
                   break;
                   case 4:
                   this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.modifiedOn < obj2.modifiedOn) 
+                        if (obj1.modifiedAt < obj2.modifiedAt) {
                               return 1;
-                        if (obj1.modifiedOn > obj2.modifiedOn)
+                        }
+                        if (obj1.modifiedAt > obj2.modifiedAt) {
                               return -1;
+                        }
                         return 0;
                   });
                   break;
@@ -150,43 +176,38 @@ export class CardList implements ICardList{
       }
 }
 
-export interface ICardList{
-      id: number;
-      name: string;
-      cards: Array<Card>;
-      createdOn: Date;
-      modifiedOn: Date;
-
-      sortBy(option: number): void;
-}
-
 //#endregion
 
 //#region Card
 
-export class Card implements ICard{
-      id: number;
+export interface ICardItem {
+      _id: number;
       name: string;
-      createdOn: Date;
-      modifiedOn: Date;
+      priority: number;
+      createdAt: Date;
+      modifiedAt: Date;
       version: number;
-
-      constructor(name: string){
-            //this.id = 0;
-            this.id = Math.floor(Math.random() * 10000);
-            this.name = name;
-            this.createdOn = new Date();
-            this.modifiedOn = new Date();
-            this.version = 1;
-      }
+      cardListId: number;
 }
 
-export interface ICard{
-      id: number;
+export class CardItem implements ICardItem {
+      _id: number;
       name: string;
-      createdOn: Date;
-      modifiedOn: Date;
+      priority: number;
+      createdAt: Date;
+      modifiedAt: Date;
       version: number;
+      cardListId: number;
+
+      constructor(name: string) {
+            // this.id = 0;
+            this._id = Math.floor(Math.random() * 10000);
+            this.name = name;
+            this.priority = 0;
+            this.createdAt = new Date();
+            this.modifiedAt = new Date();
+            this.version = 1;
+      }
 }
 
 //#endregion

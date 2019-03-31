@@ -31,7 +31,7 @@ import { BoardCardListComponent } from './components/board-components/card-list/
 import { BoardCardItemComponent } from './components/board-components/card-item/board-card-item.component'
 
 //Directives
-import { AutoFocusDirective, ClickOutsideDirective, ClickInsideDirective, AutoSizeInputDirective } from 'src/app/shared/modules/directives';
+import { AutoFocusDirective, ClickOutsideDirective, ClickInsideDirective, AutoSizeInputDirective, AutoSizeTextAreaDirective } from 'src/app/shared/modules/directives';
 //Animations
 import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
 
@@ -64,6 +64,7 @@ import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
     ClickOutsideDirective,
     ClickInsideDirective,
     AutoSizeInputDirective,
+    AutoSizeTextAreaDirective,
     //Animation
     AnimatedIconComponent
   ],

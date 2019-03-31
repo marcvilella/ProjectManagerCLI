@@ -1,13 +1,18 @@
-import { Component, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Renderer2, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { moveItemInArray, transferArrayItem, CdkDragDrop} from '@angular/cdk/drag-drop';
 
-import { ICardList, ICard } from 'src/app/shared/models/boards';
+import { IAppState } from 'src/app/shared/store/state/app.state';
+import { ICardList, ICardItem } from 'src/app/shared/models/boards';
+import { AddCardItem, DeleteCardList, SortCardList } from 'src/app/shared/store/actions/board.actions';
+
 
 @Component({
   selector: 'board-card-list',
   templateUrl: './board-card-list.component.html',
-  styleUrls: ['../../../styles/board.component.scss']
+  styleUrls: ['../../../styles/board.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoardCardListComponent {
 
@@ -15,12 +20,14 @@ export class BoardCardListComponent {
 
   @Input() index: number;
   @Input() list: ICardList;
-  @Input() listTracker: string[];
+  @Input() listTracker: number[];
+  @Input() listNames: string[];
 
   @Input() loading: boolean;
   @Input() error: any;
 
-  @Output() refresh = new EventEmitter();
+  @Output() MoveListItems = new EventEmitter<{id: number, destinationId: number}>();
+  @Output() PriorityChanged = new EventEmitter<CdkDragDrop<ICardItem[]>>();
 
   isListTitleEditable: boolean;
   isNewCardAddible: boolean;
@@ -32,7 +39,8 @@ export class BoardCardListComponent {
 //#region Constructor
 
   constructor(
-    private renderer2: Renderer2, 
+    private _store: Store<IAppState>,
+    private renderer2: Renderer2,
   ) {
     this.isListTitleEditable = false;
     this.isNewCardAddible = false;
@@ -40,72 +48,67 @@ export class BoardCardListComponent {
     this.newCardFormControl = new FormControl('', Validators.required);
   }
 
-//#endregion
+  //#endregion
 
-//#region 
+  //#region Functions
 
-ChangeListTitleState(): void{
-  this.listTitleFormControl.setValue(this.list.name);
-  this.isListTitleEditable = true;
-}
-
-updateListName(): void{
-  if(this.listTitleFormControl.valid)
-      this.list.name = this.listTitleFormControl.value;
-}
-
-removeListCard(): void {
-  // let listsArray = <FormArray>this.listsTitleForm.controls['lists'];
-  // if (listsArray.length > 1) {
-  //     listsArray.removeAt(index);
-  // }
-}
-
-moveListTo(currentIndex: number, index: number): void{
-  // this.board.lists[currentIndex].cards.forEach((card) => {
-  //     this.board.lists[index].cards.push(card);
-  // });
-  // this.board.lists[currentIndex].cards = new Array<Card>();
-}
-
-//#endregion
-
-//#region Add New Card
-
-newCard(): void {  
-  this.newCardFormControl.reset();
-}
-
-cancelCard(): void{
-  this.isNewCardAddible = false;
-  this.newCardFormControl.reset();
-}
-
-//#endregion
-
-//#region Drag and Drop
-
-dropCard(event: CdkDragDrop<ICard[]>): void {
-  if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-  } else {
-      transferArrayItem(event.previousContainer.data,
-                      event.container.data,
-                      event.previousIndex,
-                      event.currentIndex);
+  ChangeListTitleState(): void {
+    this.listTitleFormControl.setValue(this.list.name);
+    this.isListTitleEditable = true;
   }
-}
 
-cardenter (event: MouseEvent): void {
-  this.renderer2.addClass(event.target, 'mat-elevation-z5');
-  this.renderer2.setStyle(event.target, 'background', 'rgb(224, 224, 224)') 
-}
+  updateListName(): void {
+    if (this.listTitleFormControl.valid) {
+        this.list.name = this.listTitleFormControl.value;
+    }
+    this.isListTitleEditable = false;
+  }
 
-cardleave (event: MouseEvent): void {
-  this.renderer2.removeClass(event.target, 'mat-elevation-z5')
-  this.renderer2.removeStyle(event.target, 'background')
-}
+  removeCardList(): void {
+    this._store.dispatch(new DeleteCardList({id: this.list._id}));
+  }
 
-//#endregion
+  sortBy(mode: number): void {
+    this._store.dispatch(new SortCardList({id: this.list._id, mode: mode}));
+  }
+
+  moveListTo(index: number): void {
+    this.MoveListItems.emit({id: this.list._id, destinationId: this.listTracker[index]});
+  }
+
+  //#endregion
+
+  //#region Add New Card
+
+  newCard(): void {
+    this._store.dispatch(new AddCardItem({id: this.list._id, name: this.newCardFormControl.value, priority: this.list.cards.length}));
+    this.isNewCardAddible = false;
+    this.newCardFormControl.reset();
+  }
+
+  cancelCard(): void {
+    this.isNewCardAddible = false;
+    this.newCardFormControl.reset();
+  }
+
+  //#endregion
+
+  //#region Drag and Drop
+
+  dropCard(event: CdkDragDrop<ICardItem[]>): void {
+    this.PriorityChanged.emit(event);
+  }
+
+  cardenter (event: MouseEvent): void {
+    this.renderer2.addClass(event.target, 'mat-elevation-z5');
+    this.renderer2.setStyle(event.target, 'background', 'rgb(224, 224, 224)');
+  }
+
+  cardleave (event: MouseEvent): void {
+    this.renderer2.removeClass(event.target, 'mat-elevation-z5');
+    this.renderer2.removeStyle(event.target, 'background');
+  }
+
+  //#endregion
 
 }

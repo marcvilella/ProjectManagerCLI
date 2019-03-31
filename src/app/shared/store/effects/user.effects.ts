@@ -13,20 +13,20 @@ import * as userSelectors from '../selectors/user.selectors';
 
 @Injectable()
 export class UserEffects {
-      
+
       constructor(
             private _usersService: UsersService,
             private _actions$: Actions,
             private _store: Store<IAppState>
-      ){}
+      ) {}
 
       @Effect()
       getCurrentUser$ = this._actions$.pipe(
             ofType<userActions.GetCurrentUser>(userActions.EUserActions.GetCurrentUser),
             mergeMap(() => this._usersService.getCurrentUser()),
             switchMap((user: IUser) => {
-                  //this._store.dispatch(new boardActions.UpdateBoardsStarredInternal(user.boards));
-                  return of(new userActions.GetCurrentUserSuccess(user))
+                  // this._store.dispatch(new boardActions.UpdateBoardsStarredInternal(user.boards));
+                  return of(new userActions.GetCurrentUserSuccess(user));
             })
       );
 

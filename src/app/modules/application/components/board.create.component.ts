@@ -100,7 +100,14 @@ export class BoardCreateDialog {
         }
       };
 
-      this._store.dispatch(new AddBoard(params));
+      this._store.dispatch(new AddBoard({board: {
+        name: this.boardTitleFormControl.value,
+        settings: {
+          mode: this.privacyMode,
+          color: this.selectedColor,
+          users: users
+        }
+      }}));
     }
   }
     
