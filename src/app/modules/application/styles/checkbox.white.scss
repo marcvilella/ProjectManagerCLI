@@ -1,0 +1,30 @@
+
+$toolbarColor: rgb(140, 140, 140);
+$itemBackground: rgb(235, 235, 235);
+$divBackground: rgb(240, 240, 240);
+
+::ng-deep .mat-checkbox .mat-checkbox-ripple {
+      visibility: hidden;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+      border-color: $toolbarColor;
+      background-color: $divBackground !important;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+      background-color: $divBackground !important;
+      width: 12px;
+      height: 12px;
+      margin-top: 2px;
+      margin-left: 2px;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-frame {
+      border-color: $toolbarColor;
+      background-color: $divBackground !important;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-checkmark-path {
+      stroke: black !important;
+}

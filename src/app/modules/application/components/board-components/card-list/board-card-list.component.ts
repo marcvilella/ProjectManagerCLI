@@ -27,7 +27,7 @@ export class BoardCardListComponent {
   @Input() error: any;
 
   @Output() MoveListItems = new EventEmitter<{id: number, destinationId: number}>();
-  @Output() PriorityChanged = new EventEmitter<CdkDragDrop<ICardItem[]>>();
+  @Output() PositionChanged = new EventEmitter<CdkDragDrop<ICardItem[]>>();
 
   isListTitleEditable: boolean;
   isNewCardAddible: boolean;
@@ -81,7 +81,7 @@ export class BoardCardListComponent {
   //#region Add New Card
 
   newCard(): void {
-    this._store.dispatch(new AddCardItem({id: this.list._id, name: this.newCardFormControl.value, priority: this.list.cards.length}));
+    this._store.dispatch(new AddCardItem({id: this.list._id, name: this.newCardFormControl.value, position: this.list.cards.length}));
     this.isNewCardAddible = false;
     this.newCardFormControl.reset();
   }
@@ -96,7 +96,7 @@ export class BoardCardListComponent {
   //#region Drag and Drop
 
   dropCard(event: CdkDragDrop<ICardItem[]>): void {
-    this.PriorityChanged.emit(event);
+    this.PositionChanged.emit(event);
   }
 
   cardenter (event: MouseEvent): void {

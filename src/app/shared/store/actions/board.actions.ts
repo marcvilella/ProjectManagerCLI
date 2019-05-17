@@ -26,8 +26,8 @@ export enum EBoardActions {
       GetCardListsSuccess = '[Board] Get Card Lists Success',
       AddCardList = '[Board] Add Card List',
       AddCardListSuccess = '[Board] Add Card List Success',
-      UpdateCardListPriority = '[Board] Update Card List Priority',
-      UpdateCardListPrioritySuccess = '[Board] Update Card List Priority Success',
+      UpdateCardListPosition = '[Board] Update Card List Position',
+      UpdateCardListPositionSuccess = '[Board] Update Card List Position Success',
       MoveCardListItems = '[Board] Move Card List Items',
       MoveCardListItemsSuccess = '[Board] Move Card List Items Success',
       SortCardList = '[Board] Sort Card List',
@@ -39,10 +39,12 @@ export enum EBoardActions {
 
       GetCardItems = '[Board] Get Card Items',
       GetCardItemsSuccess = '[Board] Get Card Items Success',
+      GetCardItem = '[Board] Get Card Item',
+      GetCardItemSuccess = '[Board] Get Card Item Success',
       AddCardItem = '[Board] Add Card Item',
       AddCardItemSuccess = '[Board] Add Card Item Success',
-      UpdateCardItemPriority = '[Board] Update Card Item Priority',
-      UpdateCardItemPrioritySuccess = '[Board] Update Card Item Priority Success',
+      UpdateCardItemPosition = '[Board] Update Card Item Position',
+      UpdateCardItemPositionSuccess = '[Board] Update Card Item Position Success',
       DeleteCardItem = '[Board] Delete Card Item',
       DeleteCardItemSuccess = '[Board] Delete Card Item Success',
       ArchiveCardItem = '[Board] Archive Card Item',
@@ -59,7 +61,7 @@ export class Failure implements Action {
 
 export class SaveBoardState implements Action {
       readonly type = EBoardActions.SaveBoardState;
-      constructor(public payload: {action: BoardActions}) {}
+      constructor(public payload: {action: BoardActions, data?: any}) {}
 }
 
 //#endregion
@@ -188,7 +190,7 @@ export class GetCardListsSuccess implements Action {
 
 export class AddCardList implements Action {
       public readonly type = EBoardActions.AddCardList;
-      constructor(public payload: {id: number, name: string, priority: number}) {}
+      constructor(public payload: {id: number, name: string, position: number}) {}
 }
 
 export class AddCardListSuccess implements Action {
@@ -196,14 +198,14 @@ export class AddCardListSuccess implements Action {
       constructor(public payload: {cardList: ICardList}) {}
 }
 
-export class UpdateCardListPriority implements Action {
-      public readonly type = EBoardActions.UpdateCardListPriority;
+export class UpdateCardListPosition implements Action {
+      public readonly type = EBoardActions.UpdateCardListPosition;
       constructor(public payload: {cardLists: ICardList[]}) {}
 }
 
-export class UpdateCardListPrioritySuccess implements Action {
-      public readonly type = EBoardActions.UpdateCardListPrioritySuccess;
-      constructor(public payload: {id: number}) {}
+export class UpdateCardListPositionSuccess implements Action {
+      public readonly type = EBoardActions.UpdateCardListPositionSuccess;
+      constructor(public payload: {cardLists: ICardList[]}) {}
 }
 
 export class MoveCardListItems implements Action {
@@ -260,9 +262,19 @@ export class GetCardItemsSuccess implements Action {
       constructor(public payload: {cardItems: ICardItem[]}) {}
 }
 
+export class GetCardItem implements Action {
+      public readonly type = EBoardActions.GetCardItem;
+      constructor(public payload: {id: number}) {}
+}
+
+export class GetCardItemSuccess implements Action {
+      public readonly type = EBoardActions.GetCardItemSuccess;
+      constructor(public payload: {cardItem: ICardItem}) {}
+}
+
 export class AddCardItem implements Action {
       public readonly type = EBoardActions.AddCardItem;
-      constructor(public payload: {id: number, name: string, priority: number}) {}
+      constructor(public payload: {id: number, name: string, position: number}) {}
 }
 
 export class AddCardItemSuccess implements Action {
@@ -270,8 +282,8 @@ export class AddCardItemSuccess implements Action {
       constructor(public payload: {cardItem: ICardItem}) {}
 }
 
-export class UpdateCardItemPriority implements Action {
-      public readonly type = EBoardActions.UpdateCardItemPriority;
+export class UpdateCardItemPosition implements Action {
+      public readonly type = EBoardActions.UpdateCardItemPosition;
       constructor(public payload: {
             changedId?: number,
             from?: {id: number, carditems: ICardItem[]},
@@ -279,8 +291,8 @@ export class UpdateCardItemPriority implements Action {
       }) {}
 }
 
-export class UpdateCardItemPrioritySuccess implements Action {
-      public readonly type = EBoardActions.UpdateCardItemPrioritySuccess;
+export class UpdateCardItemPositionSuccess implements Action {
+      public readonly type = EBoardActions.UpdateCardItemPositionSuccess;
       constructor(public payload: {id: number}) {}
 }
 
@@ -320,15 +332,16 @@ export type BoardActions =
 
       | GetCardLists                | GetCardListsSuccess
       | AddCardList                 | AddCardListSuccess
-      | UpdateCardListPriority      | UpdateCardListPrioritySuccess
+      | UpdateCardListPosition      | UpdateCardListPositionSuccess
       | MoveCardListItems           | MoveCardListItemsSuccess
       | SortCardList                | SortCardListSuccess
       | DeleteCardList              | DeleteCardListSuccess
       | ArchiveCardList             | ArchiveCardListSuccess
 
       | GetCardItems                | GetCardItemsSuccess
+      | GetCardItem                 | GetCardItemSuccess
       | AddCardItem                 | AddCardItemSuccess
-      | UpdateCardItemPriority      | UpdateCardItemPrioritySuccess
+      | UpdateCardItemPosition      | UpdateCardItemPositionSuccess
       | DeleteCardItem              | DeleteCardItemSuccess
       | ArchiveCardItem             | ArchiveCardItemSuccess
 ;

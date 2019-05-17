@@ -152,10 +152,10 @@ export const selectSelectedCardLists = createSelector(
       entityAllCardListItems,
       selectSelectedCardListIds,
       (allCardLists: ICardList[], cardListIds: number[]) => allCardLists.filter(m => cardListIds.includes(m._id)).sort((obj1, obj2) => {
-            if (obj1.priority > obj2.priority) {
+            if (obj1.position > obj2.position) {
                   return 1;
             }
-            if (obj1.priority < obj2.priority) {
+            if (obj1.position < obj2.position) {
                   return -1;
             }
             return 0;
@@ -218,10 +218,10 @@ const entityAllCardItemEntities = createSelector(
 export const selectAllCardItemsItems = createSelector(
       entityAllCardItemItems,
       (allCardItems: ICardItem[]) => allCardItems.sort((obj1, obj2) => {
-            if (obj1.priority > obj2.priority) {
+            if (obj1.position > obj2.position) {
                   return 1;
             }
-            if (obj1.priority < obj2.priority) {
+            if (obj1.position < obj2.position) {
                   return -1;
             }
             return 0;
@@ -232,10 +232,10 @@ export const selectSelectedCardItems = createSelector(
       entityAllCardItemItems,
       selectSelectedCardItemIds,
       (allCardItems: ICardItem[], cardItemIds: number[]) => allCardItems.filter(m => cardItemIds.includes(m._id)).sort((obj1, obj2) => {
-            if (obj1.priority > obj2.priority) {
+            if (obj1.position > obj2.position) {
                   return 1;
             }
-            if (obj1.priority < obj2.priority) {
+            if (obj1.position < obj2.position) {
                   return -1;
             }
             return 0;

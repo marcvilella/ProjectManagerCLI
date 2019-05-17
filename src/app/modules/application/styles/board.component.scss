@@ -2,6 +2,7 @@
 
 $toolbarheight: 40px;
 $applicationColor: rgb(26, 35, 126);
+$cardBackground: rgb(245, 245, 245);
 $beforeHoverBackground: rgb(235, 235, 235);
 $beforeHoverBorder: rgb(210, 210, 210);
 $hoverBackground: rgb(224, 224, 224);
@@ -95,6 +96,7 @@ $hoverBackground: rgb(224, 224, 224);
 /*#region Card List Component*/
 
 .card-list{
+      background: $cardBackground;
       padding-top: 0px; 
       padding-bottom: 5px; 
       overflow: hidden;
@@ -149,6 +151,7 @@ $hoverBackground: rgb(224, 224, 224);
 
 .add-card-item{
       cursor: pointer; 
+      background: $cardBackground;
       padding-top: 10px;
       padding-bottom: 12px;
       margin-left: -10px;
@@ -203,6 +206,109 @@ $hoverBackground: rgb(224, 224, 224);
 }
 
 /*#endregion Card Item Component*/
+
+/*#region Card Item Dialog*/
+
+$cardItemDialogWidth: 810px;
+$cardItemDialogLeftAvatar: 34px;
+$DarkGray: rgb(140, 140, 140);
+
+.card-item-dialog .dialog-toolbar {
+      background: $DarkGray;
+      margin: -10px -20px 10px -20px;
+      padding: 10px 20px 0px 20px;
+}
+
+.card-item-dialog .title{
+      display: block;
+      margin-top: 2px;
+      margin-bottom: 5px;
+      font-weight: bold;
+}
+
+.card-item-dialog .last-child-right div:last-child{
+      margin-left: auto;
+}
+
+.card-item-dialog .subtitle{
+      margin: 0 auto;
+      font-size: 12px;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+}
+
+.card-item-dialog .label{
+      cursor: pointer; 
+      height: 27px;
+      width: 100%;
+      margin: 2px 3px 4px 0px; 
+      padding-left: 3px;
+      user-select: none;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+}
+
+.card-item-dialog .textarea{
+      width: 100%;
+      margin-right: 3px;
+      margin-left: 0px;
+      margin-bottom: 7px; 
+      padding-left: 3px;
+      padding-bottom: 0px; 
+      font-weight: bold;
+      border: transparent;
+      resize: none;
+      overflow: hidden;
+}
+
+.card-item-dialog .edit{
+      line-height: unset;
+      width: 24px;
+      height: 27px;
+      align-items: center;
+      opacity: 0.7;
+}
+
+.card-item-dialog .edit:hover{
+      background: lightgray;
+      opacity: 0.9;
+}
+
+.card-item-dialog .item .label{
+      cursor: pointer; 
+      height: 27px;
+      width: 100%;
+      margin-left: 0px;
+      margin-top: 2px; 
+      margin-bottom: 4px; 
+      padding-left: 3px;
+      user-select: none;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+}
+
+.card-item-dialog .item .textarea{
+      width: 100%;
+      padding-left: 5px;
+      border: black;
+      border-style: solid;
+      border-width: thin;
+      border-radius: 3px;
+      font-weight: normal;
+}
+
+.card-item-dialog .item .button{
+      display: inline-block;
+      width: fit-content;
+      padding-left: 3px;
+      padding-right: 3px;
+      margin-left: 5px;
+      margin-right: 5px;     
+}
+
+/*#endregion*/
 
 /*#region Create Board*/
 
@@ -262,7 +368,7 @@ $hoverBackground: rgb(224, 224, 224);
 
 /*#region Overlay*/
 
-.create-board .title{
+.title{
       display: block;
       margin-bottom: 5px;
       font-weight: bold;

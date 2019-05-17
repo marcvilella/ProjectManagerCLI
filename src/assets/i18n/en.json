@@ -121,6 +121,99 @@
 				},
 				"ArchiveList": "Archive this list",
 				"DeleteList": "Delete this list"
+			},
+			"CardActions": {
+				"ChangeMembers": "Change Members",
+				"Move": "Move",
+				"Copy": "Copy",
+				"ChangeDate": "Change Due Date",
+				"Archive": "Archive",
+				"Share": "Share"
+			},
+			"CardDialog": {
+				"Visibility-tooltip": "Suscribe card changes.",
+				"Members": "Members",
+				"DueDate": "Due Date",
+				"Attachments": "Attachments",
+				"Priority": "Priority",
+				"Timesheet": "Timesheet",
+				"Checklist": "Checklist",
+				"Description": "Description",
+				"Description-input": "Add a detailed information...",
+				"AddComment": "Add Comment",
+				"AddComment-input": "Write a comment to the card activity...",
+				"Activity": "Activity"
+			}
+		},
+		"Timesheets": {
+			"Timesheet": "Timesheet"
+		},
+		"Common": {
+			"Save": "Save",
+			"Update": "Update",
+			"Remove": "Remove",
+			"Delete": "Delete",
+			"Cancel": "Cancel",
+			"Time": {
+				"lessMin": "Less than a minute ago",
+				"Mins": "minutes ago",
+				"Hours": "hours ago",
+				"Days": "days ago",
+				"Helper": ""
+			},
+			"Date": {
+				"No-Date": "No Date",
+				"Date": "Date",
+				"Time": "Time",
+				"Today": "Today",
+				"Tomorrow": "Tomorrow",
+				"Yesterday": "Yesterday",
+				"At": "At",
+				"Reminder": {
+					"Set": "Set Reminder",
+					"None": "None",
+					"AtDueTime": "At due time",
+					"5mBefore": "5 minutes before",
+					"15mBefore": "15 minutes before",
+					"30mBefore": "30 minutes before",
+					"1hBefore": "1 hour before",
+					"2hBefore": "2 hour before",
+					"6hBefore": "6 hour before",
+					"12hBefore": "12 hour before",
+					"1dBefore": "1 day before",
+					"2dBefore": "2 day before"
+				}
+			},
+			"Members": {
+				"No-Members": "No Members",
+				"Search-input": "Search members...",
+				"Position-not-defined": "Position not defined"
+			},
+			"Attachments": {
+				"No-Attachments": "No Attachments",
+				"File": "File",
+				"ProjectManager": "ProjectManager",
+				"Link-input": "Insert link here...",
+				"Link-save": "Save Link",
+				"Name": "Name",
+				"Link": "Link",
+				"Remove-text": "Remove this attachment?"
+			},
+			"Priority": {
+				"No-Priority": "Not Applicable",
+				"Low": "Low",
+				"Moderate": "Moderate",
+				"High": "High",
+				"Critical": "Critical",
+				"Immediate": "Immediate"
+			},
+			"Checklist": {
+				"Checklist": "Checklist"
+			},
+			"Activity": {
+				"Messages": "Messages",
+				"CardActivitiy": "Card Activitiy",
+				"NoComments": "There are no comments yet"
 			}
 		}
 	},

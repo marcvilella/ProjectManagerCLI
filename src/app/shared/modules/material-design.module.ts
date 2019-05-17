@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 
-import { MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatCheckboxModule, MatDividerModule, 
+import { MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatCheckboxModule, MatDividerModule,
   MatSnackBarModule, MatDialogModule, MatProgressSpinnerModule, MatToolbarModule, MatSidenavModule, MatListModule, MatCardModule,
-  MatMenuModule, MatExpansionModule, MatGridListModule} from '@angular/material';
+  MatMenuModule, MatExpansionModule, MatGridListModule, MatTooltipModule, MatDatepickerModule, MatProgressBarModule, MatTabsModule } from '@angular/material';
 
-import {DragDropModule} from '@angular/cdk/drag-drop'; 
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 
-//Lista iconos: https://material.io/tools/icons/
+// Lista iconos: https://material.io/tools/icons/
 
 @NgModule({
   imports: [
@@ -31,9 +33,14 @@ import { OverlayModule } from '@angular/cdk/overlay';
       MatMenuModule,
       MatExpansionModule,
       MatGridListModule,
+      MatTooltipModule,
+      MatDatepickerModule,
+      MatMomentDateModule,
+      MatProgressBarModule,
+      MatTabsModule,
       
       DragDropModule,
       OverlayModule
   ]
 })
-export class MaterialDesignModule {}
+export class MaterialDesignModule { }

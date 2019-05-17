@@ -4,9 +4,17 @@
 
 export const environment = {
   production: false,
-
   socket: {
     baseUrl: 'http://localhost:3000'
+    //baseUrl: 'http://192.168.1.8:3000'
+  },
+  colors: {
+    applicationColor: 'rgb(26, 35, 126)',
+    toolbarColor: 'rgb(140, 140, 140)',
+    itemBackground: 'rgb(235, 235, 235)',
+    itemHoverBorder: 'rgb(210, 210, 210)',
+    itemHoverBackground: 'rgb(224, 224, 224)',
+    buttonBackground: 'rgb(210, 210, 210)',
   }
 };
 

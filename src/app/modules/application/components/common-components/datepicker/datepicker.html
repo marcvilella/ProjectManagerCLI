@@ -1,0 +1,47 @@
+<button mat-button class="icon-button" [matMenuTriggerFor]="datepicker" [style.background]="DueDateColor">
+      <div *ngIf="card.dueDate === undefined">
+            <mat-icon svgIcon="time"></mat-icon>
+            {{ 'APPLICATION.Common.Date.No-Date' | translate }}
+      </div>
+      <div *ngIf="card.dueDate !== undefined" [style.color]="DueDateColor !== 'rgb(210, 210, 210)' ? 'white' : 'black'">
+            <mat-checkbox tabIndex="-1" class="checkbox-within-button" (change)="onCheckDueDate($event.checked)" (click)="$event.stopPropagation()"></mat-checkbox>
+            {{ card.dueDate.date | date:'d MMMM' }}
+            {{ DueDateText}}
+      </div>
+</button>
+<mat-menu #datepicker="matMenu">
+      <div class="menu-content" fxLayout="column" (click)="stopPropagation($event)">
+            <div gdColumns="120px 75px" gdGap="10px">
+                  <mat-form-field gdColumn="1">
+                        <input matInput [matDatepicker]="picker" [formControl]="DateFormControl" placeholder="{{ 'APPLICATION.Common.Date.Date' | translate }}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field gdColumn="2">
+                        <input matInput [formControl]="TimeFormControl" placeholder="{{ 'APPLICATION.Common.Date.Time' | translate }}">
+                  </mat-form-field>
+            </div>
+            <div>
+                  <mat-form-field class="block">
+                        <mat-label>{{ 'APPLICATION.Common.Date.Reminder.Set' | translate }}</mat-label>
+                        <mat-select [(value)]="Reminder">
+                              <mat-option class="selector-small" value="null">{{ 'APPLICATION.Common.Date.Reminder.None' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="0">{{ 'APPLICATION.Common.Date.Reminder.AtDueTime' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="5">{{ 'APPLICATION.Common.Date.Reminder.5mBefore' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="15">{{ 'APPLICATION.Common.Date.Reminder.15mBefore' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="30">{{ 'APPLICATION.Common.Date.Reminder.30mBefore' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="60">{{ 'APPLICATION.Common.Date.Reminder.1hBefore' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="120">{{ 'APPLICATION.Common.Date.Reminder.2hBefore' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="360">{{ 'APPLICATION.Common.Date.Reminder.6hBefore' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="720">{{ 'APPLICATION.Common.Date.Reminder.12hBefore' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="1440">{{ 'APPLICATION.Common.Date.Reminder.1dBefore' | translate }}</mat-option>
+                              <mat-option class="selector-small" value="2880">{{ 'APPLICATION.Common.Date.Reminder.2dBefore' | translate }}</mat-option>
+                        </mat-select>
+                  </mat-form-field>   
+            </div>
+            <div>
+                  <button mat-raised-button color="primary" class="left-button" [disabled]="!TimeFormControl.valid || !DateFormControl.valid" (click)="saveDate()">{{ 'APPLICATION.Common.Save' | translate }}</button>
+                  <button mat-raised-button color="warn" class="right-button" (click)="removeDate()">{{ 'APPLICATION.Common.Remove' | translate }}</button>
+            </div>
+      </div>
+</mat-menu> 

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ApplicationComponent } from './application.component';
 import { DashboardComponent } from './components/dashboard.component';
+import { CalendarComponent } from './components/calendar.component';
 import { BoardContainerComponent } from './components/board-components/board-container/board.container';
 
 
@@ -10,6 +11,7 @@ const applicationRoutes: Routes = [
     {path: '', component: ApplicationComponent, children: [
         {path: '', component: DashboardComponent},
         {path: 'dashboard', redirectTo: '',  pathMatch: 'full'},
+        {path: 'calendar', component: CalendarComponent},
         {path: 'board', component: BoardContainerComponent}
     ]},
     {path: '', redirectTo: '', pathMatch: 'full'}

@@ -102,10 +102,10 @@ export class BoardEffects {
       );
 
       @Effect()
-      updateCardListPriority$: Observable<Action> = this._actions$.pipe(
-            ofType<boardActions.UpdateCardListPriority>(boardActions.EBoardActions.UpdateCardListPriority),
-            switchMap(action => this._boardsService.updateCardListPriority(action.payload)),
-            switchMap((id: number) => of(new boardActions.UpdateCardListPrioritySuccess({id: id})))
+      updateCardListPosition$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.UpdateCardListPosition>(boardActions.EBoardActions.UpdateCardListPosition),
+            switchMap(action => this._boardsService.updateCardListPosition(action.payload)),
+            switchMap((cardlists: ICardList[]) => of(new boardActions.UpdateCardListPositionSuccess({cardLists: cardlists})))
       );
 
       @Effect()
@@ -160,10 +160,10 @@ export class BoardEffects {
       );
 
       @Effect()
-      updateCardItemPriority$: Observable<Action> = this._actions$.pipe(
-            ofType<boardActions.UpdateCardItemPriority>(boardActions.EBoardActions.UpdateCardItemPriority),
-            switchMap(action => this._boardsService.updateCardItemPriority(action.payload)),
-            switchMap((id: number) => of(new boardActions.UpdateCardItemPrioritySuccess({id: id})))
+      updateCardItemPosition$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.UpdateCardItemPosition>(boardActions.EBoardActions.UpdateCardItemPosition),
+            switchMap(action => this._boardsService.updateCardItemPosition(action.payload)),
+            switchMap((id: number) => of(new boardActions.UpdateCardItemPositionSuccess({id: id})))
       );
 
       @Effect()

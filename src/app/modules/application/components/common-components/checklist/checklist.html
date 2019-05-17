@@ -1,0 +1,26 @@
+<div class="item" fxLayout="column" fxLayoutGap="5px">
+      <div fxLayout="row" class="margin-bottom-off" fxLayoutGap="10px">
+            <mat-icon svgIcon="checklist"></mat-icon>
+            <span class="title">{{ 'APPLICATION.Common.Checklist.Checklist' | translate }}</span>
+      </div>
+      <div gdColumns="30px auto" gdGap="5px">
+            <div gdColumn="1" class="subtitle">{{percentage}}%</div>
+            <mat-progress-bar gdColumn="2" class="vertical-centered-margin" [value]="percentage"></mat-progress-bar>
+      </div>
+      
+      <div fxLayout="column" fxLayoutGap="5px" *ngFor="let checkitem of checklist.checkitems; index as checkIndex">
+            <div gdColumns="16px auto 24px" class="checkitem" gdGap="8px" (mouseenter)='cardenter(checkIndex, $event)' (mouseleave)="cardleave($event)">
+                  <div gdColumn="1">
+                        <mat-checkbox tabIndex="-1" class="checkbox-within-button" (change)="onCheckedChange(checkitem._id, $event.checked)"></mat-checkbox>
+                  </div>
+                  <div gdColumn="2">
+                        <div *ngIf="selectedFormControl !== checkIndex" (click)="onSelectedFormControl(checkIndex)">{{checkitem.name}}</div>
+                        <textarea #textarea [attr.id]="'textarea' + checkIndex" class="textarea parent-size" *ngIf="selectedFormControl === checkIndex" [mentionConfig]="mentionConfig" [formControl]="textFormControl" (blur)="onBlurFormControl()" spellcheck="false" autoSizeTextArea autoFocus></textarea>
+                        
+                  </div>
+                  <button mat-icon-button gdColumn="3" class="icon standalone-only-icon-button align-right" *ngIf="currentIndex === checkIndex" (click)="onDeleteCheckItem(checkIndex)">
+                        <mat-icon mat-icon-button class="icon-size-small" svgIcon="delete"></mat-icon> 
+                  </button>
+            </div>
+      </div>
+</div>

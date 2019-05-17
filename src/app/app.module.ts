@@ -1,25 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-//Services
+// Services
 import { SharedModule } from './shared/modules/shared.module';
 
-//Providers
+// Providers
 import { AuthService, AuthGuard } from './shared/services/auth.service';
 
-//Routing
+// Routing
 import { AppRoutingModule } from './app-routing.module';
 
-//Component
+// Component
 import { AppComponent } from './app.component';
 import { JwtModule } from '@auth0/angular-jwt';
 
-//Elements
+// Elements
 import { environment } from 'src/environments/environment';
 import { appReducers } from './shared/store/reducers/app.reducers';
 import { UserEffects } from './shared/store/effects/user.effects';
@@ -44,9 +44,9 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        //whitelistedDomains: new Array(new RegExp('^null$'))
+        // whitelistedDomains: new Array(new RegExp('^null$'))
         whitelistedDomains: ['http://localhost:3000', 'localhost:3000'],
-        //blacklistedRoutes: ['localhost:3000/api/auth/']
+        // blacklistedRoutes: ['localhost:3000/api/auth/']
       }
     }),
     StoreModule.forRoot( appReducers ),

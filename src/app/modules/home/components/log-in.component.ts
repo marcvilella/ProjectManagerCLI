@@ -21,25 +21,25 @@ import { AuthDialog } from './auth.dialog.component';
     ]
 })
 
-export class LogInComponent{
+export class LogInComponent {
 
     //#region Properties
 
-    languageSelected: string;    
+    languageSelected: string;
     languages = LanguagesList;
 
     //#endregion
-    
+
     //#region FormControls
 
     @ViewChild('email') emailElement: ElementRef;
-    emailFormControl = new FormControl('', 
+    emailFormControl = new FormControl('',
     {
         validators: [
             Validators.required,
             Validators.pattern(/^[a-z0-9](\.?[a-z0-9_-]){0,}@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$/)
         ],
-        updateOn: "blur"
+        updateOn: 'blur'
     });
     @ViewChild('password') passwordElement: ElementRef;
     passwordFormControl = new FormControl('',
@@ -48,18 +48,26 @@ export class LogInComponent{
             Validators.required,
             Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[_!@#\$%\^&\*])(?=.{8,20})/)
         ],
-        updateOn: "blur"
+        updateOn: 'blur'
     });
 
-    request: boolean = false;
+    request = false;
     @ViewChild('buttonLabel') buttonLabel: ElementRef;
     labelTransform: number;
     spinnerPadding: number;
     //#endregion
-    
+
     //#region Constructor
 
-    constructor(private userAuth: AuthService, private router: Router, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog, public translate: TranslateService, private jwtHelper: JwtHelperService) {
+    constructor(
+        private userAuth: AuthService,
+        private router: Router,
+        private route: ActivatedRoute,
+        public snackBar: MatSnackBar,
+        public dialog: MatDialog,
+        public translate: TranslateService,
+        private jwtHelper: JwtHelperService
+    ) {
         this.languageSelected = translate.currentLang;
 
         let token: string;
@@ -67,16 +75,17 @@ export class LogInComponent{
             token = params.id;
         });
 
-        if(token != undefined && !this.jwtHelper.isTokenExpired(token))
+        if (token != undefined && !this.jwtHelper.isTokenExpired(token)) {
             this.dialog.open(AuthDialog, {
                 width: '500px',
                 data: {
                     mode: 1,
-                    title: this.translate.instant("HOME.LogIn.WarningDialog.Title"),
-                    content: this.translate.instant("HOME.LogIn.WarningDialog.Content"),
+                    title: this.translate.instant('HOME.LogIn.WarningDialog.Title'),
+                    content: this.translate.instant('HOME.LogIn.WarningDialog.Content'),
                     params: token,
                 }
             });
+        }
 
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
@@ -90,17 +99,18 @@ export class LogInComponent{
 
     //#region Function
 
-    onSubmit(){
+    onSubmit() {
 
-        if(!this.emailFormControl.valid  || !this.passwordFormControl.valid)
+        if (!this.emailFormControl.valid  || !this.passwordFormControl.valid) {
             return;
+        }
 
-        //Update current width and trigger animation
-        let widths = computeButtonTranslateX(320, this.buttonLabel.nativeElement.clientWidth)
+        // Update current width and trigger animation
+        const widths = computeButtonTranslateX(320, this.buttonLabel.nativeElement.clientWidth);
         this.labelTransform = widths[0];
         this.spinnerPadding = widths[1];
 
-        //Trigger animation
+        // Trigger animation
         this.request = true;
 
         this.userAuth.logIn(this.emailFormControl.value, this.passwordFormControl.value).subscribe(
@@ -112,21 +122,21 @@ export class LogInComponent{
             error => {
                 this.request = false;
 
-                switch(error.status){
+                switch (error.status) {
                     case 400:
-                        //this.passwordFormControl.reset();
-                        this.passwordFormControl.setErrors({notMatch: true})
+                        // this.passwordFormControl.reset();
+                        this.passwordFormControl.setErrors({notMatch: true});
                     break;
                     case 403:
-                        //Email still not verfied
-                        //TODO: Resent email
+                        // Email still not verfied
+                        // TODO: Resent email
                         this.dialog.open(AuthDialog, {
                             width: '500px',
                             data: {
                                 mode: 0,
-                                title: this.translate.instant("HOME.LogIn.RequestDialog.Title"),
-                                content: this.translate.instant("HOME.LogIn.RequestDialog.Content"),
-                                params: this.translate.instant("HOME.LogIn.RequestDialog.Url"),
+                                title: this.translate.instant('HOME.LogIn.RequestDialog.Title'),
+                                content: this.translate.instant('HOME.LogIn.RequestDialog.Content'),
+                                params: this.translate.instant('HOME.LogIn.RequestDialog.Url'),
                             }
                         });
                     break;
@@ -134,17 +144,17 @@ export class LogInComponent{
                         this.emailFormControl.setErrors({notMatch: true});
                     break;
                     default:
-                        this.snackBar.open(this.translate.instant("SERVER.Internal-error"), "", {duration: 5000});
+                        this.snackBar.open(this.translate.instant('SERVER.Internal-error'), '', {duration: 5000});
                     break;
                 }
             }
         );
     }
 
-    onLanguageChange(lang: string){
-        localStorage.setItem('language', lang)
-        this.translate.use(lang)
+    onLanguageChange(lang: string) {
+        localStorage.setItem('language', lang);
+        this.translate.use(lang);
     }
-    
+
     //#endregion
 }

@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NumberFormatStyle } from '@angular/common';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { registerLocaleData} from '@angular/common';
+import localeEnGb from '@angular/common/locales/en-GB';
+import localeEs from '@angular/common/locales/es';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -12,13 +15,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 export function tokenGetter() {
-  console.log(localStorage.getItem('access_token'))
+  console.log(localStorage.getItem('access_token'));
   return localStorage.getItem('access_token');
 }
 
 
-//TODO: Hacer que funciones el cambio de idioma default a otro
-//No se carga, solo se carga el idioma seleccionado y el default
+// TODO: Hacer que funciones el cambio de idioma default a otro
+// No se carga, solo se carga el idioma seleccionado y el default
 
 @NgModule({
     imports: [
@@ -32,7 +35,7 @@ export function tokenGetter() {
            deps: [HttpClient],
          },
          isolate: false
-       }),
+      }),
       //  JwtModule.forRoot({
       //   config: {
       //     tokenGetter: tokenGetter,
@@ -50,19 +53,22 @@ export function tokenGetter() {
 export class SharedModule {
 
   constructor(private translate: TranslateService) {
-                  
-    translate.addLangs(["en", "es"]);
+
+    translate.addLangs(['en', 'en-GB', 'es']);
     translate.setDefaultLang('en');
 
-    let lang: string = localStorage.getItem('language');
-    if(lang === null){
-      let browserLang = translate.getBrowserLang();
+    registerLocaleData(localeEs, 'es');
+    registerLocaleData(localeEnGb, 'en-GB');
+
+    const lang: string = localStorage.getItem('language');
+    if (lang === undefined) {
+      const browserLang = translate.getBrowserLang();
       translate.use(browserLang.match(/en|es/) ? browserLang : 'en');
 
-      localStorage.setItem('language', translate.currentLang)
-    }
-    else
+      localStorage.setItem('language', translate.currentLang);
+    } else {
       translate.use(lang.match(/en|es/) ? lang : 'en');
+    }
 
   }
 }

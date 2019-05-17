@@ -1,8 +1,15 @@
 <mat-card class="card-item" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)">
-      <mat-card-content fxLayout="row">
+      <mat-card-content fxLayout="row" (click)="showCardContentDialog()">
             <span class="title">{{card.name}}</span>
             <div class="edit" *ngIf="showEditable">
-                  <mat-icon mat-icon-button svgIcon="edit" class="edit-icon"></mat-icon> 
+                  <mat-icon mat-icon-button svgIcon="edit" class="edit-icon" (click)="stopPropagation($event)" [matMenuTriggerFor]="cardOptions" (menuOpened)="menuChanged()" (menuClosed)="menuChanged()" ></mat-icon> 
             </div>
       </mat-card-content>
 </mat-card>      
+<mat-menu #cardOptions="matMenu">
+      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.ChangeMembers' | translate }}</button>
+      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Move' | translate }}</button>
+      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Copy' | translate }}</button>
+      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.ChangeDate' | translate }}</button>
+      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Archive' | translate }}</button>
+</mat-menu>

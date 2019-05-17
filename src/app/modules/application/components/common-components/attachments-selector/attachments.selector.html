@@ -1,0 +1,27 @@
+<div fxLayout="row wrap" fxLayoutGap="4px" style="max-width: 240px;">
+      <div fxFlex="36px" *ngFor="let attachment of attachments">
+            <common-attachment-avatar [attachment]="attachment"></common-attachment-avatar>
+      </div>
+      <button mat-button [ngClass]="(attachments.length !== 0) ? 'only-icon-button' : 'icon-button'" [matMenuTriggerFor]="attachmentsselector">
+            <div *ngIf="attachments.length !== 0">
+                  <mat-icon svgIcon="add" class="no-vertical-alignment"></mat-icon>   
+            </div>
+            <div *ngIf="attachments.length === 0">
+                  <mat-icon svgIcon="attachment" class="no-vertical-alignment icon-slim"></mat-icon>
+                  {{ 'APPLICATION.Common.Attachments.No-Attachments' | translate }}
+            </div>
+      </button>
+</div>
+
+<mat-menu #attachmentsselector="matMenu">
+      <button mat-menu-item (click)="openFileDialog()">{{ 'APPLICATION.Common.Attachments.File' | translate }} </button>
+      <button mat-menu-item disabled>{{ 'APPLICATION.Common.Attachments.ProjectManager' | translate }}</button>
+      <mat-divider></mat-divider>
+      <div fxLayout="column" fxLayoutGap="4px" class="menu-item-link" (click)="stopPropagation($event)">
+            <input matInput class="textarea" [formControl]="linkFormControl" placeholder="{{ 'APPLICATION.Common.Attachments.Link-input' | translate }}" spellcheck="false" (click)="selectLink()" (blur)="unselectLink()"/>
+            <button mat-raised-button class="button" color="primary" *ngIf="linkSelected || linkFormControl.valid" disabled="{{!linkFormControl.valid}}" (click)="saveLink()">
+                  {{ 'APPLICATION.Common.Attachments.Link-save' | translate }}
+            </button>
+      </div>
+</mat-menu> 
+<input type="file" hidden #fileInput (change)="onFileAdded()" multiple/>

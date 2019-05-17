@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 
 import { IAppState } from 'src/app/shared/store/state/app.state';
 import { selectBoardsById, selectSelectedCardLists, selectSelectedCardItems } from 'src/app/shared/store/selectors/board.selectors';
-import { IBoard, ICardList, ICardItem, Board } from 'src/app/shared/models/boards';
+import { IBoard, ICardList, ICardItem } from 'src/app/shared/models/boards';
 import { GetBoard } from 'src/app/shared/store/actions/board.actions';
 
 @Component({
@@ -38,7 +38,8 @@ export class BoardContainerComponent {
   getBoard() {
     return combineLatest(this.board$, this.cardlists$, this.carditems$).pipe(map((result) => {
       if (result[0] === undefined) {
-        result[0] = new Board('');
+        result[0] = {_id: 0, name: '', projectId: null, lists: new Array<ICardList>(), createdAt: new Date, modifiedAt: new Date, version: 1,
+                      settings: {mode: null, starred: false, colorDark: '', colorLight: '', users: null, group: null}};
       } else {
         result[1].forEach((cardList) => {
           if (cardList.cards.length > 0) {

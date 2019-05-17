@@ -44,17 +44,17 @@ export class BoardCreateDialog {
         take(1),
       ).subscribe();
 
-      let board = this.dialog.open(BoardCardDialog, {
+      const board = this.dialog.open(BoardCardDialog, {
         position: {top: '370px'},
         panelClass: 'noborder-dialog-container',
         hasBackdrop: false,
         autoFocus: false
       });
 
-    
+
       this.dialogRef.beforeClosed().subscribe(() => {
-        board.close()
-      })
+        board.close();
+      });
 
       this._store.pipe(select(selectCurrentUser)).subscribe((user: IUser) => this.user = user);
       this.boardTitleFormControl = new FormControl('');
@@ -66,32 +66,33 @@ export class BoardCreateDialog {
 
   //#endregion
 
-  titleChanged(): void{
+  titleChanged(): void {
     this.boardData.changeTitle(this.boardTitleFormControl.value);
   }
 
-  colorChanged(color: IColor): void{
+  colorChanged(color: IColor): void {
     this.selectedColor = color;
-    this.boardData.changeColor(this.selectedColor);//this.colors.find(m => m.colorLight == color));
+    this.boardData.changeColor(this.selectedColor);
   }
 
-  isColorSelected(color: IColor): boolean{
-    if(color == this.selectedColor)
+  isColorSelected(color: IColor): boolean {
+    if (color === this.selectedColor) {
       return true;
-    else
+    } else {
       return false;
+    }
   }
 
-  modeChanged(): void{
+  modeChanged(): void {
     this.boardData.changeMode(this.privacyMode);
   }
 
   createBoard(): void {
-    if(this.boardTitleFormControl.value != ''){
-      //this.dialogRef.close();
-      let users: number[] = [this.user._id];
-      
-      let params = {
+    if (this.boardTitleFormControl.value !== '') {
+      // this.dialogRef.close();
+      const users: number[] = [this.user._id];
+
+      const params = {
         name: this.boardTitleFormControl.value,
         settings: {
           mode: this.privacyMode,
@@ -110,20 +111,20 @@ export class BoardCreateDialog {
       }}));
     }
   }
-    
+
 }
 
 @Component({
   selector: 'board-card-dialog',
   template: `
-  <div fxLayout="row" class="create-board"> 
+  <div fxLayout="row" class="create-board">
     <div [style.background]="color.colorDark" class="darkComponent">
       <mat-icon *ngIf="mode == 'private'" svgIcon="private"></mat-icon>
       <mat-icon *ngIf="mode == 'shared'" svgIcon="shared"></mat-icon>
     </div>
     <div [style.background]="color.colorLight" class="lightComponent">
       {{title}}
-    </div> 
+    </div>
   </div>`,
   styleUrls: ['../styles/board.component.scss']
 })
@@ -144,7 +145,7 @@ export class BoardCardDialog {
     this.boardData.Mode.subscribe(message => this.mode = message);
 
   }
-  
+
 }
 
 
@@ -163,18 +164,19 @@ export class BoardCreateDataService {
   constructor() { }
 
   changeTitle(title: string) {
-    if(title === '')
+    if (title === '') {
       this.titleSource.next('Board title...');
-    else
-      this.titleSource.next(title)
+    } else {
+      this.titleSource.next(title);
+    }
   }
 
   changeColor(color: IColor) {
-    this.colorSource.next(color)
+    this.colorSource.next(color);
   }
 
   changeMode(mode: string) {
-    this.modeSource.next(mode)
+    this.modeSource.next(mode);
   }
 
 }

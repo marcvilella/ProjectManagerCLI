@@ -1,0 +1,23 @@
+<div>
+  <h1 mat-dialog-title style="margin-bottom: 5px;">Upload Files</h1>
+
+  <!-- This is the content of the dialog, containing a list of the files to upload -->
+  <mat-dialog-content>
+    <mat-list>
+      <mat-list-item *ngFor="let file of files">
+
+        <h4 mat-line>{{file.name}}</h4>
+        <h4 mat-line>{{getFileSize(file.size)}}</h4>
+
+        <mat-progress-bar *ngIf="progress" mode="determinate" [color]="(progress[file.name].error === false) ? 'primary' : 'warn'" [value]="progress[file.name].progress | async"></mat-progress-bar>
+
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+
+  <!-- This are the actions of the dialog, containing the primary and the cancel button-->
+  <mat-dialog-actions class="actions" *ngIf="error">
+    <button  mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)="upload()">Try again</button>
+  </mat-dialog-actions>
+</div>

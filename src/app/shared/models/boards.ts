@@ -1,47 +1,18 @@
 import { IColor, Colors } from './colors';
 import { IUser } from './user';
+import { Time } from '@angular/common';
 
 //#region Board
 
 export interface IBoard {
-
       _id: number;
       name: string;
-      lists: Array<CardList>;
+      lists: Array<ICardList>;
       createdAt: Date;
       modifiedAt: Date;
       version: number;
-      settings: BoardSettings;
-
-      addCardList(list: CardList): void;
-}
-
-export class Board implements IBoard {
-
-      _id: number;
-      name: string;
-      lists: Array<CardList>;
-      createdAt: Date;
-      modifiedAt: Date;
-      version: number;
-
-      settings: BoardSettings;
-
-      constructor(name: string) {
-            // this.id = 0;
-            this._id = Math.floor(Math.random() * 10000);
-            this.name = name;
-            this.lists = new Array<CardList>();
-            this.createdAt = new Date();
-            this.modifiedAt = new Date();
-            this.version = 1;
-
-            this.settings = new BoardSettings();
-      }
-
-      addCardList(list: CardList): void {
-            this.lists.push(list);
-      }
+      projectId: number;
+      settings: IBoardSettings;
 }
 
 export interface IBoardSettings {
@@ -52,26 +23,6 @@ export interface IBoardSettings {
       starred: boolean;
       group: IUser[];
       users: IUser[];
-}
-
-export class BoardSettings implements IBoardSettings {
-
-      mode: string;
-      color: IColor;
-      group: IUser[];
-      users: IUser[];
-      starred: boolean;
-      colorLight: string;
-      colorDark: string;
-
-      constructor() {
-
-            this.mode = 'private';
-            this.color = Colors[0];
-            this.group = null;
-            this.users = null;
-      }
-
 }
 
 //#endregion
@@ -85,95 +36,8 @@ export interface ICardList {
       createdAt: Date;
       modifiedAt: Date;
       version: number;
-      priority: number;
+      position: number;
       boardId: number;
-
-      sortBy(option: number): void;
-}
-
-export class CardList implements ICardList {
-      _id: number;
-      name: string;
-      cards: Array<CardItem>;
-      createdAt: Date;
-      modifiedAt: Date;
-      version: number;
-      priority: number;
-      boardId: number;
-
-      constructor(name: string, cards: Array<CardItem> = new Array<CardItem>()) {
-            // this.id = 0;
-            this._id = Math.floor(Math.random() * 10000);
-            this.name = name;
-            this.cards = cards;
-            this.createdAt = new Date();
-            this.modifiedAt = new Date();
-            this.priority = 0;
-            this.version = 1;
-      }
-
-      public sortBy(option: number): void {
-            switch (option) {
-                  // Alphabetically
-                  case 0:
-                  this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.name.toLocaleLowerCase() > obj2.name.toLocaleLowerCase()) {
-                              return 1;
-                        }
-                        if (obj1.name.toLocaleLowerCase() < obj2.name.toLocaleLowerCase()) {
-                              return -1;
-                        }
-                        return 0;
-                  });
-                  break;
-                  // CreatedOn
-                  case 1:
-                  this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.createdAt > obj2.createdAt) {
-                              return 1;
-                        }
-                        if (obj1.createdAt < obj2.createdAt) {
-                              return -1;
-                        }
-                        return 0;
-                  });
-                  break;
-                  case 2:
-                  this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.createdAt < obj2.createdAt) {
-                              return 1;
-                        }
-                        if (obj1.createdAt < obj2.createdAt) {
-                              return -1;
-                        }
-                        return 0;
-                  });
-                  break;
-                  // UpdatedOn
-                  case 3:
-                  this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.modifiedAt > obj2.modifiedAt) {
-                              return 1;
-                        }
-                        if (obj1.modifiedAt < obj2.modifiedAt) {
-                              return -1;
-                        }
-                        return 0;
-                  });
-                  break;
-                  case 4:
-                  this.cards = this.cards.sort((obj1, obj2) => {
-                        if (obj1.modifiedAt < obj2.modifiedAt) {
-                              return 1;
-                        }
-                        if (obj1.modifiedAt > obj2.modifiedAt) {
-                              return -1;
-                        }
-                        return 0;
-                  });
-                  break;
-            }
-      }
 }
 
 //#endregion
@@ -183,31 +47,122 @@ export class CardList implements ICardList {
 export interface ICardItem {
       _id: number;
       name: string;
-      priority: number;
+      position: number;
       createdAt: Date;
       modifiedAt: Date;
       version: number;
       cardListId: number;
+
+      users: IUser[];
+      priority: number;
+      dueDate: IDueDate;
+      attachments: IAttachment[];
+      checklists: ICheckList[];
+      worksegments: IWorkSegment[];
+      messages: IMessage[];
+
 }
 
-export class CardItem implements ICardItem {
+export interface IDueDate {
+      date: Date;
+      remindAt: Number;
+      done: Boolean;
+}
+
+export interface IAttachment {
+      _id: Number;
+      name: String;
+      dataType: String;
+      userName: String;
+      link: String;
+      date: Date;
+}
+
+export interface ICheckList {
       _id: number;
       name: string;
-      priority: number;
-      createdAt: Date;
-      modifiedAt: Date;
-      version: number;
-      cardListId: number;
+      checkitems: ICheckItem[];
+      hideCompleted: boolean;
+}
 
-      constructor(name: string) {
-            // this.id = 0;
-            this._id = Math.floor(Math.random() * 10000);
-            this.name = name;
-            this.priority = 0;
-            this.createdAt = new Date();
-            this.modifiedAt = new Date();
-            this.version = 1;
-      }
+export interface ICheckItem {
+      _id: number;
+      name: string;
+      checked: boolean;
+      position: number;
+}
+
+export interface IMessage {
+      _id: number;
+      cardId: number;
+      userId: number;
+      priority: number;
+      date: Date;
+      text: string;
+      edited: boolean;
+}
+
+//#endregion
+
+//#region Timesheet
+
+// https://stackoverflow.com/questions/3282403/database-schema-for-timesheet
+
+export interface IProject {
+      _id: number;
+      name: string;
+      projectId: string;
+}
+
+export interface ISubProject {
+      _id: number;
+      projectId: number;
+      name: string;
+}
+
+export interface IWorkSegment {
+      _id: number;
+      subProjectId: number;
+      userId: number;
+      payrollCycleId: number;
+      date: Date;
+      start: Time;
+      end: Time;
+      total: number;
+      comment: string;
+}
+
+export interface ITimeSheet {
+      _id: number;
+      userId: number;
+      payrollCycleId: number;
+}
+
+export interface ITimeSheetSegment {
+      _id: number;
+      subProjectId: number;
+      userId: number;
+      payrollCycleId: number;
+}
+
+export interface IApproval {
+      _id: number;
+      timeSheetId: number;
+      payrollCycleId: number;
+      submitedTime: Date;
+      approvedBy: number;
+      approvedTime: Date;
+}
+
+export interface IPayrollCycle {
+      _id: number;
+      year: number;
+      number: number;
+      start: Date;
+      end: Date;
+      deposit: Date;
+      check: Date;
+      total: number;
 }
 
 //#endregion

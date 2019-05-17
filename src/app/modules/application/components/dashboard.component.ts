@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
-    selector: 'dashboard',
+    selector: 'app-dashboard',
     templateUrl: '../views/dashboard.html',
     styleUrls: ['../application.component.scss', '../../../app.component.scss']
 })

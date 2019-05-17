@@ -1,0 +1,19 @@
+<button mat-button class="icon-button" [matMenuTriggerFor]="priorityselector">
+      <div *ngIf="prioritySelected.priority === 0">
+            <mat-icon class="icon-ultra-slim" svgIcon="priority"></mat-icon>
+            {{ 'APPLICATION.Common.Priority.No-Priority' | translate }}
+      </div>
+      <div *ngIf="prioritySelected.priority !== 0" gdColumns="12px auto" gdGap="6px">
+            <div gdColumn="1" class="inline-block" [style.background]="prioritySelected.color">&nbsp;</div>
+            <div gdColumn="2">{{getTranslation(prioritySelected.name)}}</div>
+      </div>
+</button>
+
+<mat-menu #priorityselector="matMenu">
+      <div *ngFor="let priority of priorities">
+            <button mat-menu-item fxLayout="row" fxLayoutGap="10px" (click)="onSelectedChange(priority.priority)">
+                  <div fxFlex="10px" class="inline-block" [style.background]="priority.color">&nbsp;</div>
+                  {{getTranslation(priority.name)}}
+            </button>
+      </div>
+</mat-menu> 

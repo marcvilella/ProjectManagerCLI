@@ -1,0 +1,28 @@
+<div gdColumns="26px auto" gdGap="8px">
+      <div gdColumn="1" >
+            <ngx-avatar name="{{message.userId}}" size="26" textSizeRatio="2.5"></ngx-avatar>
+            {{message.date}}
+            <button mat-icon-button class="icon standalone-only-icon-button">
+                  <mat-icon mat-icon-button svgIcon="delete" [matMenuTriggerFor]="remove"></mat-icon> 
+            </button>
+      </div>
+      <div gdColumn="2">
+            <div *ngIf="!isEdit" (click)="editMessage()">{{message.text}}</div>
+            <div *ngIf="isEdit">
+                  <textarea class="textarea" [formControl]="commentFormControl" spellcheck="false" autoSizeTextArea></textarea>
+                  <button mat-raised-button color="primary" class="button" [disabled]="!commentFormControl.valid" (click)="saveChanges()">
+                        {{ 'APPLICATION.Common.Save' | translate }}  
+                  </button>
+                  <button mat-raised-button color="warn" class="button" (click)="cancelEdit()">
+                        {{ 'APPLICATION.Common.Cancel' | translate }} 
+                  </button>
+            </div>
+      </div>
+</div>
+
+<mat-menu #remove="matMenu">
+      <div fxLayout="column" class="menu-content-small pointable" fxLayoutGap="4px" (click)="stopPropagation($event)">
+            <div class="mat-menu-text">{{ 'APPLICATION.Common.Attachments.Remove-text' | translate }}</div>
+            <button mat-raised-button color="warn" class="mat-menu-button" (click)="deleteMessage()">{{ 'APPLICATION.Common.Remove' | translate }}</button>
+      </div>
+</mat-menu>

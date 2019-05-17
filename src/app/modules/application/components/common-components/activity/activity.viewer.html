@@ -1,0 +1,26 @@
+<div class="item" fxLayout="column" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutGap="10px">
+            <mat-icon class="vertical-centered-margin" svgIcon="timeline"></mat-icon>
+            <span class="title vertical-centered-margin">{{ 'APPLICATION.Boards.CardDialog.Activity' | translate }}</span>
+      </div>
+      <mat-tab-group>
+            <mat-tab label="{{ 'APPLICATION.Common.Activity.Messages' | translate }}">
+                  <ng-template matTabContent>
+                        <div *ngIf="comments.length === 0">
+                              {{ 'APPLICATION.Common.Activity.NoComments' | translate }}  
+                        </div>
+                        <div *ngFor="let comment of comments">
+                              <common-activity-message [message]="comment" [users]="users"></common-activity-message>
+                        </div>
+                  </ng-template>
+            </mat-tab>
+            <mat-tab label="{{ 'APPLICATION.Common.Activity.CardActivitiy' | translate }}">
+                  <ng-template matTabContent>
+                        <div *ngFor="let cardActivity of cardActivities">
+                              <common-activity-message [message]="cardActivity" [users]="users"></common-activity-message>
+                        </div>
+                  </ng-template>
+            </mat-tab>
+      </mat-tab-group>
+
+</div>

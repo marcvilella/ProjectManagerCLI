@@ -1,0 +1,318 @@
+
+$applicationColor: rgb(26, 35, 126);
+$toolbarColor: rgb(140, 140, 140);
+$divBackground: rgb(240, 240, 240);
+$itemBackground: rgb(235, 235, 235);
+$itemHoverBorder: rgb(210, 210, 210);
+$itemHoverBackground: rgb(224, 224, 224);
+$buttonBackground: rgb(210, 210, 210);
+
+/* #region General */
+
+.block {
+      display: block;
+}
+
+.inline-block {
+      display: inline-block;
+}
+
+.pointable {
+      cursor: pointer;
+}
+
+.no-outline {
+      outline: 0;
+}
+
+.no-vertical-alignment {
+      vertical-align: unset;
+}
+
+.vertical-centered-margin {
+      margin-top: auto;
+      margin-bottom: auto;
+}
+
+.align-right {
+      margin-left: auto;
+}
+
+.parent-size {
+      width:100%;
+      height:100%; 
+}
+
+.margin-bottom-off {
+      margin-bottom: unset !important;
+}
+
+.radius {
+      border-radius: 100%;
+}
+
+/* #endregion */
+
+/* #region Icon */
+
+.icon {
+      width: 24px;
+      height: 24px;
+      line-height: unset;
+}
+
+.icon-ultra-slim {
+      margin: 0px -5px 0px -6px;
+}
+
+.icon-slim {
+      margin: 0px -2px 0px -4px;
+}
+
+.icon-size-small {
+      width: 20px;
+}
+
+/* #endregion */
+
+/* #region Text */
+
+.title{
+      display: block;
+      font-weight: bold;
+}
+
+.subtitle{
+      margin: 0 auto;
+      font-size: 12px;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+}
+
+.text {
+      font-size: 14px;
+      line-height: 16px;
+}
+
+.sub-text {
+      font-size: 12px;
+      line-height: 16px;
+}
+
+.bold {
+      font-weight: bold;
+}
+
+.italic {
+      font-style: italic;
+}
+
+.textarea {
+      width: 100%;
+      padding-left: 5px;
+      border: black;
+      border-style: solid;
+      border-width: thin;
+      border-radius: 3px;
+      resize: none;
+      overflow: hidden;
+}
+
+/* #endregion */
+
+/* #region Menu Content */
+
+.menu-content {
+      padding: 10px 15px;
+}
+
+.menu-content-small {
+      padding: 4px 8px;
+}
+
+/* #endregion */
+
+/* #region Menu Item */
+
+.selector-small {
+      height: 1.4em !important;
+}
+
+.menu-item-pointable{
+      cursor: pointer;
+      background: $divBackground;
+      padding: 3px;
+      margin: 1px 0px;
+      overflow: hidden;
+}
+
+.menu-item-pointable:hover{
+      background: $itemHoverBackground;
+}
+
+/* #endregion*/
+
+/* #region Button */
+
+.checkbox-within-button {
+      position: relative;
+      top: 3px;
+}
+
+.icon-button{
+      padding: 0px 8px;
+      background: $buttonBackground;
+}
+
+.only-icon-button {
+      width: 36px;
+      min-width: unset;
+      padding: 0;
+      background: $buttonBackground;
+}
+
+.only-icon-button-grid {
+      margin-right: -3px;
+      margin-left: -3px;
+}
+
+.standalone-only-icon-button:hover{
+      border-radius: 50%;
+      background: lightgray;
+      opacity: 0.9;
+}
+
+.left-button {
+      width: 44%;
+}
+
+.right-button {
+      width: 44%;
+      float: right;
+      margin-right: 0;
+}
+
+/* #endregion */
+
+/* #region Searcher */
+
+.search-textarea{
+      width: 235px;
+      height: 29px;
+      padding: 0px 5px;
+      font-size: 14px;
+      font-weight: 400;
+      background: $divBackground;
+      border: 1px solid $itemHoverBorder;
+      border-radius: 4px;
+}
+
+.search-textarea:hover{
+      background: $itemHoverBackground;
+}
+
+/* #endregion*/
+
+/* #region DataTable */
+
+.input-padding {
+      width: 100%;
+      padding: 1px 2px 1px 6px;
+}
+
+.input-disabled-padding {
+      width: 100%;
+      padding: 1px 2px 1px 8px;
+}
+
+.non-editable-cell {
+      color: black;
+      background-color: rgb(230, 230, 230) !important;
+      border: 1px solid #d9d9d9;
+}
+
+.header-left-transparent {
+      background-color: transparent !important;
+      border-top: transparent !important;
+      border-left: transparent !important;
+}
+
+.header-right-transparent {
+      background-color: transparent !important;
+      border-top: transparent !important;
+      border-right: transparent !important;
+}
+
+/* #endregion */
+
+/* #region Components*/
+
+      /* #region Members Selector */
+
+      .menu-content-small .user-properties-centered {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 44px;
+      }
+
+      .menu-content-small .user-properties-selected {
+            margin-top: 6px;
+      }
+
+      /* #endregion */
+
+      /* #region Attachments Selector */
+
+      .menu-item-link {
+            padding: 8px 16px;
+      }
+
+      .menu-item-link .textarea {
+            width: 200px;
+            height: 29px;
+            padding: 0px 5px;
+            font-size: 14px;
+            font-weight: 400;
+            background: $divBackground;
+            border: 1px solid $itemHoverBorder;
+            border-radius: 4px;
+      }
+
+      .menu-item-link .textarea:hover{
+            background: $itemHoverBackground;
+      }
+      
+      .menu-item-link .button {
+            width: fit-content;
+      }
+
+      /* #endregion */
+
+      /* #region Attachment Avatar */
+
+      .attachment-menu {
+            width: 275px;
+      }
+
+      .attachment-menu .attachment-properties-centered {
+            justify-content: center;
+      }
+
+      /* #endregion */
+
+      /* #region Checklist */
+
+      .checkitem {
+            margin-left: 34px;
+            padding-left: 4px;
+            border-radius: 4px;
+      }
+
+      .checkitem .textarea {
+            margin-top: 6px;
+      }
+
+      /* #endregion */
+
+/* #endregion */

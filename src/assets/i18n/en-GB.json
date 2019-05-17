@@ -1,0 +1,221 @@
+{
+	"HOME": {
+		"Common": {
+			"Nonempty-error": "This field is required",
+			"Account-NotFound-error": "Couldn't find your account",
+			"Email": "Email",
+			"Email-input": "Enter your email address",
+			"Email-error": "Please enter a valid email address",
+			"Email-DataMatching-error": "Couldn't find any account with these data",
+			"Password": "Password",
+			"Password-input": "Enter your password",
+			"Password-error": "Please enter a valid password",
+			"Password-NotMatch-error": "Wrong password. Try again or click Forgot password to reset it"
+		},
+		"LogIn": {
+			"Title": "Log in",
+			"Subtitle": "into your ProjectManager account",
+			"LogInButton": "LOG IN",
+			"ForgotPassword": "Forgot password?",
+			"Trial-text": "Do not you have an account?",
+			"Trial-link": "Get a free trial account",
+			"Slogan-title": "Helping PYMES to work more efficiently",
+			"Slogan-subtitle": "CRM, project manager and billing in a single application",
+			"WarningDialog": {
+				"Title": "Verifying your account",
+				"Content": "Account verified"
+			},
+			"RequestDialog": {
+				"Title": "Verify your account",
+				"Content": "You need to verify your account. Please, check your email. \nIf you have not received any email, click in the next link to resend a verification email.",
+				"Url":"Send verification e-mail"
+			}
+		},
+		"SignUp": {
+			"Title": "Sign up",
+			"Subtitle": "and create your ProjectManager account",
+			"Name": "Name",
+			"Surname": "Surname",
+			"Company": "Company",
+			"ConfirmPassword": "Confirm password",
+			"AcceptTerms-text": "Accept",
+			"AcceptTerms-link": "terms of use",
+			"Email-error": "Email address already in use",
+			"Password-error": "The length must be between 8 and 20 characters",
+			"ConfirmPassword-error": "The passwords do not match",
+			"SignUpButton": "SIGN UP",
+			"LogInRedirect": "Log in into your ProjectManager account",
+			"Slogan-title": "Helping PYMES to work more efficiently",
+			"Slogan-subtitle": "CRM, project manager and billing in a single application",
+			"WarningDialog": {
+				"Title": "Verify your account",
+				"Content": "You are one step away from starting to manage your tasks. \nYou will receive a verification email."
+			}
+		},
+		"RequestPasswordReset": {
+			"Title": "Account recovery",
+			"Subtitle": "Enter your full name and email and you will receive more information.",
+			"FullName": "Full Name",
+			"FullName-input": "Enter your full name",
+			"RequestPasswordResetButton": "RESTORE PASSWORD",
+			"LogInRedirect": "Return to log in",
+			"Slogan-title": "Helping PYMES to work more efficiently",
+			"Slogan-subtitle": "CRM, project manager and billing in a single application",
+			"WarningDialog": {
+				"Title": "Account recovery",
+				"Content": "You are one step away from starting to manage your tasks. \nYou will receive a verification email."
+			}
+		},
+		"PasswordReset": {
+			"Title": "Account recovery",
+			"Subtitle": "Enter your new password.",
+			"Password-error": "The length must be between 8 and 20 characters",
+			"ConfirmPassword": "Confirm password",
+			"ConfirmPassword-error": "The passwords do not match",
+			"PasswordResetButton": "RESTORE PASSWORD",
+			"Slogan-title": "Helping PYMES to work more efficiently",
+			"Slogan-subtitle": "CRM, project manager and billing in a single application",
+			"WarningDialog": {
+				"Content": "Password changed succesfully."
+			}
+		}
+	},
+	"APPLICATION":{
+		"HUD": {
+			"Dashboard": "Dashboard",
+			"Boards": "Boards",
+			"Boards-list":{
+				"Find-hint": "Find boards by name...",
+				"Starred": "Starred Boards",
+				"Recent": "Recent Boards",
+				"Personal": "Personal Boards",
+				"Shared": "Shared Boards",
+				"Create": "Create new board..."
+			},
+			"Profile": "Profile",
+			"Activity": "Activity",
+			"Projects": "Projects",
+			"LogOut": "Log out"
+		},
+		"Dashoard": {},
+		"Boards": {
+			"AddCard": "Add another card...",
+			"AddList": "Add another list...",
+			"AddList-input": "Enter the list title...",
+			"ListActions": {
+				"CopyList": "Copy list...",
+				"MoveList": "Add list...",
+				"SortBy": "Sort by...",
+				"SortByOptions": {
+					"CardName": "Card name (Alphabetically)",
+					"DateCreatedA": "Date created (Ascending)",
+					"DateCreatedD": "Date created (Descending)",
+					"DateModifiedA": "Date modified (Ascending)",
+					"DateModifiedD": "Date modified (Descending)"
+				},
+				"MoveCards": "Move all cards in this list...",
+				"ArchiveCards": "Archive all cards in this list...",
+				"ArchiveCardsDialog": {
+					"Text": "This will remove all the cards in this list from the board. To view archived cards and bring them back to the board, click “Menu” > “Archived Items.”",
+					"Button": "Archive All"
+				},
+				"ArchiveList": "Archive this list",
+				"DeleteList": "Delete this list"
+			},
+			"CardActions": {
+				"ChangeMembers": "Change Members",
+				"Move": "Move",
+				"Copy": "Copy",
+				"ChangeDate": "Change Due Date",
+				"Archive": "Archive",
+				"Share": "Share"
+			},
+			"CardDialog": {
+				"Visibility-tooltip": "Suscribe card changes.",
+				"Members": "Members",
+				"DueDate": "Due Date",
+				"Attachments": "Attachments",
+				"Priority": "Priority",
+				"Timesheet": "Timesheet",
+				"Checklist": "Checklist",
+				"Description": "Description",
+				"Description-input": "Add a detailed information...",
+				"AddComment": "Add Comment",
+				"AddComment-input": "Write a comment to the card activity...",
+				"Activity": "Activity"
+			}
+		},
+		"Timesheets": {
+			"Timesheet": "Timesheet"
+		},
+		"Common": {
+			"Save": "Save",
+			"Update": "Update",
+			"Remove": "Remove",
+			"Delete": "Delete",
+			"Cancel": "Cancel",
+			"Time": {
+				"lessMin": "Less than a minute ago",
+				"Mins": "minutes ago",
+				"Hours": "hours ago",
+				"Days": "days ago",
+				"Helper": ""
+			},
+			"Date": {
+				"No-Date": "No Date",
+				"Date": "Date",
+				"Time": "Time",
+				"Today": "Today",
+				"Tomorrow": "Tomorrow",
+				"Yesterday": "Yesterday",
+				"At": "At",
+				"Reminder": {
+					"Set": "Set Reminder",
+					"None": "None",
+					"AtDueTime": "At due time",
+					"5mBefore": "5 minutes before",
+					"15mBefore": "15 minutes before",
+					"30mBefore": "30 minutes before",
+					"1hBefore": "1 hour before",
+					"2hBefore": "2 hour before",
+					"6hBefore": "6 hour before",
+					"12hBefore": "12 hour before",
+					"1dBefore": "1 day before",
+					"2dBefore": "2 day before"
+				}
+			},
+			"Members": {
+				"No-Members": "No Members",
+				"Search-input": "Search members...",
+				"Position-not-defined": "Position not defined"
+			},
+			"Attachments": {
+				"No-Attachments": "No Attachments",
+				"File": "File",
+				"ProjectManager": "ProjectManager",
+				"Link-input": "Insert link here...",
+				"Link-save": "Save Link",
+				"Name": "Name",
+				"Link": "Link",
+				"Remove-text": "Remove this attachment?"
+			},
+			"Priority": {
+				"No-Priority": "Not Applicable",
+				"Low": "Low",
+				"Moderate": "Moderate",
+				"High": "High",
+				"Critical": "Critical",
+				"Immediate": "Immediate"
+			},
+			"Checklist": {
+				"Checklist": "Checklist"
+			}
+		}
+	},
+	"SERVER": {
+		"Internal-error": "Internal server error, please conctact our support service",
+		"Token-PasswordReset-error": "Token used has expired, restart the password reset process",
+		"Token-LogIn-error": "Token used has expired, please log in again",
+		"Parameter-missing": "Please, fill up all parameters"
+	}
+}

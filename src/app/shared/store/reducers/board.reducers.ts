@@ -77,7 +77,10 @@ export function boardReducers (
                   if (action.payload.error.backup !== undefined) {
                         const executedAction = findExecutedAction(action.payload.error.backup.action, action.payload.error.backup.params);
 
+                        console.log(executedActions);
                         if (executedAction !== undefined) {
+                              console.log('Recovery Found:');
+                              console.log(executedAction);
                               return {
                                     ...executedAction.State
                               };
@@ -91,7 +94,11 @@ export function boardReducers (
             }
 
             case EBoardActions.SaveBoardState: {
-                  addExecutedAction(action.payload.action, state, null);
+                  if (action.payload.data !== undefined) {
+                        addExecutedAction(action.payload.action, state, action.payload.data);
+                  } else {
+                        addExecutedAction(action.payload.action, state, null);
+                  }
                   return state;
             }
 
@@ -244,17 +251,25 @@ export function boardReducers (
                         )
                   };
             }
-            case EBoardActions.UpdateCardListPriority: {
-                  addExecutedAction(action, state, action.payload);
+            case EBoardActions.UpdateCardListPosition: {
+                  modifyExecutedAction(action, action.payload);
                   return {
                         ...state,
                         cardlists: cardListAdapter.updateMany(
                               action.payload.cardLists.map(cardList => Object.assign({},
-                                    {id: cardList._id, changes: {priority: cardList.priority}})),
-                              {
-                                    ...state.cardlists,
-                                    error: null
-                              }
+                                    {id: cardList._id, changes: {position: cardList.position}})),
+                              state.cardlists
+                        )
+                  };
+            }
+            case EBoardActions.UpdateCardListPositionSuccess: {
+                  removeExecutedAction(EBoardActions.UpdateCardListPosition, action.payload);
+                  return {
+                        ...state,
+                        cardlists: cardListAdapter.updateMany(
+                              action.payload.cardLists.map(cardList => Object.assign({},
+                                    {id: cardList._id, changes: {position: cardList.position}})),
+                              state.cardlists
                         )
                   };
             }
@@ -268,7 +283,7 @@ export function boardReducers (
                         ),
                         carditems: cardItemAdapter.updateMany(
                               action.payload.cardLists[1].cards.map(cardItem => Object.assign({}, {
-                                    id: cardItem._id, changes: {priority: cardItem.priority, cardListId: cardItem.cardListId}
+                                    id: cardItem._id, changes: {position: cardItem.position, cardListId: cardItem.cardListId}
                               })),
                               state.carditems
                         )
@@ -279,7 +294,7 @@ export function boardReducers (
                         ...state,
                         carditems: cardItemAdapter.updateMany(
                               action.payload.cardItems.map(cardItem => Object.assign({}, {
-                                    id: cardItem._id, changes: {priority: cardItem.priority}
+                                    id: cardItem._id, changes: {position: cardItem.position}
                               })),
                               state.carditems
                         )
@@ -342,7 +357,7 @@ export function boardReducers (
                   };
             }
 
-            case EBoardActions.UpdateCardItemPriority: {
+            case EBoardActions.UpdateCardItemPosition: {
                   modifyExecutedAction(action, action.payload);
 
                   if (action.payload.changedId !== undefined) {
@@ -363,7 +378,7 @@ export function boardReducers (
 
                         state.carditems = cardItemAdapter.updateMany(
                               action.payload.from.carditems.map(cardItem => Object.assign({}, {
-                                    id: cardItem._id, changes: {priority: cardItem.priority}
+                                    id: cardItem._id, changes: {position: cardItem.position}
                               })),
                               state.carditems
                         );
@@ -373,7 +388,7 @@ export function boardReducers (
                         ...state,
                         carditems: cardItemAdapter.updateMany(
                               action.payload.to.carditems.map(cardItem => Object.assign({}, {
-                                    id: cardItem._id, changes: {priority: cardItem.priority, cardListId: action.payload.to.id}
+                                    id: cardItem._id, changes: {position: cardItem.position, cardListId: action.payload.to.id}
                               })),
                               state.carditems
                         )

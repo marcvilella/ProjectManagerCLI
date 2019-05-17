@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar, MatDialog } from '@angular/material'
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { buttonLabelTranslateX, buttonSpinnerTranslateX, computeButtonTranslateX } from '../../../shared/modules/animations';
 import { AuthService } from '../../../shared/services/auth.service';
 
@@ -20,34 +20,34 @@ import { AuthDialog } from './auth.dialog.component';
     ]
 })
 
-export class RequestPasswordResetComponent{
+export class RequestPasswordResetComponent {
 
     //#region Properties
 
-    languageSelected: string;    
+    languageSelected: string;
     languages = LanguagesList;
-    
+
     //#endregion
 
     //#region FormControls
 
     fullNameFormControl = new FormControl('', [Validators.required]);
-    emailFormControl = new FormControl('', 
+    emailFormControl = new FormControl('',
     {
         validators: [
             Validators.required,
             Validators.pattern(/^[a-z0-9](\.?[a-z0-9_-]){0,}@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$/)
         ],
-        updateOn: "blur"
+        updateOn: 'blur'
     });
 
-    request: boolean = false;
+    request = false;
     @ViewChild('buttonLabel') buttonLabel: ElementRef;
     labelTransform: number;
     spinnerPadding: number;
 
     //#endregion
-    
+
     //#region Constructor
 
     constructor(private userAuth: AuthService, private router: Router, public snackBar: MatSnackBar, public dialog: MatDialog, public translate: TranslateService) {
@@ -65,17 +65,18 @@ export class RequestPasswordResetComponent{
 
     //#region Functions
 
-    onSubmit(){
+    onSubmit() {
 
-        if(!this.emailFormControl.valid || !this.fullNameFormControl.valid)
+        if (!this.emailFormControl.valid || !this.fullNameFormControl.valid) {
             return;
-        
-        //Update current width and trigger animation
-        let widths = computeButtonTranslateX(320, this.buttonLabel.nativeElement.clientWidth)
+        }
+
+        // Update current width and trigger animation
+        const widths = computeButtonTranslateX(320, this.buttonLabel.nativeElement.clientWidth);
         this.labelTransform = widths[0];
         this.spinnerPadding = widths[1];
 
-        //Trigger animation
+        // Trigger animation
         this.request = true;
 
         this.userAuth.requestResetPassword(this.fullNameFormControl.value, this.emailFormControl.value).subscribe(
@@ -86,32 +87,32 @@ export class RequestPasswordResetComponent{
                     width: '500px',
                     data: {
                         mode: 0,
-                        title: this.translate.instant("HOME.RequestPasswordReset.WarningDialog.Title"),
-                        content: this.translate.instant("HOME.RequestPasswordReset.WarningDialog.Content")
+                        title: this.translate.instant('HOME.RequestPasswordReset.WarningDialog.Title'),
+                        content: this.translate.instant('HOME.RequestPasswordReset.WarningDialog.Content')
                     }
                 });
             },
             error => {
                 this.request = false;
 
-                switch(error.status){
-                    case 401: 
+                switch (error.status) {
+                    case 401:
                         this.emailFormControl.setErrors({notDataMatch: true});
                     break;
                     case 404:
                         this.emailFormControl.setErrors({notMatch: true});
                     break;
                     default:
-                        this.snackBar.open(this.translate.instant("SERVER.Internal-error"), "", {duration: 5000});
+                        this.snackBar.open(this.translate.instant('SERVER.Internal-error'), '', {duration: 5000});
                     break;
                 }
             }
         );
     }
 
-    onLanguageChange(lang: string){
-        localStorage.setItem('language', lang)
-        this.translate.use(lang)
+    onLanguageChange(lang: string) {
+        localStorage.setItem('language', lang);
+        this.translate.use(lang);
     }
 
     //#endregion

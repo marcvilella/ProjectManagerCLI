@@ -26,7 +26,7 @@
               <board-menu-item [board]="board"></board-menu-item>
             </div>
           </mat-expansion-panel>
-          <mat-expansion-panel>
+          <mat-expansion-panel expanded="true">
             <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'" (click)="$event.stopPropagation()">
               <mat-panel-title class="header-component-mat-content-expander-title">
                 <mat-icon svgIcon="star" class="icon"></mat-icon>
@@ -94,7 +94,7 @@
           
           <mat-divider></mat-divider>
   
-          <mat-list-item (click)="toggleActive($event)" class="application-menu-item">
+          <mat-list-item (click)="toggleActive($event)" class="application-menu-item" [routerLink]="['./calendar']">
             <mat-icon matListIcon svgIcon="calendar" class="application-menu-item-icon"></mat-icon>
             <p matLine *ngIf="isExpanded">Calendar</p>
           </mat-list-item>

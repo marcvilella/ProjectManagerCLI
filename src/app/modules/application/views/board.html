@@ -23,7 +23,7 @@
                         <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="board.lists" (cdkDropListDropped)="drop($event)">
                               <!-- Lists -->
                               <div *ngFor="let list of board.lists; index as listIndex" fxFlex="300px" class="board-column" cdkDrag>
-                                    <board-card-list [list]="list" [index]="listIndex" [listTracker]="trackCardListIds" [listNames]="cardListNames" (PriorityChanged)="dropCard($event)" (MoveListItems)="moveListTo($event)"></board-card-list>
+                                    <board-card-list [list]="list" [index]="listIndex" [listTracker]="trackCardListIds" [listNames]="cardListNames" (PositionChanged)="dropCard($event)" (MoveListItems)="moveListTo($event)"></board-card-list>
                               </div>
                               <!-- Add List -->
                               <div class="board-column" fxFlex="300px" (clickOutside)="addibleListHandler(false)">

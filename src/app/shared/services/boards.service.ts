@@ -21,7 +21,7 @@ export class BoardsService {
 
   getCardListsSuccess$: Observable<ICardList[]>;
   addCardListSuccess$: Observable<ICardList>;
-  updateCardListPrioritySuccess$: Observable<number>;
+  updateCardListPositionSuccess$: Observable<ICardList[]>;
   moveCardListItemsSuccess$: Observable<ICardList[]>;
   sortCardListSuccess$: Observable<ICardItem[]>;
   deleteCardListSuccess$: Observable<number>;
@@ -29,7 +29,7 @@ export class BoardsService {
 
   getCardItemsSuccess$: Observable<ICardItem[]>;
   addCardItemSuccess$: Observable<ICardItem>;
-  updateCardItemPrioritySuccess$: Observable<number>;
+  updateCardItemPositionSuccess$: Observable<number>;
   deleteCardItemSuccess$: Observable<number>;
   archiveCardItemSuccess$: Observable<number>;
 
@@ -47,7 +47,7 @@ export class BoardsService {
 
     this.getCardListsSuccess$ = this.socket.listen(EBoardActions.GetCardListsSuccess);
     this.addCardListSuccess$ = this.socket.listen(EBoardActions.AddCardListSuccess);
-    this.updateCardListPrioritySuccess$ = this.socket.listen(EBoardActions.UpdateCardListPrioritySuccess);
+    this.updateCardListPositionSuccess$ = this.socket.listen(EBoardActions.UpdateCardListPositionSuccess);
     this.moveCardListItemsSuccess$ = this.socket.listen(EBoardActions.MoveCardListItemsSuccess);
     this.sortCardListSuccess$ = this.socket.listen(EBoardActions.SortCardListSuccess);
     this.deleteCardListSuccess$ = this.socket.listen(EBoardActions.DeleteCardListSuccess);
@@ -55,7 +55,7 @@ export class BoardsService {
 
     this.getCardItemsSuccess$ = this.socket.listen(EBoardActions.GetCardItemsSuccess);
     this.addCardItemSuccess$ = this.socket.listen(EBoardActions.AddCardItemSuccess);
-    this.updateCardItemPrioritySuccess$ = this.socket.listen(EBoardActions.UpdateCardItemPrioritySuccess);
+    this.updateCardItemPositionSuccess$ = this.socket.listen(EBoardActions.UpdateCardItemPositionSuccess);
     this.deleteCardItemSuccess$ = this.socket.listen(EBoardActions.DeleteCardItemSuccess);
     this.archiveCardItemSuccess$ = this.socket.listen(EBoardActions.ArchiveCardItemSuccess);
   }
@@ -138,9 +138,9 @@ export class BoardsService {
     return this.addCardListSuccess$;
   }
 
-  updateCardListPriority(data: {cardLists: ICardList[]}) {
-    this.socket.emit(EBoardActions.UpdateCardListPriority, data);
-    return this.updateCardListPrioritySuccess$;
+  updateCardListPosition(data: {cardLists: ICardList[]}) {
+    this.socket.emit(EBoardActions.UpdateCardListPosition, data);
+    return this.updateCardListPositionSuccess$;
   }
 
   moveCardListItems(data: {id: number, destinationId: number}) {
@@ -177,7 +177,7 @@ export class BoardsService {
     return this.addCardItemSuccess$;
   }
 
-  updateCardItemPriority(data: {
+  updateCardItemPosition(data: {
     changedId?: number,
     from?: {id: number, carditems: ICardItem[]},
     to: {id: number, carditems: ICardItem[]}
@@ -189,24 +189,24 @@ export class BoardsService {
         changedId: data.changedId,
         from: {
           id: data.from.id,
-          carditems: data.from.carditems.map(cardItem => <any>{id: cardItem._id, priority: cardItem.priority})
+          carditems: data.from.carditems.map(cardItem => <any>{id: cardItem._id, position: cardItem.position})
         },
         to: {
           id: data.to.id,
-          carditems: data.to.carditems.map(cardItem => <any>{id: cardItem._id, priority: cardItem.priority})
+          carditems: data.to.carditems.map(cardItem => <any>{id: cardItem._id, position: cardItem.position})
         }
       };
     } else {
       recomposedData = {
         to: {
           id: data.to.id,
-          carditems: data.to.carditems.map(cardItem => <any>{id: cardItem._id, priority: cardItem.priority})
+          carditems: data.to.carditems.map(cardItem => <any>{id: cardItem._id, position: cardItem.position})
         }
       };
     }
 
-    this.socket.emit(EBoardActions.UpdateCardItemPriority, recomposedData);
-    return this.updateCardItemPrioritySuccess$;
+    this.socket.emit(EBoardActions.UpdateCardItemPosition, recomposedData);
+    return this.updateCardItemPositionSuccess$;
   }
 
   deleteCardItem(data: {id: number}) {

@@ -2,15 +2,16 @@ import { Component, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { moveItemInArray, CdkDragDrop, transferArrayItem} from '@angular/cdk/drag-drop';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
-import { CardList, CardItem, Board, IBoard, ICardItem } from 'src/app/shared/models/boards';
+import { IBoard, ICardItem, ICardList } from 'src/app/shared/models/boards';
 import { IAppState } from 'src/app/shared/store/state/app.state';
-import { GetBoard, UpdateBoard, UpdateBoardStarred, AddCardList, UpdateCardListPriority, UpdateCardItemPriority, SaveBoardState, MoveCardListItems } from 'src/app/shared/store/actions/board.actions';
+import { UpdateBoard, UpdateBoardStarred, AddCardList, UpdateCardListPosition,
+    UpdateCardItemPosition, SaveBoardState, MoveCardListItems } from 'src/app/shared/store/actions/board.actions';
 
 
 @Component({
-    selector: 'board-component',
+    selector: 'app-board',
     templateUrl: '../views/board.html',
     styleUrls: ['../styles/board.component.scss', '../../../app.component.scss'],
 })
@@ -89,7 +90,7 @@ export class BoardComponent {
         this._store.dispatch(new AddCardList({
             id: this.board._id,
             name: this.newCardListFormControl.value,
-            priority: this.board.lists.length
+            position: this.board.lists.length
         }));
 
         this.isNewCardListAddible = false;
@@ -98,17 +99,6 @@ export class BoardComponent {
 
     moveListTo(event: {id: number, destinationId: number}): void {
         this._store.dispatch(new MoveCardListItems({id: event.id, destinationId: event.destinationId}));
-
-        // const currentList = this.board.lists.find(m => m._id === event.currentListId);
-        // const newList = this.board.lists.find(m => m._id === event.newListId);
-        // let counter = newList.cards.length;
-        // currentList.cards.forEach(cardItem => {
-        //     cardItem.cardListId = event.newListId;
-        //     cardItem.priority = counter;
-        //     newList.cards.push(cardItem);
-        //     counter++;
-        // });
-        // currentList.cards = [];
     }
 
     //#endregion
@@ -123,22 +113,26 @@ export class BoardComponent {
         return this.board.lists.map(cardlist => cardlist.name);
     }
 
-    drop(event: CdkDragDrop<CardList[]>): void {
+    drop(event: CdkDragDrop<ICardList[]>): void {
         if (event.previousContainer === event.container) {
             if (event.previousIndex === event.currentIndex) {
                 return;
             }
 
+            this._store.dispatch(new SaveBoardState({
+                action: new UpdateCardListPosition(null)
+            }));
+
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
             let counter = 0;
             event.container.data.forEach(cardList => {
-                cardList.priority = counter;
+                cardList.position = counter;
                 counter++;
             });
 
-            this._store.dispatch(new UpdateCardListPriority({
-                cardLists: event.container.data.map(cardList => <any>{id: cardList._id, priority: cardList.priority})
+            this._store.dispatch(new UpdateCardListPosition({
+                cardLists: event.container.data.map(cardList => <ICardList>{_id: cardList._id, position: cardList.position})
             }));
         }
     }
@@ -146,7 +140,7 @@ export class BoardComponent {
     dropCard(event: CdkDragDrop<ICardItem[]>): void {
         let counter = 0;
         this._store.dispatch(new SaveBoardState({
-            action: new UpdateCardItemPriority(null)
+            action: new UpdateCardItemPosition(null)
         }));
 
         if (event.previousContainer === event.container) {
@@ -156,13 +150,13 @@ export class BoardComponent {
 
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
-            const currentCardItems = event.container.data.map(cardItem => <ICardItem>{_id: cardItem._id, priority: cardItem.priority});
+            const currentCardItems = event.container.data.map(cardItem => <ICardItem>{_id: cardItem._id, position: cardItem.position});
             currentCardItems.forEach(cardItem => {
-                cardItem.priority = counter;
+                cardItem.position = counter;
                 counter++;
             });
 
-            this._store.dispatch(new UpdateCardItemPriority({
+            this._store.dispatch(new UpdateCardItemPosition({
                 to: {
                     id: event.container.data[event.currentIndex].cardListId,
                     carditems: currentCardItems
@@ -174,20 +168,20 @@ export class BoardComponent {
                             event.previousIndex,
                             event.currentIndex);
 
-            const previusCardItems = event.previousContainer.data.map(cardItem => <ICardItem>{_id: cardItem._id, priority: cardItem.priority});
+            const previusCardItems = event.previousContainer.data.map(cardItem => <ICardItem>{_id: cardItem._id, position: cardItem.position});
             previusCardItems.forEach(cardItem => {
-                cardItem.priority = counter;
+                cardItem.position = counter;
                 counter++;
             });
 
             counter = 0;
-            const currentCardItems = event.container.data.map(cardItem => <ICardItem>{_id: cardItem._id, priority: cardItem.priority});
+            const currentCardItems = event.container.data.map(cardItem => <ICardItem>{_id: cardItem._id, position: cardItem.position});
             currentCardItems.forEach(cardItem => {
-                cardItem.priority = counter;
+                cardItem.position = counter;
                 counter++;
             });
 
-            this._store.dispatch(new UpdateCardItemPriority({
+            this._store.dispatch(new UpdateCardItemPosition({
                 changedId: event.container.data[event.currentIndex]._id,
                 from: {
                     id: event.container.data[event.currentIndex].cardListId,
@@ -203,22 +197,4 @@ export class BoardComponent {
       }
 
     //#endregion
-
-
-    testingCreate() {
-        const array: Array<CardItem> = new Array<CardItem>();
-        array.push(new CardItem('TFG'));
-        array.push(new CardItem('Angular'));
-        const array2: Array<CardItem> = new Array<CardItem>();
-        array2.push(new CardItem('Boards'));
-        array2.push(new CardItem('Dash'));
-        const array3: Array<CardItem> = new Array<CardItem>();
-        array3.push(new CardItem('English'));
-        array3.push(new CardItem('Spanish'));
-
-        this.board = new Board('Project Manager');
-        this.board.addCardList(new CardList('TODO', array));
-        this.board.addCardList(new CardList('Done', array2));
-        this.board.addCardList(new CardList('Perfect', array3));
-    }
 }

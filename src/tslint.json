@@ -10,14 +10,14 @@
         "component-selector": [
             true,
             "element",
-            ["home", "app", "board"],
+            ["home", "app", "common", "board", "calendar", "timesheet"],
             "kebab-case"
         ],
         "max-line-length": [
             true, 
             {
               "limit": 180, 
-              "ignore-pattern": "^import [^,]+ from |^export | implements"
+              "ignore-pattern": "^import [^,]+ from | ^export | implements"
             }
           ]
     }

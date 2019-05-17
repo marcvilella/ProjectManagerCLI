@@ -13,6 +13,10 @@ $app-theme: mat-light-theme($theme-app-primary, $theme-app-accent, $theme-app-wa
 
 /*#endregion */
 
+/*#region Calendar*/
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+/*#endregion*/
+
 /*#region Custom Predefined Classes*/
 
 /* No yellow background when autocomplete is used */
@@ -34,17 +38,13 @@ button.mat-menu-item {
     height: auto;
 }
 
-// svg {
-//     overflow: hidden;
-//     vertical-align: unset;
-// }
-
 /*#endregion */
 
 /*#region Dialog Classes*/
 
 /* Dialog with custom borders for forms, up to within content */
 .form-dialog-container .mat-dialog-container {
+    background: rgb(240, 240, 240);
     padding: 10px 20px;
 }
 

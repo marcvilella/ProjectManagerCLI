@@ -1,0 +1,63 @@
+<div class="item" fxLayout="column" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutGap="10px">
+            <mat-icon class="vertical-centered-margin" svgIcon="timesheet"></mat-icon>
+            <span class="title vertical-centered-margin">{{ 'APPLICATION.Timesheets.Timesheet' | translate }}</span>
+
+            <div class="align-right">
+                  <button mat-icon-button class="only-icon-button-grid" (click)="getWeek(showWeek - 1)" [disabled]="showWeek < currentWeek - 4">
+                        <mat-icon class="no-vertical-alignment" svgIcon="before"></mat-icon>
+                  </button>
+                  <button mat-icon-button class="only-icon-button-grid" (click)="getWeek(currentWeek)"  [disabled]="showWeek === currentWeek">
+                        <mat-icon class="no-vertical-alignment" svgIcon="circle" style="height: 18px;"></mat-icon>
+                  </button>
+                  <button mat-icon-button class="only-icon-button-grid" (click)="getWeek(showWeek + 1)" [disabled]="showWeek === currentWeek">
+                        <mat-icon class="no-vertical-alignment" svgIcon="next"></mat-icon>
+                  </button>
+            </div>
+      </div>
+
+      <p-table [ngStyle]="{'width': '100%'}" class="mat-elevation-z1" [columns]="weekCols" [value]="weekData" 
+                                    [contextMenu]="contexmenu" [(contextMenuSelection)]="selectedDataRow" contextMenuSelectionMode="joint"
+                                    selectionMode="single" [(selection)]="selectedDataRow" [metaKeySelection]="true">
+            <ng-template pTemplate="header" let-columns>
+                  <tr>
+                        <th *ngFor="let col of columns" [ngStyle]="{'width': col.width}" [ngClass]="(col.settings.class === undefined) ? null : col.settings.class">
+                              <div *ngIf="col.header !== undefined">
+                                    {{col.header | datepipe:'shortDate'}}
+                              </div>
+                        </th>
+                  </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                  <tr [pContextMenuRow]="rowData" [pSelectableRow]="rowData" [pSelectableRowDisabled]="(rowData['0'] === undefined || rowData['0'].settings.selectable === undefined) ? null : !rowData['0'].settings.selectable" [ngClass]="(rowData['0'] === undefined) ? null : rowData['0'].settings.class">
+                        <td *ngFor="let col of columns" [ngStyle]="{'width': col.settings.width}" [ngClass]="(rowData[col.field].settings.class === undefined) ? null : rowData[col.field].settings.class" pEditableColumn>
+                              <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                          <div *ngIf="rowData[col.field].settings.editable !== false"> 
+                                                <input pInputText [type]="(rowData[col.field].settings.type === undefined) ? 'text' : rowData[col.field].settings.type" class="input-padding"
+                                                                  [min]="(rowData[col.field].settings.min === undefined) ? null : rowData[col.field].settings.min" [max]="(rowData[col.field].settings.max === undefined) ? null : rowData[col.field].settings.max"  [step]="(rowData[col.field].settings.step === undefined) ? null : rowData[col.field].settings.step" 
+                                                                  [(ngModel)]="rowData[col.field].text" (input)="onInputChange(rowIndex, col.field); updateTotalsRow(col.field); updateTotalsColumn(rowIndex)">
+                                          </div>
+                                          <div class="input-disabled-padding" *ngIf="rowData[col.field].settings.editable === false">
+                                                {{rowData[col.field].text | numberpipe}}
+                                          </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                          {{rowData[col.field].text | numberpipe}}
+                                    </ng-template>
+                              </p-cellEditor>
+                        </td>
+                        <!-- <td *ngFor="let col of columns">
+                              {{rowData[col.field].text}}
+                        </td> -->
+                  </tr>
+            </ng-template>
+      </p-table>
+
+      <div *ngIf="hasChanges">
+            <button mat-raised-button color="primary" class="button" (click)="updateDescription()">Save</button>
+            <button mat-raised-button color="warn" class="button" (click)="$event.stopPropagation()">Cancel</button>
+      </div>
+
+      <p-contextMenu #contexmenu [model]="contextItems"></p-contextMenu>
+</div>

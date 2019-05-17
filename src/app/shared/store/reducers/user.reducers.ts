@@ -3,15 +3,15 @@ import { userAdapter, IUserState, initialUserState } from '../state/user.state';
 
 export function userReducers (
       state: IUserState = initialUserState,
-      action : UserActions
+      action: UserActions
 ): IUserState {
-      switch(action.type){
+      switch (action.type) {
 
             //#region Requests
 
-            case EUserActions.GetCurrentUser: 
-            case EUserActions.GetUsersFromBoard: 
-            case EUserActions.GetUser:{
+            case EUserActions.GetCurrentUser:
+            case EUserActions.GetUsersFromBoard:
+            case EUserActions.GetUser: {
                   return {
                     ...state,
                     isLoading: true,
@@ -23,7 +23,7 @@ export function userReducers (
 
             //#region Failure
 
-            case EUserActions.Failure:{
+            case EUserActions.Failure: {
                   return {
                     ...state,
                     isLoading: false,
@@ -37,7 +37,7 @@ export function userReducers (
 
             case EUserActions.GetCurrentUserSuccess: {
                   return userAdapter.upsertOne(
-                        action.payload, 
+                        action.payload,
                         {
                         ...state,
                         selectedUserId: action.payload._id,
@@ -47,7 +47,7 @@ export function userReducers (
             }
             case EUserActions.GetUsersFromBoardSuccess: {
                   return userAdapter.upsertMany(
-                        action.payload, 
+                        action.payload,
                         {
                         ...state,
                         isLoading: false,

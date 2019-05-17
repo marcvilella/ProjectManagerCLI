@@ -15,7 +15,7 @@ import { UpdateBoardStarred, DeleteBoard } from 'src/app/shared/store/actions/bo
     trigger('onConfigurationChange', [
       state('false',
         style({
-          transform: 'translateX(100px)',
+          transform: 'translateX(100px)'
         })
       ),
       state('true',

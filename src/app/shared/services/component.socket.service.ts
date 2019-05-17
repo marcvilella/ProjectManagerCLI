@@ -7,10 +7,10 @@ import { Config } from '../models/config';
 
 @Injectable()
 export class ComponentSocketService {
-      
+
       private socket: SocketIOClient.Socket;
 
-      constructor(){
+      constructor() {
             this.socket = socketIo(Config.socketConnection + '?token=' + localStorage.getItem('access_token'));
       }
 
