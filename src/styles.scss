@@ -50,7 +50,12 @@ button.mat-menu-item {
 
 /* Dialog with no borders, up to within content */
 .noborder-dialog-container .mat-dialog-container {
+    background: rgb(240, 240, 240);
     padding: 0px;
 }
 
 /*#endregion */
+
+.ng-scrollbar-layout {
+    max-height: inherit !important;
+}

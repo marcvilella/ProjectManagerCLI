@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SocketService } from './socket.service';
 import { EBoardActions } from '../store/actions/board.actions';
 
-import { IBoard, ICardList, ICardItem } from '../models/boards';
+import { IBoard, ICardList, ICardItem, IDueDate, IAttachment, ICheckList, ICheckItem } from '../models/boards';
 
 @Injectable()
 export class BoardsService {
@@ -28,9 +28,25 @@ export class BoardsService {
   archiveCardListSuccess$: Observable<number>;
 
   getCardItemsSuccess$: Observable<ICardItem[]>;
+  getCardItemSuccess$: Observable<ICardItem>;
   addCardItemSuccess$: Observable<ICardItem>;
+  addCardItemMemberSuccess$: Observable<{id: number, userId: number}>;
+  addCardItemAttachmentSuccess$: Observable<{cardId: number, attachment: IAttachment}>;
+  addCardItemChecklistSuccess$: Observable<{id: number, checklist: ICheckList}>;
+  addCardItemChecklistItemSuccess$: Observable<{id: number, checklistId: number, checkitem: ICheckItem}>;
   updateCardItemPositionSuccess$: Observable<number>;
+  updateCardItemProperties$: Observable<{id: number, name: string, description: string}>;
+  updateCardItemDueDateSuccess$: Observable<{id: number, dueDate: IDueDate}>;
+  updateCardItemPrioritySuccess$: Observable<{id: number, priority: number}>;
+  updateCardItemAttachmentSuccess$: Observable<{id: number, cardId: number, name: string, value: string}>;
+  updateCardItemChecklistSuccess$: Observable<{id: number, checklistId: number, name: string, hide: boolean}>;
+  updateCardItemChecklistItemSuccess$: Observable<{id: number, checkitemId: number, name: string, checked: boolean}>;
   deleteCardItemSuccess$: Observable<number>;
+  deleteCardItemMemberSuccess$: Observable<{id: number, userId: number}>;
+  deleteCardItemDueDateSuccess$: Observable<number>;
+  deleteCardItemAttachmentSuccess$: Observable<{id: number, cardId: number}>;
+  deleteCardItemChecklistSuccess$: Observable<{id: number, checklistId: number}>;
+  deleteCardItemChecklistItemSuccess$: Observable<{id: number, checkitemId: number}>;
   archiveCardItemSuccess$: Observable<number>;
 
   constructor(private socket: SocketService) {
@@ -54,9 +70,25 @@ export class BoardsService {
     this.archiveCardListSuccess$ = this.socket.listen(EBoardActions.ArchiveCardListSuccess);
 
     this.getCardItemsSuccess$ = this.socket.listen(EBoardActions.GetCardItemsSuccess);
+    this.getCardItemSuccess$ = this.socket.listen(EBoardActions.GetCardItemSuccess);
     this.addCardItemSuccess$ = this.socket.listen(EBoardActions.AddCardItemSuccess);
+    this.addCardItemMemberSuccess$ = this.socket.listen(EBoardActions.AddCardItemMemberSuccess);
+    this.addCardItemAttachmentSuccess$ = this.socket.listen(EBoardActions.AddCardItemAttachmentSuccess);
+    this.addCardItemChecklistSuccess$ = this.socket.listen(EBoardActions.AddCardItemChecklistSuccess);
+    this.addCardItemChecklistItemSuccess$ = this.socket.listen(EBoardActions.AddCardItemChecklistItemSuccess);
     this.updateCardItemPositionSuccess$ = this.socket.listen(EBoardActions.UpdateCardItemPositionSuccess);
+    this.updateCardItemProperties$ = this.socket.listen(EBoardActions.UpdateCardItemPropertiesSuccess);
+    this.updateCardItemDueDateSuccess$ = this.socket.listen(EBoardActions.UpdateCardItemDueDateSuccess);
+    this.updateCardItemPrioritySuccess$ = this.socket.listen(EBoardActions.UpdateCardItemPrioritySuccess);
+    this.updateCardItemAttachmentSuccess$ = this.socket.listen(EBoardActions.UpdateCardItemAttachmentSuccess);
+    this.updateCardItemChecklistSuccess$ = this.socket.listen(EBoardActions.UpdateCardItemChecklistSuccess);
+    this.updateCardItemChecklistItemSuccess$ = this.socket.listen(EBoardActions.UpdateCardItemChecklistItemSuccess);
     this.deleteCardItemSuccess$ = this.socket.listen(EBoardActions.DeleteCardItemSuccess);
+    this.deleteCardItemMemberSuccess$ = this.socket.listen(EBoardActions.DeleteCardItemMemberSuccess);
+    this.deleteCardItemDueDateSuccess$ = this.socket.listen(EBoardActions.DeleteCardItemDueDateSuccess);
+    this.deleteCardItemAttachmentSuccess$ = this.socket.listen(EBoardActions.DeleteCardItemAttachmentSuccess);
+    this.deleteCardItemChecklistSuccess$ = this.socket.listen(EBoardActions.DeleteCardItemChecklistSuccess);
+    this.deleteCardItemChecklistItemSuccess$ = this.socket.listen(EBoardActions.DeleteCardItemChecklistItemSuccess);
     this.archiveCardItemSuccess$ = this.socket.listen(EBoardActions.ArchiveCardItemSuccess);
   }
 
@@ -80,10 +112,10 @@ export class BoardsService {
 
   updateBoard(data: {id: number, name?: string, mode?: string, colorLight?: string, colorDark?: string}) {
 
-    let datax = {};
+    let newData = {};
 
     if (data.mode !== undefined || data.colorLight !== undefined || data.colorDark !== undefined) {
-      datax = {
+      newData = {
         id: data.id,
         name: data.name,
         settings: {
@@ -93,19 +125,13 @@ export class BoardsService {
         }
       };
     } else {
-      datax = {
+      newData = {
         id: data.id,
         name: data.name
       };
     }
 
-      console.log('Check UPDATE BOARD:');
-      console.log('DATA:');
-      console.log(data);
-      console.log('DATAX:');
-      console.log(datax);
-
-    this.socket.emit(EBoardActions.UpdateBoard, datax);
+    this.socket.emit(EBoardActions.UpdateBoard, newData);
     return this.updateBoardSuccess$;
   }
 
@@ -172,9 +198,34 @@ export class BoardsService {
     return this.getCardItemsSuccess$;
   }
 
+  getCardItem(data: {id: number}) {
+    this.socket.emit(EBoardActions.GetCardItem, data);
+    return this.getCardItemSuccess$;
+  }
+
   addCardItem(data: {id: number, name: string}) {
     this.socket.emit(EBoardActions.AddCardItem, data);
     return this.addCardItemSuccess$;
+  }
+
+  addCardItemMember(data: {id: number, userId: number}) {
+    this.socket.emit(EBoardActions.AddCardItemMember, data);
+    return this.addCardItemMemberSuccess$;
+  }
+
+  addCardItemAttachment(data: {cardId: number, value: string}) {
+    this.socket.emit(EBoardActions.AddCardItemAttachment, data);
+    return this.addCardItemAttachmentSuccess$;
+  }
+
+  addCardItemChecklist(data: {id: number}) {
+    this.socket.emit(EBoardActions.AddCardItemChecklist, data);
+    return this.addCardItemChecklistSuccess$;
+  }
+
+  addCardItemChecklistItem(data: {id: number, checklistId: number}) {
+    this.socket.emit(EBoardActions.AddCardItemChecklistItem, data);
+    return this.addCardItemChecklistItemSuccess$;
   }
 
   updateCardItemPosition(data: {
@@ -209,9 +260,64 @@ export class BoardsService {
     return this.updateCardItemPositionSuccess$;
   }
 
+  updateCardItemProperties(data: {id: number, name?: string, description?: string}) {
+    this.socket.emit(EBoardActions.UpdateCardItemProperties, data);
+    return this.updateCardItemProperties$;
+  }
+
+  updateCardItemDueDate(data: {id: number, dueDate: IDueDate}) {
+    this.socket.emit(EBoardActions.UpdateCardItemDueDate, data);
+    return this.updateCardItemDueDateSuccess$;
+  }
+
+  updateCardItemPriority(data: {id: number, priority: number}) {
+    this.socket.emit(EBoardActions.UpdateCardItemPriority, data);
+    return this.updateCardItemPrioritySuccess$;
+  }
+
+  updateCardItemAttachment(data: {id: number, cardId: number, name: string, value: string}) {
+    this.socket.emit(EBoardActions.UpdateCardItemAttachment, data);
+    return this.updateCardItemAttachmentSuccess$;
+  }
+
+  updateCardItemChecklist(data: {id: number, checklistId: number, name: string, hide: boolean}) {
+    this.socket.emit(EBoardActions.UpdateCardItemChecklist, data);
+    return this.updateCardItemChecklistSuccess$;
+  }
+
+  updateCardItemChecklistItem(data: {id: number, checkitemId: number, name: string, checked: boolean}) {
+    this.socket.emit(EBoardActions.UpdateCardItemChecklistItem, data);
+    return this.updateCardItemChecklistItemSuccess$;
+  }
+
   deleteCardItem(data: {id: number}) {
     this.socket.emit(EBoardActions.DeleteCardItem, data);
     return this.deleteCardItemSuccess$;
+  }
+
+  deleteCardItemMember(data: {id: number, userId: number}) {
+    this.socket.emit(EBoardActions.DeleteCardItemMember, data);
+    return this.deleteCardItemMemberSuccess$;
+  }
+
+  deleteCardItemDueDate(data: {id: number}) {
+    this.socket.emit(EBoardActions.DeleteCardItemDueDate, data);
+    return this.deleteCardItemDueDateSuccess$;
+  }
+
+  deleteCardItemAttachment(data: {id: number, cardId: number}) {
+    this.socket.emit(EBoardActions.DeleteCardItemAttachment, data);
+    return this.deleteCardItemAttachmentSuccess$;
+  }
+
+  deleteCardItemChecklist(data: {id: number, checklistId: number}) {
+    this.socket.emit(EBoardActions.DeleteCardItemChecklist, data);
+    return this.deleteCardItemChecklistSuccess$;
+  }
+
+  deleteCardItemChecklistItem(data: {id: number, checkitemId: number}) {
+    this.socket.emit(EBoardActions.DeleteCardItemChecklistItem, data);
+    return this.deleteCardItemChecklistItemSuccess$;
   }
 
   archiveCardItem(data: {id: number}) {

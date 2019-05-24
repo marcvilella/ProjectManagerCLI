@@ -10,65 +10,65 @@ export enum EUserActions {
       GetUsersFromBoardSuccess = '[User] Get Users from Board Success',
       GetUser = '[User] Get User',
       GetUserSuccess = '[User] Get User Success'
-      
+
 }
 
 //#region Failure
 
-export class Failure implements Action{
+export class Failure implements Action {
       public readonly type = EUserActions.Failure;
-      constructor(public payload: string){}
+      constructor(public payload: string) {}
 }
 
 //#endregion
 
 //#region Get Current User
 
-export class GetCurrentUser implements Action{
+export class GetCurrentUser implements Action {
       public readonly type = EUserActions.GetCurrentUser;
 }
 
-export class GetCurrentUserSuccess implements Action{
+export class GetCurrentUserSuccess implements Action {
       public readonly type = EUserActions.GetCurrentUserSuccess;
-      constructor(public payload: IUser){}
+      constructor(public payload: IUser) {}
 }
 
 //#endregion
 
 //#region Get Users from Board
 
-export class GetUsersFromBoard implements Action{
+export class GetUsersFromBoard implements Action {
       public readonly type = EUserActions.GetUsersFromBoard;
-      constructor(public payload: number){}
+      constructor(public payload: number) {}
 }
 
-export class GetUsersFromBoardSuccess implements Action{
+export class GetUsersFromBoardSuccess implements Action {
       public readonly type = EUserActions.GetUsersFromBoardSuccess;
-      constructor(public payload: IUser[]){}
+      constructor(public payload: IUser[]) {}
 }
 
 //#endregion
 
 //#region Get User
 
-export class GetUser implements Action{
+export class GetUser implements Action {
       public readonly type = EUserActions.GetUser;
       constructor(public payload: number) {}
 }
 
-export class GetUserSuccess implements Action{
+export class GetUserSuccess implements Action {
       public readonly type = EUserActions.GetUserSuccess;
-      constructor(public payload: IUser){}
+      constructor(public payload: IUser) {}
 }
 
 //#endregion
 
-export type UserActions = 
+export type UserActions =
       | Failure
-      | GetCurrentUser 
+      | GetCurrentUser
       | GetCurrentUserSuccess
-      | GetUsersFromBoard 
-      | GetUsersFromBoardSuccess 
-      | GetUser 
+      | GetUsersFromBoard
+      | GetUsersFromBoardSuccess
+      | GetUser
       | GetUserSuccess
       ;

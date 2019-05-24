@@ -1,7 +1,9 @@
 import { EBoardActions, BoardActions } from '../actions/board.actions';
 import { IMergeBoardState, initialMergeBoardState, boardAdapter, cardListAdapter, cardItemAdapter } from '../state/board.state';
-import { IBoard, ICardList, ICardItem } from '../../models/boards';
+import { IBoard, ICardList, ICardItem, IAttachment, ICheckList } from '../../models/boards';
 import swal from 'sweetalert';
+import { IMessage } from '../../models/message';
+import { IUser } from '../../models/user';
 
 const executedActions: Array<{Action: BoardActions, State: IMergeBoardState, Payload: any}> = [];
 
@@ -11,9 +13,9 @@ function addExecutedAction(action: BoardActions, state: IMergeBoardState, payloa
       }
 }
 
-function findExecutedAction(action: string, payload: any): {Action: BoardActions, State: IMergeBoardState, Payload: any} {
+function findExecutedAction(timestamp: any): {Action: BoardActions, State: IMergeBoardState, Payload: any} {
       for (let index = executedActions.length - 1; index >= 0; index--) {
-            if (executedActions[index].Action.type === action && executedActions[index].Payload.toString() === payload.toString()) {
+            if (executedActions[index].Payload.timestamp === timestamp) {
                   return executedActions[index];
             }
       }
@@ -26,10 +28,18 @@ function removeExecutedAction(action: string, payload: any): void {
 }
 
 function modifyExecutedAction(action: BoardActions, payload: any): void {
-      let index = executedActions.length - 1;
-      for ( ; index >= 0; index--) {
+      for (let index = executedActions.length - 1 ; index >= 0; index--) {
             if (executedActions[index].Action.type === action.type && executedActions[index].Payload === null) {
                   executedActions[index].Payload = payload;
+                  break;
+            }
+      }
+}
+
+export function addBoardTimestamp(action: string, timestamp: number) {
+      for (let index = executedActions.length - 1 ; index >= 0; index--) {
+            if (executedActions[index].Action.type === action) {
+                  executedActions[index].Payload.timestamp = timestamp;
                   break;
             }
       }
@@ -42,22 +52,6 @@ export function boardReducers (
       switch (action.type) {
 
             //#region Requests
-
-            case EBoardActions.GetBoards:
-            case EBoardActions.GetBoard:
-            case EBoardActions.AddBoard:
-            case EBoardActions.UpdateBoard:
-            case EBoardActions.UpdateBoardStarred:
-            case EBoardActions.AddCardList: {
-                  return {
-                  ...state
-                  // boards: boardAdapter.({}, {...state, error: null})
-                  // ...error: null
-                  // error: null
-                  // ...state.boards.error,
-                  // error: null
-                  };
-            }
 
             case EBoardActions.GetCardLists: {
 
@@ -74,8 +68,8 @@ export function boardReducers (
             case EBoardActions.Failure: {
                   swal(action.payload.error.name, action.payload.error.message, 'error');
 
-                  if (action.payload.error.backup !== undefined) {
-                        const executedAction = findExecutedAction(action.payload.error.backup.action, action.payload.error.backup.params);
+                  if (action.payload.error.timestamp !== undefined) {
+                        const executedAction = findExecutedAction(action.payload.error.timestamp);
 
                         console.log(executedActions);
                         if (executedAction !== undefined) {
@@ -320,6 +314,23 @@ export function boardReducers (
             //#region Card Item
 
             case EBoardActions.GetCardItemsSuccess: {
+                  action.payload.cardItems.forEach((card: ICardItem) => {
+                        card.createdAt = new Date(card.createdAt);
+                        card.modifiedAt = new Date(card.modifiedAt);
+                        if (card.dueDate !== undefined && card.dueDate.date !== undefined) {
+                              card.dueDate.date = new Date(card.dueDate.date);
+                        }
+                        if (card.attachments !== undefined) {
+                              card.attachments.forEach((attachment: IAttachment) => {
+                                    attachment.date = new Date(attachment.date);
+                                    let datatype = '';
+                                    for (let i = 0; i < attachment.dataType.length; i++) {
+                                          datatype = datatype + ' ' + attachment.dataType[i];
+                                    }
+                                    attachment.dataType = datatype;
+                              });
+                        }
+                  });
                   return {
                         ...state,
                         carditems: cardItemAdapter.upsertMany(
@@ -329,6 +340,34 @@ export function boardReducers (
                                     selectedCardItemIds: action.payload.cardItems.map(cardItem => cardItem._id),
                                     error: null
                               }
+                        )
+                  };
+            }
+
+            case EBoardActions.GetCardItemSuccess: {
+                  action.payload.cardItem.createdAt = new Date(action.payload.cardItem.createdAt);
+                  action.payload.cardItem.modifiedAt = new Date(action.payload.cardItem.modifiedAt);
+                        if (action.payload.cardItem.dueDate !== undefined && action.payload.cardItem.dueDate.date !== undefined) {
+                              action.payload.cardItem.dueDate.date = new Date(action.payload.cardItem.dueDate.date);
+                        }
+                        if (action.payload.cardItem.attachments !== undefined) {
+                              action.payload.cardItem.attachments.forEach((attachment: IAttachment) => {
+                                    attachment.date = new Date(attachment.date);
+                                    let datatype = '';
+                                    for (let i = 0; i < attachment.dataType.length; i++) {
+                                          datatype = datatype + ' ' + attachment.dataType[i];
+                                    }
+                                    attachment.dataType = datatype;
+                              });
+                        }
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.cardItem._id,
+                                    changes: action.payload.cardItem
+                              },
+                              state.carditems
                         )
                   };
             }
@@ -353,6 +392,74 @@ export function boardReducers (
                                     selectedCardItemIds: [...state.carditems.selectedCardItemIds, action.payload.cardItem._id],
                                     error: null
                               }
+                        )
+                  };
+            }
+
+            case EBoardActions.AddCardItemMemberSuccess: {
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {
+                                          users: [...state.carditems.entities[action.payload.id].users, <IUser>{_id: action.payload.userId}]
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.AddCardItemAttachmentSuccess: {
+                  action.payload.attachment.date = new Date(action.payload.attachment.date);
+                  let datatype = '';
+                  for (let i = 0; i < action.payload.attachment.dataType.length; i++) {
+                        datatype = datatype + ' ' + action.payload.attachment.dataType[i];
+                  }
+                  action.payload.attachment.dataType = datatype;
+
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.cardId,
+                                    changes: {
+                                          attachments: [...state.carditems.entities[action.payload.cardId].attachments, action.payload.attachment]
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.AddCardItemChecklistSuccess: {
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {
+                                          checklists: [...state.carditems.entities[action.payload.id].checklists, action.payload.checklist]
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.AddCardItemChecklistItemSuccess: {
+                  const index = state.carditems.entities[action.payload.id].checklists.findIndex(m => m._id === action.payload.checklistId);
+                  state.carditems.entities[action.payload.id].checklists[index].checkitems.push(action.payload.checkitem);
+
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {}
+                              },
+                              state.carditems
                         )
                   };
             }
@@ -390,6 +497,205 @@ export function boardReducers (
                               action.payload.to.carditems.map(cardItem => Object.assign({}, {
                                     id: cardItem._id, changes: {position: cardItem.position, cardListId: action.payload.to.id}
                               })),
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.UpdateCardItemPropertiesSuccess: {
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {
+                                          name: action.payload.name,
+                                          description: action.payload.description
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.UpdateCardItemDueDateSuccess: {
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {
+                                          dueDate: {date: new Date(action.payload.dueDate.date), done: action.payload.dueDate.done, remindAt: action.payload.dueDate.remindAt}
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.UpdateCardItemAttachmentSuccess: {
+                  const index = state.carditems.entities[action.payload.cardId].attachments.findIndex(m => m._id === action.payload.id);
+                  state.carditems.entities[action.payload.cardId].attachments[index].name = action.payload.name;
+                  state.carditems.entities[action.payload.cardId].attachments[index].value = action.payload.value;
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.cardId,
+                                    changes: {}
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.UpdateCardItemChecklistSuccess: {
+                  const index = state.carditems.entities[action.payload.id].checklists.findIndex(m => m._id === action.payload.checklistId);
+                  state.carditems.entities[action.payload.id].checklists[index].name = action.payload.name;
+                  state.carditems.entities[action.payload.id].checklists[index].hide = action.payload.hide;
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {}
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.UpdateCardItemChecklistItemSuccess: {
+                  state.carditems.entities[action.payload.id].checklists.forEach((checklist: ICheckList) => {
+                        if (checklist.checkitems.some(m => m._id === action.payload.checkitemId)) {
+                              const index = checklist.checkitems.findIndex(m => m._id === action.payload.checkitemId);
+                              checklist.checkitems[index].name = action.payload.name;
+                              checklist.checkitems[index].checked = action.payload.checked;
+                        }
+                  });
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {}
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.UpdateCardItemPrioritySuccess: {
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {
+                                          priority: action.payload.priority
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.DeleteCardItemSuccess: {
+                  const cardlistId = state.carditems.entities[action.payload.id].cardListId;
+                  return {
+                        ...state,
+                        cardlists: cardListAdapter.updateOne({
+                              id: cardlistId,
+                              changes: {
+                                    cards: state.cardlists.entities[cardlistId].cards.filter(m => m._id !== action.payload.id)
+                              }},
+                              state.cardlists
+                        ),
+                        carditems: cardItemAdapter.removeOne(
+                              action.payload.id,
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.DeleteCardItemMemberSuccess: {
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {
+                                          users: state.carditems.entities[action.payload.id].users.filter(m => m._id !== action.payload.userId)
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.DeleteCardItemDueDateSuccess: {
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {
+                                          dueDate: undefined
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.DeleteCardItemAttachmentSuccess: {
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.cardId,
+                                    changes: {
+                                          attachments: state.carditems.entities[action.payload.cardId].attachments.filter(m => m._id !== action.payload.id)
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.DeleteCardItemChecklistSuccess: {
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {
+                                          checklists: state.carditems.entities[action.payload.id].checklists.filter(m => m._id !== action.payload.checklistId)
+                                    }
+                              },
+                              state.carditems
+                        )
+                  };
+            }
+
+            case EBoardActions.DeleteCardItemChecklistItemSuccess: {
+                  console.log(action.payload.checkitemId)
+                  state.carditems.entities[action.payload.id].checklists.forEach((checklist: ICheckList) => {
+                        console.log(checklist)
+                        if (checklist.checkitems.some(m => m._id === action.payload.checkitemId)) {
+                              console.log(checklist.checkitems.length)
+                              console.log(checklist.checkitems.filter(m => m._id !== action.payload.checkitemId).length)
+                              checklist.checkitems = checklist.checkitems.filter(m => m._id !== action.payload.checkitemId);
+                        }
+                  });
+
+                  return {
+                        ...state,
+                        carditems: cardItemAdapter.updateOne(
+                              {
+                                    id: action.payload.id,
+                                    changes: {}
+                              },
                               state.carditems
                         )
                   };

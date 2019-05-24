@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import * as socketIo from 'socket.io-client';
 import { Observable, Observer } from 'rxjs';
-import { Config } from '../models/config';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
@@ -11,7 +10,7 @@ export class ComponentSocketService {
       private socket: SocketIOClient.Socket;
 
       constructor() {
-            this.socket = socketIo(Config.socketConnection + '?token=' + localStorage.getItem('access_token'));
+            this.socket = socketIo(environment.server.url + '?token=' + localStorage.getItem('access_token'));
       }
 
       // public initSocket(): void {

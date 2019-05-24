@@ -24,9 +24,13 @@ import { environment } from 'src/environments/environment';
 import { appReducers } from './shared/store/reducers/app.reducers';
 import { UserEffects } from './shared/store/effects/user.effects';
 import { BoardEffects } from './shared/store/effects/board.effects';
-import { BoardsService } from './shared/services/boards.service';
-import { SocketService } from './shared/services/socket.service';
+import { MessageEffects } from './shared/store/effects/message.effects';
 import { UsersService } from './shared/services/users.service';
+import { BoardsService } from './shared/services/boards.service';
+import { MessagesService } from './shared/services/messages.service';
+import { SocketService } from './shared/services/socket.service';
+import { HelperService } from './shared/services/helper.service';
+
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -44,19 +48,17 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        // whitelistedDomains: new Array(new RegExp('^null$'))
-        whitelistedDomains: ['http://localhost:3000', 'localhost:3000'],
-        // blacklistedRoutes: ['localhost:3000/api/auth/']
+        whitelistedDomains: ['http://localhost:3000', 'localhost:3000']
       }
     }),
     StoreModule.forRoot( appReducers ),
-    EffectsModule.forRoot([UserEffects, BoardEffects]),
+    EffectsModule.forRoot([UserEffects, BoardEffects, MessageEffects]),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
     }) : []
   ],
-  providers: [AuthService, AuthGuard, UsersService, BoardsService, SocketService],
+  providers: [AuthService, SocketService, UsersService, BoardsService, MessagesService, AuthGuard, HelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

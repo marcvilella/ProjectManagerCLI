@@ -24,7 +24,7 @@ export const selectUserError: MemoizedSelector<IAppState, any> = createSelector(
 );
 
 export const selectUserIsLoading: MemoizedSelector<IAppState, boolean> = createSelector(
-      selectUserState, 
+      selectUserState,
       (state: IUserState): boolean => state.isLoading
 );
 
@@ -35,18 +35,18 @@ export const selectUserIsLoading: MemoizedSelector<IAppState, boolean> = createS
 export const selectAllUsersItems = createSelector(
       selectUserState,
       selectAllUserItems
-)
+);
 
 export const selectAllUsersEntities = createSelector(
       selectUserState,
       selectAllUserEntities
-)
+);
 
 export const selectUserById = (id: number) => createSelector(
-      selectAllUserItems, 
+      selectAllUserItems,
       (allUsers: IUser[]) => {
       if (allUsers) {
-            return allUsers.find(user => user._id == id);
+            return allUsers.find(user => user._id === id);
       } else {
             return null;
       }
@@ -57,11 +57,24 @@ export const selectCurrentUserId: MemoizedSelector<IAppState, number> = createSe
       (state: IUserState) => state.selectedUserId
 );
 
-export const selectCurrentUser = createSelector(
-      selectAllUsersEntities,
-      selectCurrentUserId,
-      (userEntities, userId) => userEntities[userId]
+export const selectCurrentUser = () => createSelector(
+      selectUserState,
+      (state: IUserState) => {
+            if (state.selectedUserId !== null) {
+                  return state.entities[state.selectedUserId];
+            }
+      },
 );
+
+export const selectUsersByBoardId = (id: number) => createSelector(
+      selectAllUsersItems,
+      (users: IUser[]) => {
+      if (users) {
+            return users.filter(user => user.boards !== undefined && user.boards.some(m => m._id === id));
+      } else {
+            return null;
+      }
+});
 
 //#endregion
 

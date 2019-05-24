@@ -7,9 +7,9 @@
       </mat-card-content>
 </mat-card>      
 <mat-menu #cardOptions="matMenu">
-      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.ChangeMembers' | translate }}</button>
-      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Move' | translate }}</button>
-      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Copy' | translate }}</button>
-      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.ChangeDate' | translate }}</button>
-      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Archive' | translate }}</button>
+      <button mat-menu-item disabled>{{ 'APPLICATION.Boards.CardActions.ChangeMembers' | translate }}</button>
+      <button mat-menu-item disabled>{{ 'APPLICATION.Boards.CardActions.Move' | translate }}</button>
+      <button mat-menu-item disabled>{{ 'APPLICATION.Boards.CardActions.Copy' | translate }}</button>
+      <button mat-menu-item disabled>{{ 'APPLICATION.Boards.CardActions.ChangeDate' | translate }}</button>
+      <button mat-menu-item (click)="deleteCard()">{{ 'APPLICATION.Boards.CardActions.Archive' | translate }}</button>
 </mat-menu>

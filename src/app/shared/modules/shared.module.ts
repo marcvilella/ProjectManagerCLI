@@ -61,7 +61,7 @@ export class SharedModule {
     registerLocaleData(localeEnGb, 'en-GB');
 
     const lang: string = localStorage.getItem('language');
-    if (lang === undefined) {
+    if (lang === null) {
       const browserLang = translate.getBrowserLang();
       translate.use(browserLang.match(/en|es/) ? browserLang : 'en');
 

@@ -12,8 +12,8 @@ import { TranslateService } from '@ngx-translate/core';
 //
 import { IAppState } from '../../shared/store/state/app.state';
 import { GetCurrentUser } from '../../shared/store/actions/user.actions';
-import { selectAllUsersItems } from '../../shared/store/selectors/user.selectors';
-import { User, IUser } from '../../shared/models/user'; 
+import { selectAllUsersItems, selectCurrentUser } from '../../shared/store/selectors/user.selectors';
+import { IUser } from '../../shared/models/user'; 
 import { BoardCreateDialog } from './components/board.create.component';
 import { selectAllBoardsItems } from 'src/app/shared/store/selectors/board.selectors';
 import { GetBoards, GetBoard } from 'src/app/shared/store/actions/board.actions';
@@ -56,7 +56,7 @@ export class ApplicationComponent {
 
   isExpanded: boolean;
   element: HTMLElement;
-  user: User;
+  user: IUser;
 
   constructor(
     private router: Router,
@@ -74,7 +74,18 @@ export class ApplicationComponent {
       if (decoded == null) {
         this.router.navigate(['../auth/log-in']);
       }
-      this.user = new User(decoded.sub, decoded.name, decoded.surname, decoded.name + ' ' + decoded.surname, decoded.email, '', decoded.role, '');
+
+      // this.user = new User(decoded.sub, decoded.name, decoded.surname, decoded.name + ' ' + decoded.surname, decoded.email, '', decoded.role, '');
+      this._store.pipe(select(selectCurrentUser())).subscribe((user: IUser) => {
+        if (user !== undefined) {
+          this.user = user;
+        } else {
+          this.user = {
+            _id: decoded.sub, name: decoded.name, surname: decoded.surname, fullname: decoded.name + ' ' + decoded.surname, email: decoded.email, role: decoded.role,
+            image: null, boards: null , company: null, position: null, password: null
+          };
+        }
+      });
 
       this.boardSearcher = new FormControl('');
       this.users$ = this._store.pipe(select(selectAllUsersItems));
@@ -259,7 +270,7 @@ export class ApplicationComponent {
 
     this.userAuth.logOut(this.user._id).subscribe(
       response => {
-        // localStorage.removeItem('access_token');
+        localStorage.removeItem('access_token');
         this.router.navigate(['../auth/log-in']);
       },
       error => {

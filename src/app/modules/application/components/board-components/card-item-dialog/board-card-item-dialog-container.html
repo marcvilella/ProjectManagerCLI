@@ -1,0 +1,7 @@
+<div *ngIf="(getCard() | async) as card; else loading">
+      <board-card-item-dialog [selectedUser]="selectedUser$ | async" [card]="card" [users]="data.users$ | async"></board-card-item-dialog>
+</div>
+
+<ng-template #loading>
+      Loading stuff...
+</ng-template>

@@ -1,17 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { IAttachment } from 'src/app/shared/models/boards';
 
 @Component({
       selector: 'common-attachment-avatar',
       templateUrl: './attachment.avatar.html',
-      styleUrls: ['../../../styles/common.scss']
+      styleUrls: ['../../../styles/common.scss'],
 })
 export class AttachmentsAvatarComponent implements OnInit {
 
       //#region Members
 
       @Input() attachment: IAttachment;
+
+      @Output() updatedProperties = new EventEmitter<{id: number, name: string, value?: string}>();
+      @Output() delete = new EventEmitter<number>();
 
       canReturn: Boolean;
 
@@ -30,9 +33,33 @@ export class AttachmentsAvatarComponent implements OnInit {
       ngOnInit() {
             this.Attachment = this.attachment;
             this.nameFormControl = new FormControl(this.Attachment.name, Validators.required);
-            if (this.Attachment.link !== undefined) {
-                  this.linkFormControl = new FormControl(this.Attachment.link, Validators.required); 
+            this.linkFormControl = new FormControl(this.Attachment.value, Validators.required);
+      }
+
+      //#endregion
+
+      //#region Functions
+
+      openAttachment(): void {
+            if (this.attachment.dataType === ' l i n k') {
+                  window.open(this.attachment.value, '_blank');
             }
+
+            this.canReturn = true;
+      }
+
+      saveProperties(): void {
+            if (this.attachment.dataType === ' l i n k') {
+                  this.updatedProperties.emit({id: this.attachment._id, name: this.nameFormControl.value, value: this.linkFormControl.value});
+            } else {
+                  this.updatedProperties.emit({id: this.attachment._id, name: this.nameFormControl.value});
+            }
+
+            this.canReturn = true;
+      }
+
+      deleteAttachment(): void {
+            this.delete.emit(this.attachment._id);
       }
 
       //#endregion
@@ -44,44 +71,8 @@ export class AttachmentsAvatarComponent implements OnInit {
                   event.stopPropagation();
             } else {
                   this.canReturn = false;
-                  // this.setDefaultCanReturn();
             }
       }
 
       //#endregion
-
-      //#region Functions - Link
-
-      editLink(): void {
-            console.log('open')
-      }
-
-      unselectLink(): void {
-            console.log('close')
-      }
-
-      saveLink(): void {
-            this.attachment.link = <String>this.linkFormControl.value;
-
-            this.canReturn = true;
-      }
-
-      //#endregion
-
-     //#region Async - Reset CanReturn
-
-     waitSeconds(miliseconds: any): Promise<any> {
-      return new Promise(resolve => {
-                  setTimeout(() => {
-                        resolve();
-                  }, miliseconds);
-            });
-      }
-
-      async setDefaultCanReturn() {
-            await this.waitSeconds(1000);
-            this.canReturn = false;
-      }
-
-//#endregion
 }

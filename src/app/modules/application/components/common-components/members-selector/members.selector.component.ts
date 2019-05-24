@@ -1,4 +1,4 @@
-import { Component, Input, Renderer2 } from '@angular/core';
+import { Component, Input, Renderer2, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IUser } from 'src/app/shared/models/user';
 import { ICardItem } from 'src/app/shared/models/boards';
@@ -21,19 +21,18 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
             ])
       ]
 })
-export class MembersSelectorComponent {
-
-      @Input() card: ICardItem;
+export class MembersSelectorComponent implements OnInit {
 
       //#region Members
 
-      canReturn: boolean;
+      @Input() users: IUser[];
+      @Input() selectedUsers: IUser[];
+      @Output() userSelected = new EventEmitter<number>();
+      @Output() userDeleted = new EventEmitter<number>();
 
       searchFormControl: FormControl;
-      selectedUsers: Array<String>;
-      // users: Array<IUser>;
-      users: Array<String>;
-      filteredUsers: Array<String>;
+      filteredUsers: IUser[];
+      canReturn: boolean;
 
       //#endregion
 
@@ -41,18 +40,12 @@ export class MembersSelectorComponent {
 
       constructor(
             private renderer2: Renderer2
-      ) {
-            this.canReturn  = false;
+      ) {}
 
+      ngOnInit() {
             this.searchFormControl = new FormControl('');
-            this.selectedUsers = new Array<String>();
-            this.users = new Array<String>();
-            this.users.push('Marc Vilella');
-            this.users.push('Xavier Vilella');
-            this.users.push('Marc Muñoz');
-            this.users.push('Xavier Muñoz');
-            this.users.push('Marc Pallarès');
             this.filteredUsers = this.users;
+            this.canReturn  = false;
       }
 
       //#endregion
@@ -64,12 +57,15 @@ export class MembersSelectorComponent {
       }
 
       userSearcherUpdated(): void {
-            this.filteredUsers = this.users.filter(m => m.match(new RegExp(this.searchFormControl.value, 'i')));
+            this.filteredUsers = this.users.filter(m => m.fullname.match(new RegExp(this.searchFormControl.value, 'i')));
       }
 
-      selectUser(user: String): void {
-            this.selectedUsers.push(user);
-            this.canReturn  = !this.canReturn;
+      selectUser(id: number): void {
+            if (this.selectedUsers.some(m => m._id === id)) {
+                  this.userDeleted.emit(id);
+            } else {
+                  this.userSelected.emit(id);
+            }
       }
 
       //#endregion

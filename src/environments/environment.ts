@@ -4,9 +4,11 @@
 
 export const environment = {
   production: false,
-  socket: {
-    baseUrl: 'http://localhost:3000'
-    //baseUrl: 'http://192.168.1.8:3000'
+  url: 'localhost:4200',
+  // url: 'http://192.168.1.5:4200',
+  server: {
+    url: 'http://localhost:3000',
+    // url: 'http://192.168.1.5:3000'
   },
   colors: {
     applicationColor: 'rgb(26, 35, 126)',

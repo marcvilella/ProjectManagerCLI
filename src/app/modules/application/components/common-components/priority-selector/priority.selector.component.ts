@@ -39,7 +39,7 @@ export class PrioritySelectorComponent implements OnInit {
 
       onSelectedChange(priority: number) {
             this.prioritySelected = this.priorities.find(m => m.priority === priority);
-            this.priorityChanged.emit(+this.prioritySelected);
+            this.priorityChanged.emit(this.prioritySelected.priority);
       }
 
       //#endregion

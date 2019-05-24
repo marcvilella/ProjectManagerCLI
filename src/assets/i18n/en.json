@@ -208,12 +208,15 @@
 				"Immediate": "Immediate"
 			},
 			"Checklist": {
-				"Checklist": "Checklist"
+				"Checklist": "Checklist",
+				"Task": "Task"
 			},
 			"Activity": {
 				"Messages": "Messages",
 				"CardActivitiy": "Card Activitiy",
-				"NoComments": "There are no comments yet"
+				"NoComments": "There are no comments yet",
+				"Edited": "Edited",
+				"Remove-text": "Remove this message?"
 			}
 		}
 	},

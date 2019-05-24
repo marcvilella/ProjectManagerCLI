@@ -13,14 +13,13 @@ import { PrimeNgModule } from 'src/app/shared/modules/primeng.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { MentionModule } from 'angular-mentions';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // Routing
 import { ApplicationRouting } from './application.routing';
 
 // Provider
-import { HelperService } from 'src/app/shared/services/helper.service';
 import { SocketService } from '../../shared/services/socket.service';
-import { ComponentSocketService } from '../../shared/services/component.socket.service';
 import { BoardsService } from 'src/app/shared/services/boards.service';
 import { UploadService } from 'src/app/shared/services/upload.service';
 
@@ -50,29 +49,30 @@ import { ActivityMessageComponent } from './components/common-components/activit
 import { AutoFocusDirective, ClickOutsideDirective, ClickInsideDirective, AutoSizeInputDirective, AutoSizeTextAreaDirective } from 'src/app/shared/modules/directives';
 
 // Pipes
-import { MyDatePipe, TimeAgoPipe, NumberPipe } from 'src/app/shared/modules/pipes';
+import { MyDatePipe, TimeAgoPipe, NumberPipe, HighlightSearch } from 'src/app/shared/modules/pipes';
 
 // Animations
 import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
+import { CardItemDialogContainerComponent } from './components/board-components/card-item-dialog/board-card-item-dialog-container.component';
 
 @NgModule({
   declarations: [
     ApplicationComponent,
     DashboardComponent,
 
-    //#region Application
+    // #region Application
 
     BoardMenuItemComponent,
 
-    //#endregion
+    // #endregion
 
-    //#region Calendar
+    // #region Calendar
 
     CalendarComponent,
 
-    //#endregion
+    // #endregion
 
-    //#region Board
+    // #region Board
 
     BoardComponent,
     BoardCreateDialog,
@@ -81,16 +81,17 @@ import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
     BoardCardListComponent,
     BoardCardItemComponent,
     CardItemDialogComponent,
+    CardItemDialogContainerComponent,
 
-    //#endregion Board
+    // #endregion Board
 
-    //#region Timesheet
+    // #region Timesheet
 
     TimesheetWeeklyInsertComponent,
 
-    //#endregion
+    // #endregion
 
-    //#region Common Components
+    // #region Common Components
 
     DatepickerComponent,
     MembersSelectorComponent,
@@ -102,29 +103,37 @@ import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
     ActivityViewerComponent,
     ActivityMessageComponent,
 
-    //#endregion
+    // #endregion
 
-    //#region Pipes
+    // #region Pipes
 
+    HighlightSearch,
     MyDatePipe,
     NumberPipe,
     TimeAgoPipe,
 
-    //#endregion
+    // #endregion
 
-    // Directives
+    // #region Directives
+
     AutoFocusDirective,
     ClickOutsideDirective,
     ClickInsideDirective,
     AutoSizeInputDirective,
     AutoSizeTextAreaDirective,
-    // Animation
+
+    // #endregion
+
+    // #region Animations
+
     AnimatedIconComponent
+
+    // #endregion
   ],
   entryComponents: [
     BoardCreateDialog,
     BoardCardDialog,
-    CardItemDialogComponent,
+    CardItemDialogContainerComponent,
     AttachmentUploadDialogComponent
   ],
   imports: [
@@ -145,14 +154,13 @@ import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+    NgScrollbarModule
   ],
   providers: [
     SocketService,
-    ComponentSocketService,
     BoardsService,
     BoardCreateDataService,
-    UploadService,
-    HelperService
+    UploadService
   ]
 })
 export class ApplicationModule { }

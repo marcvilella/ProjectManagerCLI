@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Router, CanLoad } from '@angular/router';
-import { Config, AuthURLs } from '../models/config';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
+import { Router, CanLoad } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthURLs } from '../models/config';
+import { environment } from 'src/environments/environment';
+import { SocketService } from './socket.service';
 
 @Injectable()// {
       // we declare that this service should be created
@@ -11,10 +13,7 @@ import { HttpClient } from '@angular/common/http';
 // })
 export class AuthService {
 
-      private url: string;
-
       constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
-            this.url = Config.authUrl;
       }
 
       setToken(token: string): boolean {
@@ -36,54 +35,54 @@ export class AuthService {
       }
 
       signUp(name: string, surname: string, email: string, company: string, language: string, password: string) {
-
             const params = {'name': name, 'surname': surname, 'email': email, 'company': company, 'password': password, 'language': language};
 
-            return this.http.post(this.url + AuthURLs.SignUp, params);
+            return this.http.post(environment.server.url + AuthURLs.authUrl + AuthURLs.signUp, params);
       }
 
       logIn(email: string, password: string) {
             const params = {'email': email, 'password': password};
 
-            return this.http.post<response>(this.url + AuthURLs.LogIn, params);
+            return this.http.post<response>(environment.server.url + AuthURLs.authUrl + AuthURLs.logIn, params);
       }
 
       logOut(id: number) {
             const params = {'id': id};
 
-            return this.http.post(this.url + AuthURLs.LogOut, params);
+            return this.http.post(environment.server.url + AuthURLs.authUrl + AuthURLs.logOut, params);
       }
 
       verifyEmail(token: string) {
-            return this.http.get(this.url + AuthURLs.VerifyEmail + '?code=' + token);
+            return this.http.get(environment.server.url + AuthURLs.authUrl + AuthURLs.verifyEmail + '?code=' + token);
       }
 
       requestResetPassword(fullname: string, email: string) {
             const params = {'fullname': fullname, 'email': email};
 
-            return this.http.post(this.url + AuthURLs.PasswordResetRequest, params);
+            return this.http.post(environment.server.url + AuthURLs.authUrl + AuthURLs.passwordResetRequest, params);
       }
 
       setResetPassword(token: string, password: string) {
             const params = {'token': token, 'password': password};
 
-            return this.http.post(this.url + AuthURLs.PasswordReset, params);
+            return this.http.post(environment.server.url + AuthURLs.authUrl + AuthURLs.passwordReset, params);
       }
 
 }
 
 @Injectable()
 export class AuthGuard implements CanLoad {
-  constructor(private router: Router, private jwtHelper: JwtHelperService) { }
+  constructor(private router: Router, private jwtHelper: JwtHelperService, private socketService: SocketService) { }
 
     canLoad() {
     if (!this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'))) {
-      return true;
+            this.socketService.reConnect();
+            return true;
     }
 
     localStorage.removeItem('access_token');
 
-    this.router.navigateByUrl('http://localhost:4200/auth/log-in');
+    this.router.navigateByUrl(environment.url + '/auth/log-in');
     return false;
   }
 }

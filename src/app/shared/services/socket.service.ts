@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import * as socketIo from 'socket.io-client';
-import { Observable, Observer, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { HelperService } from './helper.service';
+import { addBoardTimestamp } from '../store/reducers/board.reducers';
 
 @Injectable()
 export class SocketService {
@@ -10,14 +11,25 @@ export class SocketService {
       private socket: SocketIOClient.Socket;
       connected$ = new BehaviorSubject<boolean>(false);
 
-      constructor() {
+      constructor(private helper: HelperService) {
             console.log('Socket Service');
 
             if (localStorage.getItem('access_token') !== null) {
-                  this.socket = socketIo(environment.socket.baseUrl + '?token=' + localStorage.getItem('access_token'));
+                  this.socket = socketIo(environment.server.url + '?token=' + localStorage.getItem('access_token'));
 
                   this.socket.on('connect', () => this.connected$.next(true));
                   this.socket.on('disconnect', () => this.connected$.next(false));
+            }
+      }
+
+      reConnect(): void {
+            if (this.socket === undefined && localStorage.getItem('access_token') !== null) {
+                  this.socket = socketIo(environment.server.url + '?token=' + localStorage.getItem('access_token'));
+
+                  this.socket.on('connect', () => this.connected$.next(true));
+                  this.socket.on('disconnect', () => this.connected$.next(false));
+
+                  // TODO: Add here listens that has to be always
             }
       }
 
@@ -32,11 +44,24 @@ export class SocketService {
       }
 
       disconnect() {
+            console.log('disconnect')
             this.socket.disconnect();
             this.connected$.next(false);
       }
 
       emit(event: string, data?: any) {
+
+            if (data !== undefined) {
+                  switch (event.substring(1, event.indexOf(']', 1))) {
+                        case 'Board':
+                        data.timestamp = this.helper.generateRandom();
+                        addBoardTimestamp(event, data.timestamp);
+                        break;
+                        default:
+                        data.timestamp = this.helper.generateRandom();
+                        break;
+                  }
+            }
 
             console.group();
             console.log('----- SOCKET OUTGOING -----');
@@ -50,18 +75,21 @@ export class SocketService {
       public listen(event: string): Observable<any> {
             return new Observable<any>( observer => {
 
-                  this.socket.on(event, (data: any) => {
+                  if (this.socket !== undefined) {
+                        this.socket.on(event, (data: any) => {
 
-                        console.group();
-                        console.log('----- SOCKET INBOUND -----');
-                        console.log('Action: ', event);
-                        console.log('Payload: ', data);
-                        console.groupEnd();
+                              console.group();
+                              console.log('----- SOCKET INBOUND -----');
+                              console.log('Action: ', event);
+                              console.log('Payload: ', data);
+                              console.groupEnd();
 
-                        observer.next(data);
-                  });
-              // dispose of the event listener when unsubscribed
-              return () => this.socket.off(event);
+                              observer.next(data);
+                        });
+
+                        // dispose of the event listener when unsubscribed
+                        return () => this.socket.off(event);
+                  }
             });
       }
 

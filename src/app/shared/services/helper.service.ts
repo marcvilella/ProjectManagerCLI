@@ -1,18 +1,10 @@
 import { Injectable } from '@angular/core';
-
-function _window(): any {
-      // return the global native browser window object
-      return window;
-    }
+import { FormControl } from '@angular/forms';
 
 @Injectable()
 export class HelperService {
 
       constructor() {
-      }
-
-      nativeWindow(): any {
-            return _window();
       }
 
       deepCopy(obj: any): any {
@@ -65,10 +57,24 @@ export class HelperService {
             return true;
       }
 
+      isEmpty(obj: any): boolean {
+            for (const prop in obj) {
+                  if (obj.hasOwnProperty(prop)) {
+                        return false;
+                  }
+            }
+
+            return true;
+      }
+
       groupBy(array: any, key: any): any[] {
             return array.reduce(function(element: any, x: any) {
                   (element[x[key]] = element[x[key]] || []).push(x);
                   return element;
             }, []);
+      }
+
+      generateRandom(min: number = 0, max: number = 1000000): number {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
       }
 }

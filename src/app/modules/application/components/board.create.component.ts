@@ -56,7 +56,7 @@ export class BoardCreateDialog {
         board.close();
       });
 
-      this._store.pipe(select(selectCurrentUser)).subscribe((user: IUser) => this.user = user);
+      this._store.pipe(select(selectCurrentUser())).subscribe((user: IUser) => this.user = user);
       this.boardTitleFormControl = new FormControl('');
       this.privacyMode = 'private';
       this.listColors = Colors;

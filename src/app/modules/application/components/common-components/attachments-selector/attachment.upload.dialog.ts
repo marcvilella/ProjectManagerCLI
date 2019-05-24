@@ -37,7 +37,7 @@ export class AttachmentUploadDialogComponent implements OnInit {
       constructor(
             public dialogRef: MatDialogRef<AttachmentUploadDialogComponent>,
             public uploadService: UploadService,
-            @Inject(MAT_DIALOG_DATA) public data: { files: any }
+            @Inject(MAT_DIALOG_DATA) public data: { files: any, cardId: number }
       ) {
             this.files = new Set();
 
@@ -47,7 +47,6 @@ export class AttachmentUploadDialogComponent implements OnInit {
       }
 
       ngOnInit() {
-
             // Prepare data
             const files: { [key: string]: File } = this.data.files;
             for (const key in files) {
@@ -84,9 +83,9 @@ export class AttachmentUploadDialogComponent implements OnInit {
             this.dialogRef.disableClose = true;
 
             if (onlyErrors) {
-                  this.progress = this.uploadService.upload(this.files);
+                  this.progress = this.uploadService.upload('cardAttachment', this.data.cardId, this.files);
             } else {
-                  this.progress = this.uploadService.upload(this.files);
+                  this.progress = this.uploadService.upload('cardAttachment', this.data.cardId, this.files);
             }
 
             for (const key of Object.keys(this.progress)) {
@@ -104,7 +103,7 @@ export class AttachmentUploadDialogComponent implements OnInit {
                   end => {
                         this.uploadSuccessful = true;
                         this.uploading = false;
-                        this.dialogRef.close();
+                        this.dialogRef.close(true);
                   },
                   error => {
                         this.error = true;

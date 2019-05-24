@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IMessage } from 'src/app/shared/models/boards';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { IMessage } from 'src/app/shared/models/message';
 import { IUser } from 'src/app/shared/models/user';
 
 @Component({
@@ -7,12 +7,13 @@ import { IUser } from 'src/app/shared/models/user';
       templateUrl: './activity.viewer.html',
       styleUrls: ['../../../styles/common.scss']
 })
-export class ActivityViewerComponent implements OnInit {
+export class ActivityViewerComponent implements OnChanges {
 
       //#region Members
 
       @Input() messages: IMessage[];
       @Input() users: IUser[];
+      @Input() selectedUser: IUser;
 
       comments: IMessage[];
       cardActivities: IMessage[];
@@ -24,28 +25,11 @@ export class ActivityViewerComponent implements OnInit {
       constructor() {
       }
 
-      ngOnInit() {
-            if (this.messages === undefined){
-                  this.comments = new Array<IMessage>();
-                  this.cardActivities = new Array<IMessage>();
-            } else {
-                  this.comments = this.messages.filter(m => m.priority === 0);
-                  this.cardActivities = this.messages.filter(m => m.priority === 1);
-            }
+      ngOnChanges(changes: any) {
+            this.comments = this.messages.filter(m => m.priority === 0);
+            this.cardActivities = this.messages.filter(m => m.priority === 1);
       }
 
       //#endregion
 
-
-      //#region Functions - Show/Hide details
-
-      showDetails(): void {
-            console.log('show');
-      }
-
-      hideDetails(): void {
-            console.log('hide');
-      }
-
-      //#endregion
 }

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
-
-const url = 'http://localhost:3000/upload';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class UploadService {
   constructor(private http: HttpClient) {}
 
   public upload(
+    destination: 'cardAttachment' | 'projectAttachment' | 'avatar',
+    destId: number,
     files: Set<File>
   ): { [key: string]: { progress: Observable<number>, error: boolean } } {
     // this will be the our resulting map
@@ -21,7 +22,7 @@ export class UploadService {
 
       // create a http-post request and pass the form
       // tell it to report the upload progress
-      const req = new HttpRequest('POST', url, formData, {
+      const req = new HttpRequest('POST', environment.server.url + '/api/upload' + '?id=' + destId, formData, {
         reportProgress: true
       });
 

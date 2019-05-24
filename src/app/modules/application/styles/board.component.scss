@@ -215,7 +215,7 @@ $DarkGray: rgb(140, 140, 140);
 
 .card-item-dialog .dialog-toolbar {
       background: $DarkGray;
-      margin: -10px -20px 10px -20px;
+      // margin: -10px -20px 10px -20px;
       padding: 10px 20px 0px 20px;
 }
 
@@ -273,6 +273,10 @@ $DarkGray: rgb(140, 140, 140);
 .card-item-dialog .edit:hover{
       background: lightgray;
       opacity: 0.9;
+}
+
+.card-item-dialog .item {
+      padding: 0px 20px;
 }
 
 .card-item-dialog .item .label{

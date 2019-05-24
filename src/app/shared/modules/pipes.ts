@@ -86,3 +86,40 @@ export class TimeAgoPipe extends AsyncPipe {
             }));
       }
 }
+
+
+@Pipe({ name: 'highlight' })
+export class HighlightSearch implements PipeTransform {
+
+      markStart: string;
+      markEnd: string;
+
+      constructor() {
+            // this.markStart = `<span style="background-color: transparent; color: blue; font-weight: 600;">`;
+            this.markStart = `<span class="highlight">`;
+            this.markEnd = '</span>';
+
+            // this.markStart = `<mark>`;
+            // this.markEnd = '</mark>';
+      }
+
+      transform(value: any, args: any): any {
+            if (!args) {
+                  return value;
+            } else {
+                  // 'gi' insensitive and 'g' sensitive.
+                  switch (typeof(args)) {
+                        case 'string':
+                        return value.replace(new RegExp(args, 'gi'), this.markStart + args + this.markEnd);
+                        case 'object':
+                        args.forEach((word: string) => {
+                              value = value.replace(new RegExp(word, 'g'), this.markStart + word + this.markEnd);
+                        });
+                        console.log(value)
+                        return value;
+                        default:
+                        return value;
+                  }
+            }
+      }
+}

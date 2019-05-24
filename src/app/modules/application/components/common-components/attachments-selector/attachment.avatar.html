@@ -1,18 +1,18 @@
 <ngx-avatar name="{{Attachment.dataType}}" size="36" textSizeRatio="3" [round]="false" matTooltip="{{Attachment.name}}" [matMenuTriggerFor]="attachmentOptions"></ngx-avatar>
 
-<mat-menu #attachmentOptions="matMenu">
-      <div class="menu-content-small attachment-menu pointable" fxLayout="row" fxLayoutGap="8px" (click)="stopPropagation($event)">
+<mat-menu #attachmentOptions="matMenu" style="max-width: 350px">
+      <div class="menu-content-small attachment-menu pointable" fxLayout="row" fxLayoutGap="8px" (click)="openAttachment(); stopPropagation($event)">
             <ngx-avatar name="{{Attachment.dataType}}" size="60" textSizeRatio="4" [round]="false"></ngx-avatar>
             <div fxLayout="column" class="attachment-properties-centered">
-                  <span class="text bold">{{Attachment.name}}</span>
+                  <span class="text bold break">{{Attachment.name}}</span>
                   <span class="sub-text">{{Attachment.date | timeAgo}}</span>
             </div>
             <div fxLayout="row" class="align-right" fxLayoutGap="4px">
                   <button mat-icon-button class="icon standalone-only-icon-button">
-                        <mat-icon mat-icon-button svgIcon="edit" [matMenuTriggerFor]="edit"></mat-icon> 
+                        <mat-icon mat-icon-button svgIcon="edit" [matMenuTriggerFor]="edit" (click)="stopPropagation($event)"></mat-icon> 
                   </button>
                   <button mat-icon-button class="icon standalone-only-icon-button">
-                        <mat-icon mat-icon-button svgIcon="delete" [matMenuTriggerFor]="remove"></mat-icon> 
+                        <mat-icon mat-icon-button svgIcon="delete" [matMenuTriggerFor]="remove" (click)="stopPropagation($event)"></mat-icon> 
                   </button>
             </div>
       </div>
@@ -23,16 +23,16 @@
             <mat-form-field>
                   <input matInput [formControl]="nameFormControl" placeholder="{{ 'APPLICATION.Common.Attachments.Name' | translate }}">
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field *ngIf="attachment.dataType === ' l i n k'">
                   <input matInput [formControl]="linkFormControl" placeholder="{{ 'APPLICATION.Common.Attachments.Link' | translate }}">
             </mat-form-field>
-            <button mat-raised-button color="primary" class="mat-menu-button">{{ 'APPLICATION.Common.Update' | translate }}</button>
+            <button mat-raised-button color="primary" class="mat-menu-button" [disabled]="!nameFormControl.valid || !linkFormControl.valid" (click)="saveProperties()">{{ 'APPLICATION.Common.Update' | translate }}</button>
       </div>
 </mat-menu>
 
 <mat-menu #remove="matMenu">
       <div fxLayout="column" class="menu-content-small pointable" fxLayoutGap="4px" (click)="stopPropagation($event)">
             <div class="mat-menu-text">{{ 'APPLICATION.Common.Attachments.Remove-text' | translate }}</div>
-            <button mat-raised-button color="warn" class="mat-menu-button">{{ 'APPLICATION.Common.Remove' | translate }}</button>
+            <button mat-raised-button color="warn" class="mat-menu-button" (click)="deleteAttachment()">{{ 'APPLICATION.Common.Remove' | translate }}</button>
       </div>
 </mat-menu>

@@ -26,7 +26,7 @@ $buttonBackground: rgb(210, 210, 210);
 }
 
 .no-vertical-alignment {
-      vertical-align: unset;
+      vertical-align: unset !important;
 }
 
 .vertical-centered-margin {
@@ -97,6 +97,11 @@ $buttonBackground: rgb(210, 210, 210);
 .sub-text {
       font-size: 12px;
       line-height: 16px;
+}
+
+.break {
+      height: fit-content !important;
+      word-break: break-all;
 }
 
 .bold {
@@ -292,7 +297,8 @@ $buttonBackground: rgb(210, 210, 210);
       /* #region Attachment Avatar */
 
       .attachment-menu {
-            width: 275px;
+            // width: 275px;
+            max-width: 350px;
       }
 
       .attachment-menu .attachment-properties-centered {
@@ -315,4 +321,35 @@ $buttonBackground: rgb(210, 210, 210);
 
       /* #endregion */
 
+      /* #region Activity */
+
+      .activity-title {
+            position: relative;
+            margin-top: -30px;
+            top: 37px;
+      }
+
+      .activity-padding {
+            padding: 10px 5px;
+      }
+
+      /* #endregion */
+
 /* #endregion */
+
+/* #region Scrollbar */
+
+ng-scrollbar {
+      --scrollbar-size: 8px;
+      --scrollbar-thumb-color: rgba(94, 175, 255, 0.5);
+      --scrollbar-thumb-hover-color: dodgerblue;
+      --scrollbar-border-radius: 4px;
+      --scrollbar-padding: 8px 5px;
+      border: 1px solid gray;
+}   
+
+/* #endregion */
+
+.highlight {
+      background-color: transparent; color: blue; font-weight: 600;
+}

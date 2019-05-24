@@ -1,9 +1,13 @@
 import { Component, Input, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { Store } from '@ngrx/store';
 
-import { IAttachment } from 'src/app/shared/models/boards';
 import { AttachmentUploadDialogComponent } from './attachment.upload.dialog';
+import { IAppState } from 'src/app/shared/store/state/app.state';
+import { IAttachment } from 'src/app/shared/models/boards';
+import { AddCardItemAttachment, GetCardItem, DeleteCardItemAttachment, UpdateCardItemAttachment } from 'src/app/shared/store/actions/board.actions';
+
 
 @Component({
       selector: 'common-attachments-selector',
@@ -14,8 +18,9 @@ export class AttachmentsSelectorComponent {
 
       //#region Members
 
-      // @Input() attachments: Array<IAttachment>;
-      attachments: Array<IAttachment>;
+      @Input() attachments: Array<IAttachment>;
+      @Input() id: number;
+
       canReturn: Boolean;
 
       @ViewChild('fileInput') fileInput: ElementRef;
@@ -28,7 +33,8 @@ export class AttachmentsSelectorComponent {
 
       constructor(
             public dialog: MatDialog,
-            private renderer2: Renderer2
+            private renderer2: Renderer2,
+            private _store: Store<IAppState>
       ) {
             this.canReturn = false;
             this.attachments = new Array<IAttachment>();
@@ -43,50 +49,50 @@ export class AttachmentsSelectorComponent {
             if (!this.canReturn) {
                   event.stopPropagation();
             } else {
-                  this.setDefaultCanReturn();
+                  this.canReturn = false;
             }
       }
 
       //#endregion
 
-      //#region Functions - File
+      //#region Functions - Creation
 
       openFileDialog(): void {
             this.fileInput.nativeElement.dispatchEvent(new MouseEvent('click', {bubbles: false}));
       }
 
       onFileAdded(): void {
-            this.dialog.open(AttachmentUploadDialogComponent, {
-                  width: '50%',
-                  data: {
-                        files: this.fileInput.nativeElement.files
-                  }
-            });
-            this.fileInput.nativeElement.files = [];
+            if (this.fileInput.nativeElement.files.length > 0) {
+                  this.dialog.open(AttachmentUploadDialogComponent, {
+                        width: '50%',
+                        data: {
+                              files: this.fileInput.nativeElement.files,
+                              cardId: this.id
+                        }
+                  }).afterClosed().subscribe((result: any) => {
+                        if (result === true) {
+                              this._store.dispatch(new GetCardItem({id: this.id}));
+                        }
+                  });
+            }
+      }
+
+      saveLink(): void {
+            this._store.dispatch(new AddCardItemAttachment({cardId: this.id, value: this.linkFormControl.value + '//link'}));
+            this.canReturn = true;
       }
 
       //#endregion
 
-      //#region Functions - Link
+      //#region Functions - Events
 
-      selectLink(): void {
-            this.linkSelected = true;
+      updateAttachmentProperties(event: {id: number, name: string, value?: string}): void {
+            this._store.dispatch(new UpdateCardItemAttachment({id: event.id, cardId: this.id, name: event.name, value: event.value}));
+            this.canReturn = true;
       }
 
-      unselectLink(): void {
-            this.linkSelected = false;
-      }
-
-      saveLink(): void {
-            this.attachments.push({
-                  _id: 0,
-                  dataType: 'L I N K',
-                  name: <String>this.linkFormControl.value,
-                  userName: 'Marc Vilella',
-                  link: <String>this.linkFormControl.value,
-                  date: new Date
-            });
-
+      deleteAttachment(event: number): void {
+            this._store.dispatch(new DeleteCardItemAttachment({id: event, cardId: this.id}));
             this.canReturn = true;
       }
 
@@ -103,22 +109,4 @@ export class AttachmentsSelectorComponent {
       }
 
     //#endregion
-
-     //#region Async - Reset CanReturn
-
-     waitSeconds(miliseconds: any): Promise<any> {
-      return new Promise(resolve => {
-                  setTimeout(() => {
-                        resolve();
-                  }, miliseconds);
-            });
-      }
-
-      async setDefaultCanReturn() {
-            await this.waitSeconds(1000);
-            this.linkFormControl.setValue('');
-            this.canReturn = false;
-      }
-
-//#endregion
 }

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IWorkSegment } from 'src/app/shared/models/boards';
 import * as moment from 'moment';
 import { MyDatePipe } from 'src/app/shared/modules/pipes';
 import { MenuItem } from 'primeng/components/common/menuitem';
 import { HelperService } from 'src/app/shared/services/helper.service';
+import { IWorkSegment } from 'src/app/shared/models/timesheet';
 
 @Component({
   selector: 'timesheet-weekly-insert',
@@ -162,6 +162,11 @@ export class TimesheetWeeklyInsertComponent implements OnInit {
                               }
                         }
                   });
+                  rowColumns['0'] = {
+                        data: groupWorkSegments[0].userId,
+                        text: undefined,
+                        settings: { }
+                  };
                   weekRows.push(rowColumns);
             });
 
@@ -179,7 +184,7 @@ export class TimesheetWeeklyInsertComponent implements OnInit {
                   this.localWorkSegments.push({
                         _id: 0,
                         subProjectId: 0,
-                        userId: 0,
+                        userId: this.weekData[rowIndex]['0'].data,
                         payrollCycleId: 0,
                         date: this.weekCols.find(m => m.field === columnField).header,
                         start: { hours: 0, minutes: 0 },
@@ -240,7 +245,7 @@ export class TimesheetWeeklyInsertComponent implements OnInit {
                   };
             });
             rowColumns['0'] = {
-                  data: undefined,
+                  data: this.helper.generateRandom(),
                   text: undefined,
                   settings: {
                         class: 'non-editable-cell bold',

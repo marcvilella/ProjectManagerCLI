@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-//Modules
+// Modules
 import { MaterialDesignModule } from '../../shared/modules/material-design.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedLazyModule } from '../../shared/modules/shared-lazy.module';
-//Services
-//Routing
+// Services
+// Routing
 import { HomeRouting } from './home.routing';
 
-//Components
+// Components
 import { HomeComponent } from './home.component';
 import { SignUpComponent } from './components/sign-up.component';
 import { LogInComponent } from './components/log-in.component';

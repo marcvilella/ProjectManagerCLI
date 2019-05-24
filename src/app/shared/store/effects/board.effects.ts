@@ -6,7 +6,7 @@ import { Store, select, Action } from '@ngrx/store';
 
 // State
 import { IAppState } from '../state/app.state';
-import { IBoard, ICardList, ICardItem } from '../../models/boards';
+import { IBoard, ICardList, ICardItem, IDueDate, IAttachment, ICheckList, ICheckItem } from '../../models/boards';
 import * as boardActions from '../actions/board.actions';
 import * as boardSelectors from '../selectors/board.selectors';
 
@@ -153,10 +153,45 @@ export class BoardEffects {
       ));
 
       @Effect()
+      getCardItem$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.GetCardItem>(boardActions.EBoardActions.GetCardItem),
+            switchMap(action => this._boardsService.getCardItem(action.payload)),
+            switchMap((carditem: ICardItem) => of(new boardActions.GetCardItemSuccess({cardItem: carditem})))
+      );
+
+      @Effect()
       addCardItem$: Observable<Action> = this._actions$.pipe(
             ofType<boardActions.AddCardItem>(boardActions.EBoardActions.AddCardItem),
             switchMap(action => this._boardsService.addCardItem(action.payload)),
             switchMap((carditem: ICardItem) => of(new boardActions.AddCardItemSuccess({cardItem: carditem})))
+      );
+
+      @Effect()
+      addCardItemMember$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.AddCardItemMember>(boardActions.EBoardActions.AddCardItemMember),
+            switchMap(action => this._boardsService.addCardItemMember(action.payload)),
+            switchMap((data: {id: number, userId: number}) => of(new boardActions.AddCardItemMemberSuccess(data)))
+      );
+
+      @Effect()
+      addCardItemAttachment$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.AddCardItemAttachment>(boardActions.EBoardActions.AddCardItemAttachment),
+            switchMap(action => this._boardsService.addCardItemAttachment(action.payload)),
+            switchMap((data: {cardId: number, attachment: IAttachment}) => of(new boardActions.AddCardItemAttachmentSuccess(data)))
+      );
+
+      @Effect()
+      addCardItemChecklist$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.AddCardItemChecklist>(boardActions.EBoardActions.AddCardItemChecklist),
+            switchMap(action => this._boardsService.addCardItemChecklist(action.payload)),
+            switchMap((data: {id: number, checklist: ICheckList}) => of(new boardActions.AddCardItemChecklistSuccess(data)))
+      );
+
+      @Effect()
+      addCardItemChecklistItem$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.AddCardItemChecklistItem>(boardActions.EBoardActions.AddCardItemChecklistItem),
+            switchMap(action => this._boardsService.addCardItemChecklistItem(action.payload)),
+            switchMap((data: {id: number, checklistId: number, checkitem: ICheckItem}) => of(new boardActions.AddCardItemChecklistItemSuccess(data)))
       );
 
       @Effect()
@@ -167,10 +202,87 @@ export class BoardEffects {
       );
 
       @Effect()
+      updateCardItemProperties$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.UpdateCardItemProperties>(boardActions.EBoardActions.UpdateCardItemProperties),
+            switchMap(action => this._boardsService.updateCardItemProperties(action.payload)),
+            switchMap((data: {id: number, name: string, description: string}) => of(new boardActions.UpdateCardItemPropertiesSuccess(data)))
+      );
+
+      @Effect()
+      updateCardItemDueDate$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.UpdateCardItemDueDate>(boardActions.EBoardActions.UpdateCardItemDueDate),
+            switchMap(action => this._boardsService.updateCardItemDueDate(action.payload)),
+            switchMap((data: {id: number, dueDate: IDueDate}) => of(new boardActions.UpdateCardItemDueDateSuccess(data)))
+      );
+
+      @Effect()
+      updateCardItemPriority$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.UpdateCardItemPriority>(boardActions.EBoardActions.UpdateCardItemPriority),
+            switchMap(action => this._boardsService.updateCardItemPriority(action.payload)),
+            switchMap((data: {id: number, priority: number}) => of(new boardActions.UpdateCardItemPrioritySuccess(data)))
+      );
+
+      @Effect()
+      updateCardItemAttachment$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.UpdateCardItemAttachment>(boardActions.EBoardActions.UpdateCardItemAttachment),
+            switchMap(action => this._boardsService.updateCardItemAttachment(action.payload)),
+            switchMap((data: {id: number, cardId: number, name: string, value: string}) => of(new boardActions.UpdateCardItemAttachmentSuccess(data)))
+      );
+
+      @Effect()
+      updateCardItemChecklist$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.UpdateCardItemChecklist>(boardActions.EBoardActions.UpdateCardItemChecklist),
+            switchMap(action => this._boardsService.updateCardItemChecklist(action.payload)),
+            switchMap((data: {id: number, checklistId: number, name: string, hide: boolean}) => of(new boardActions.UpdateCardItemChecklistSuccess(data)))
+      );
+
+      @Effect()
+      updateCardItemChecklistItem$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.UpdateCardItemChecklistItem>(boardActions.EBoardActions.UpdateCardItemChecklistItem),
+            switchMap(action => this._boardsService.updateCardItemChecklistItem(action.payload)),
+            switchMap((data: {id: number, checkitemId: number, name: string, checked: boolean}) => of(new boardActions.UpdateCardItemChecklistItemSuccess(data)))
+      );
+
+      @Effect()
       deleteCardItem$: Observable<Action> = this._actions$.pipe(
             ofType<boardActions.DeleteCardItem>(boardActions.EBoardActions.DeleteCardItem),
             switchMap(action => this._boardsService.deleteCardItem(action.payload)),
             switchMap((id: number) => of(new boardActions.DeleteCardItemSuccess({id: id})))
+      );
+
+      @Effect()
+      deleteCardItemMember$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.DeleteCardItemMember>(boardActions.EBoardActions.DeleteCardItemMember),
+            switchMap(action => this._boardsService.deleteCardItemMember(action.payload)),
+            switchMap((data: {id: number, userId: number}) => of(new boardActions.DeleteCardItemMemberSuccess(data)))
+      );
+
+      @Effect()
+      deleteCardItemAttachment$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.DeleteCardItemAttachment>(boardActions.EBoardActions.DeleteCardItemAttachment),
+            switchMap(action => this._boardsService.deleteCardItemAttachment(action.payload)),
+            switchMap((data: {id: number, cardId: number}) => of(new boardActions.DeleteCardItemAttachmentSuccess(data)))
+      );
+
+      @Effect()
+      deleteCardItemDueDate$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.DeleteCardItemDueDate>(boardActions.EBoardActions.DeleteCardItemDueDate),
+            switchMap(action => this._boardsService.deleteCardItemDueDate(action.payload)),
+            switchMap((id: number) => of(new boardActions.DeleteCardItemDueDateSuccess({id: id})))
+      );
+
+      @Effect()
+      deleteCardItemChecklist$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.DeleteCardItemChecklist>(boardActions.EBoardActions.DeleteCardItemChecklist),
+            switchMap(action => this._boardsService.deleteCardItemChecklist(action.payload)),
+            switchMap((data: {id: number, checklistId: number}) => of(new boardActions.DeleteCardItemChecklistSuccess(data)))
+      );
+
+      @Effect()
+      deleteCardItemChecklistItem$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.DeleteCardItemChecklistItem>(boardActions.EBoardActions.DeleteCardItemChecklistItem),
+            switchMap(action => this._boardsService.deleteCardItemChecklistItem(action.payload)),
+            switchMap((data: {id: number, checkitemId: number}) => of(new boardActions.DeleteCardItemChecklistItemSuccess(data)))
       );
 
       @Effect()

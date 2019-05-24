@@ -1,5 +1,6 @@
 import { EUserActions, UserActions } from '../actions/user.actions';
 import { userAdapter, IUserState, initialUserState } from '../state/user.state';
+import { IUser } from '../../models/user';
 
 export function userReducers (
       state: IUserState = initialUserState,
@@ -36,6 +37,7 @@ export function userReducers (
             //#region Successes
 
             case EUserActions.GetCurrentUserSuccess: {
+                  action.payload.fullname = action.payload.name + ' ' + action.payload.surname;
                   return userAdapter.upsertOne(
                         action.payload,
                         {
@@ -46,6 +48,7 @@ export function userReducers (
                   });
             }
             case EUserActions.GetUsersFromBoardSuccess: {
+                  action.payload.forEach((user: IUser) => user.fullname = user.name + ' ' + user.surname);
                   return userAdapter.upsertMany(
                         action.payload,
                         {
@@ -55,6 +58,7 @@ export function userReducers (
                   });
             }
             case EUserActions.GetUserSuccess: {
+                  action.payload.fullname = action.payload.name + ' ' + action.payload.surname;
                   return userAdapter.upsertOne(
                         action.payload,
                         {

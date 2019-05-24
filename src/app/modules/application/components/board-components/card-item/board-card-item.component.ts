@@ -1,8 +1,12 @@
-import { Component, Input, Renderer2 } from '@angular/core';
+import { Component, Input, Renderer2, OnChanges } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material';
-
-import { ICardItem } from 'src/app/shared/models/boards';
 import { CardItemDialogComponent } from '../card-item-dialog/board-card-item-dialog.component';
+
+import { IAppState } from 'src/app/shared/store/state/app.state';
+import { ICardItem } from 'src/app/shared/models/boards';
+import { DeleteCardItem } from 'src/app/shared/store/actions/board.actions';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'board-card-item',
@@ -19,8 +23,11 @@ export class BoardCardItemComponent {
   isMenuOpen: boolean;
 
   constructor(
+    private _store: Store<IAppState>,
     private renderer2: Renderer2,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    private activeRoute: ActivatedRoute
   ) {
     this.showEditable = false;
     this.isMenuOpen = false;
@@ -29,11 +36,10 @@ export class BoardCardItemComponent {
   //#region Functions
 
   showCardContentDialog(): void {
-    this.dialog.open(CardItemDialogComponent, {
-      position: {top: '40px'},
-      width: '850px',
-      panelClass: 'form-dialog-container',
-      data: { card: this.card }
+    this.router.navigate(['.'], {
+      relativeTo: this.activeRoute,
+      queryParams: {card : this.card._id},
+      queryParamsHandling: 'merge'
     });
   }
 
@@ -47,6 +53,14 @@ export class BoardCardItemComponent {
     if (!this.isMenuOpen) {
       this.cardleave(this.lastEvent);
     }
+  }
+
+  //#endregion
+
+  //#region Functions - Menu
+
+  deleteCard(): void {
+    this._store.dispatch(new DeleteCardItem({id: this.card._id}));
   }
 
   //#endregion

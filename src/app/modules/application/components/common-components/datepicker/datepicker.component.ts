@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,16 +6,18 @@ import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
-import { ICardItem } from 'src/app/shared/models/boards';
+import { IDueDate } from 'src/app/shared/models/boards';
 
 @Component({
   selector: 'common-datepicker',
   templateUrl: './datepicker.html',
   styleUrls: ['../../../styles/common.scss', '../../../styles/checkbox.white.scss']
 })
-export class DatepickerComponent {
+export class DatepickerComponent implements OnChanges {
 
-      @Input() card: ICardItem;
+      @Input() dueDate: IDueDate;
+      @Output() changedDueDate = new EventEmitter<IDueDate>();
+      @Output() checkedDueDate = new EventEmitter<boolean>();
 
       //#region Members
 
@@ -46,9 +48,47 @@ export class DatepickerComponent {
             this.Reminder = '1440';
       }
 
+      ngOnChanges(changes: any) {
+            if (this.dueDate !== undefined && this.dueDate.date !== undefined) {
+                  this.setDateText();
+                  this.setButtonColor(this.dueDate.done);
+            } else {
+                  this.DueDateColor = environment.colors.buttonBackground;
+            }
+      }
+
       //#endregion
 
-      //#region Functions
+      //#region Functions - Functionality
+
+      onCheckDueDate(checked: boolean): void {
+            this.changedDueDate.emit({
+                  date: this.dueDate.date,
+                  remindAt: this.dueDate.remindAt,
+                  done: checked
+            });
+            this.setButtonColor(checked);
+      }
+
+      saveDate(): void {
+            this.canReturn = true;
+            const time = (<String>this.TimeFormControl.value).split(':');
+
+            this.changedDueDate.emit({
+                  date: moment(this.DateFormControl.value).hours(+time[0]).minutes(+time[1]).seconds(0).milliseconds(0).utc().toDate(),
+                  remindAt: +this.Reminder,
+                  done: false
+            });
+      }
+
+      removeDate(): void {
+            this.canReturn = true;
+            this.changedDueDate.emit(undefined);
+      }
+
+      //#endregion
+
+      //#region Functions - Design
 
       stopPropagation(event: MouseEvent): void {
             if (!this.canReturn) {
@@ -58,46 +98,27 @@ export class DatepickerComponent {
             }
       }
 
-      saveDate(): void {
-            this.canReturn = true;
-
-            const date = moment(this.DateFormControl.value).toDate();
-            const time = (<String>this.TimeFormControl.value).split(':');
-            date.setHours(+time[0], +time[1]);
-
-            this.card.dueDate = { date: date, remindAt: +this.Reminder, done: false };
-            this.setDateText();
-            this.onCheckDueDate(false);
-      }
-
-      removeDate(): void {
-            this.canReturn = true;
-            this.DueDateColor = environment.colors.buttonBackground;
-
-            this.card.dueDate = undefined;
-      }
-
       setDateText(): void {
             this.DueDateText = ' ' + (<String>this.translate.instant('APPLICATION.Common.Date.At')).toLowerCase() +  ' ' +
-                  this.card.dueDate.date.getHours().toString().padStart(2, '0') + ':' + this.card.dueDate.date.getMinutes().toString().padStart(2, '0');
+                  this.dueDate.date.getHours().toString().padStart(2, '0') + ':' + this.dueDate.date.getMinutes().toString().padStart(2, '0');
 
             const today = moment().toDate();
-            if (this.card.dueDate.date.getMonth() === today.getMonth() && this.card.dueDate.date.getFullYear() === today.getFullYear()) {
-                  if (this.card.dueDate.date.getDate() === today.getDate()) {
+            if (this.dueDate.date.getMonth() === today.getMonth() && this.dueDate.date.getFullYear() === today.getFullYear()) {
+                  if (this.dueDate.date.getDate() === today.getDate()) {
                         this.DueDateText += ' (' + this.translate.instant('APPLICATION.Common.Date.Today') + ')';
-                  } else if (this.card.dueDate.date.getDate() === today.getDate() - 1) {
+                  } else if (this.dueDate.date.getDate() === today.getDate() - 1) {
                         this.DueDateText += ' (' + this.translate.instant('APPLICATION.Common.Date.Yesterday') + ')';
-                  } else if (this.card.dueDate.date.getDate() === today.getDate() + 1) {
+                  } else if (this.dueDate.date.getDate() === today.getDate() + 1) {
                         this.DueDateText += ' (' + this.translate.instant('APPLICATION.Common.Date.Tomorrow') + ')';
                   }
             }
       }
 
-      onCheckDueDate(checked: Boolean): void {
+      setButtonColor(checked: boolean): void {
             if (checked) {
                   this.DueDateColor = 'green';
             } else {
-                  if (this.card.dueDate.date < moment().toDate()) {
+                  if (this.dueDate.date < moment().toDate()) {
                         this.DueDateColor = 'red';
                   } else {
                         this.DueDateColor = environment.colors.buttonBackground;

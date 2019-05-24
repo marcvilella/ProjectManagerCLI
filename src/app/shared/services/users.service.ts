@@ -27,7 +27,7 @@ export class UsersService {
     this.socket.emit(EUserActions.GetCurrentUser);
     return this.getCurrentUserSuccess$;
   }
-  
+
   getUsersFromBoard(id: number) {
     this.socket.emit(EUserActions.GetUsersFromBoard);
     return this.getUsersFromBoardSuccess$;

@@ -1,11 +1,11 @@
 <button mat-button class="icon-button" [matMenuTriggerFor]="datepicker" [style.background]="DueDateColor">
-      <div *ngIf="card.dueDate === undefined">
+      <div *ngIf="dueDate === undefined || dueDate.date === undefined">
             <mat-icon svgIcon="time"></mat-icon>
             {{ 'APPLICATION.Common.Date.No-Date' | translate }}
       </div>
-      <div *ngIf="card.dueDate !== undefined" [style.color]="DueDateColor !== 'rgb(210, 210, 210)' ? 'white' : 'black'">
-            <mat-checkbox tabIndex="-1" class="checkbox-within-button" (change)="onCheckDueDate($event.checked)" (click)="$event.stopPropagation()"></mat-checkbox>
-            {{ card.dueDate.date | date:'d MMMM' }}
+      <div *ngIf="dueDate !== undefined && dueDate.date !== undefined" [style.color]="DueDateColor !== 'rgb(210, 210, 210)' ? 'white' : 'black'">
+            <mat-checkbox tabIndex="-1" class="checkbox-within-button" [checked]="dueDate.done" (change)="onCheckDueDate($event.checked)" (click)="$event.stopPropagation()"></mat-checkbox>
+            {{ dueDate.date | date:'d MMMM' }}
             {{ DueDateText}}
       </div>
 </button>
