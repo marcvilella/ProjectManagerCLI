@@ -1,36 +1,71 @@
 import { Component, Input, Renderer2, OnChanges } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { MatDialog } from '@angular/material';
-import { CardItemDialogComponent } from '../card-item-dialog/board-card-item-dialog.component';
+import * as moment from 'moment';
 
 import { IAppState } from 'src/app/shared/store/state/app.state';
-import { ICardItem } from 'src/app/shared/models/boards';
+import { ICardItem, ICheckItem, ICheckList } from 'src/app/shared/models/boards';
 import { DeleteCardItem } from 'src/app/shared/store/actions/board.actions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { IPriority, priorities } from 'src/app/shared/models/priorities';
 
 @Component({
   selector: 'board-card-item',
   templateUrl: './board-card-item.component.html',
-  styleUrls: ['../../../styles/board.component.scss']
+  styleUrls: ['../../../styles/board.component.scss', '../../../styles/common.scss']
 })
-export class BoardCardItemComponent {
+export class BoardCardItemComponent implements OnChanges {
 
   @Input() card: ICardItem;
   @Input() index: number;
 
-  lastEvent: MouseEvent;
+  priorities: IPriority[];
+
   showEditable: boolean;
+  lastEvent: MouseEvent;
   isMenuOpen: boolean;
+
+  dueDateColor: string;
+  checkitemsColor: string;
+  checkitemsStat: string;
 
   constructor(
     private _store: Store<IAppState>,
     private renderer2: Renderer2,
-    public dialog: MatDialog,
     private router: Router,
     private activeRoute: ActivatedRoute
   ) {
     this.showEditable = false;
     this.isMenuOpen = false;
+    this.dueDateColor = 'transparent';
+    this.checkitemsColor = 'transparent';
+    this.priorities = priorities;
+  }
+
+  ngOnChanges(changes: any) {
+    if (this.card.dueDate !== undefined && this.card.dueDate.date !== undefined) {
+      if (this.card.dueDate.done) {
+        this.dueDateColor = 'green';
+      } else if (this.card.dueDate.date < moment().toDate()) {
+              this.dueDateColor = 'red';
+      } else {
+              this.dueDateColor = 'transparent';
+      }
+    }
+    if (this.card.checklists !== undefined) {
+      let checked = 0, total = 0;
+      this.card.checklists.forEach((checklist: ICheckList) => checklist.checkitems.forEach((checkitem: ICheckItem) => {
+        if (checkitem.checked) {
+          checked++;
+        }
+        total++;
+      }));
+      this.checkitemsStat = checked + '/' + total;
+      if (checked === total) {
+        this.checkitemsColor = 'green';
+      } else {
+        this.checkitemsColor = 'transparent';
+      }
+    }
   }
 
   //#region Functions

@@ -5,10 +5,14 @@
             <span class="title" *ngIf="checklist.name !== '' && !showNameFormControl" (click)="onNameFormControl()">{{checklist.name}}</span>
             <input gdColumn="1" *ngIf="showNameFormControl" class="textarea" spellcheck="false" [formControl]="nameFormControl" (blur)="blurNameFormControl()" autoSizeTextArea autoFocus>
             <div class="align-right">
-                  <button mat-icon-button gdColumn="3" class="only-icon-button-grid" (click)="addCheckItem()">
+                  <button mat-icon-button gdColumn="3" class="only-icon-button-grid" (click)="addCheckItem()" matTooltip="{{ 'APPLICATION.Common.Checklist.AddCheckitem' | translate }}">
                         <mat-icon class="icon-size-small" svgIcon="add"></mat-icon> 
                   </button>
-                  <button mat-icon-button gdColumn="3" class="only-icon-button-grid" (click)="onDeleteChecklist()">
+                  <button mat-icon-button gdColumn="3" class="only-icon-button-grid" (click)="changeChecklistVisibility()">
+                        <mat-icon class="icon-size-small" *ngIf="checklist.hide" svgIcon="visibility-off" matTooltip="{{ 'APPLICATION.Common.Checklist.ShowCompleted' | translate }}"></mat-icon> 
+                        <mat-icon class="icon-size-small" *ngIf="!checklist.hide" svgIcon="visibility" matTooltip="{{ 'APPLICATION.Common.Checklist.HideCompleted' | translate }}"></mat-icon> 
+                  </button>
+                  <button mat-icon-button gdColumn="3" class="only-icon-button-grid" [matMenuTriggerFor]="removeList">
                         <mat-icon class="icon-size-small" svgIcon="delete"></mat-icon> 
                   </button>
             </div>
@@ -19,19 +23,25 @@
       </div>
       
       <div fxLayout="column" fxLayoutGap="5px" *ngFor="let checkitem of checklist.checkitems; index as checkIndex">
-            <div gdColumns="16px auto 24px" class="checkitem" gdGap="8px" (mouseenter)='cardenter(checkIndex, $event)' (mouseleave)="cardleave($event)">
+            <div gdColumns="16px auto 24px" class="checkitem" gdGap="8px" *ngIf="!checklist.hide || (checklist.hide && !checkitem.checked)" (mouseenter)='cardenter(checkIndex, $event)' (mouseleave)="cardleave($event)">
                   <div gdColumn="1">
                         <mat-checkbox tabIndex="-1" class="checkbox-within-button" [checked]="checkitem.checked" (change)="onCheckedChange(checkitem._id, $event.checked)"></mat-checkbox>
                   </div>
                   <div gdColumn="2">
-                        <div *ngIf="selectedFormControl !== checkIndex && checkitem.name === ''" (click)="onItemFormControl(checkIndex)">{{ 'APPLICATION.Common.Checklist.Task' | translate }}</div>
+                        <div *ngIf="selectedFormControl !== checkIndex && checkitem.name === ''" (click)="onItemFormControl(checkIndex)">{{ 'APPLICATION.Common.Checklist.NewTask' | translate }}</div>
                         <div *ngIf="selectedFormControl !== checkIndex && checkitem.name !== ''" (click)="onItemFormControl(checkIndex)">{{checkitem.name}}</div>
                         <textarea class="textarea parent-size" *ngIf="selectedFormControl === checkIndex" [mentionConfig]="mentionConfig" [formControl]="itemFormControl" (blur)="blurItemFormControl()" spellcheck="false" autoSizeTextArea autoFocus></textarea>
-                        
                   </div>
-                  <button mat-icon-button gdColumn="3" class="icon standalone-only-icon-button align-right" *ngIf="currentIndex === checkIndex" (click)="onDeleteCheckItem(checkitem._id)">
+                  <button mat-icon-button gdColumn="3" class="icon standalone-only-icon-button align-right" *ngIf="currentIndex === checkIndex"  (click)="onDeleteCheckItem(checkitem._id)">
                         <mat-icon mat-icon-button class="icon-size-small" svgIcon="delete"></mat-icon> 
                   </button>
             </div>
       </div>
 </div>
+
+<mat-menu #removeList="matMenu">
+      <div fxLayout="column" class="menu-content-small pointable" fxLayoutGap="4px" (click)="stopPropagation($event)">
+            <div class="mat-menu-text">{{ 'APPLICATION.Common.Checklist.Remove-text' | translate }}</div>
+            <button mat-raised-button color="warn" class="mat-menu-button" (click)="onDeleteChecklist()">{{ 'APPLICATION.Common.Remove' | translate }}</button>
+      </div>
+</mat-menu>

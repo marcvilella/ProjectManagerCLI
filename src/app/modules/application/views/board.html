@@ -9,6 +9,10 @@
                   <button mat-icon-button class="button-icon" (click)="changeStarredStatus()">
                         <animated-icon [isChecked]="board.settings.starred" [icons]="'star-border,star'"></animated-icon>
                   </button>
+                  <mat-divider [vertical]="true"></mat-divider>
+                  <div *ngFor="let user of board.settings.users">
+                        <ngx-avatar name="{{user.fullname}}" size="24" textSizeRatio="1.8"></ngx-avatar>
+                  </div>
             </div>
       </mat-toolbar>
 

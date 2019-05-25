@@ -27,6 +27,7 @@ export class CheckListComponent implements OnInit {
       currentIndex: number;
       selectedFormControl: number;
       showNameFormControl: boolean;
+      canReturnRemove: boolean;
 
       mentionConfig: any = {
             mentions: [
@@ -48,8 +49,9 @@ export class CheckListComponent implements OnInit {
       ngOnInit() {
             this.nameFormControl = new FormControl('', Validators.required);
             this.itemFormControl = new FormControl('', Validators.required);
-            this.percentage = Math.round(this.checklist.checkitems.filter(m => m.checked).length / this.checklist.checkitems.length);
+            this.percentage = Math.round(this.checklist.checkitems.filter(m => m.checked).length * 100 / this.checklist.checkitems.length);
             this.showNameFormControl = false;
+            this.canReturnRemove = false;
             this.mentionConfig.mentions.items = this.users.map(m => m.fullname);
       }
 
@@ -63,7 +65,7 @@ export class CheckListComponent implements OnInit {
       }
 
       blurNameFormControl(): void {
-            this.nameFormControl.setValue((<string>this.nameFormControl.value).trim())
+            this.nameFormControl.setValue((<string>this.nameFormControl.value).trim());
             if (this.nameFormControl.valid && this.nameFormControl.value !== this.checklist.name) {
                   this.propertiesChanged.emit({name: this.nameFormControl.value, hide: this.checklist.hide});
             }
@@ -76,6 +78,7 @@ export class CheckListComponent implements OnInit {
 
       onDeleteChecklist(): void {
             this.propertiesChanged.emit(undefined);
+            this.canReturnRemove = true;
       }
 
       //#endregion
@@ -92,7 +95,7 @@ export class CheckListComponent implements OnInit {
       }
 
       blurItemFormControl(): void {
-            this.itemFormControl.setValue((<string>this.itemFormControl.value).trim())
+            this.itemFormControl.setValue((<string>this.itemFormControl.value).trim());
             if (this.itemFormControl.valid && this.itemFormControl.value !== this.checklist.checkitems[this.selectedFormControl].name) {
                   this.updateCheckitem.emit({
                         id: this.checklist.checkitems[this.selectedFormControl]._id,
@@ -109,11 +112,28 @@ export class CheckListComponent implements OnInit {
                   name: this.checklist.checkitems.find(m => m._id === id).name,
                   checked: checked
             });
-            this.percentage = Math.round(this.checklist.checkitems.filter(m => m.checked).length * 100 / this.checklist.checkitems.length);
+            if (checked) {
+                  this.percentage = Math.round((this.checklist.checkitems.filter(m => m.checked).length + 1) * 100 / this.checklist.checkitems.length);
+            } else {
+                  this.percentage = Math.round((this.checklist.checkitems.filter(m => m.checked).length - 1) * 100 / this.checklist.checkitems.length);
+            }
       }
 
       onDeleteCheckItem(id: number): void {
             this.updateCheckitem.emit({id: id});
+            this.canReturnRemove = true;
+      }
+
+      //#endregion
+
+      //#region Function - Can Return
+
+      stopPropagation(event: MouseEvent): void {
+            if (!this.canReturnRemove) {
+                  event.stopPropagation();
+            } else {
+                  this.canReturnRemove = false;
+            }
       }
 
       //#endregion

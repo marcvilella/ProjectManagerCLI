@@ -190,19 +190,17 @@ $hoverBackground: rgb(224, 224, 224);
       overflow-wrap: break-word;
 }
 
-.card-item .edit{
+.card-item .priority {
+      height: 100%;
+      width: 7px;
       position: absolute;
-      right: 10px;
-      width: 24px; 
-      height: 24px;
-      align-items: center;
-      opacity: 0.7;
+      top: 0px;
+      left: 6px;
 }
 
-.card-item .edit:hover{
-      border-radius: 10px;
-      background: lightgray;
-      opacity: 0.9;
+.card-item .finishable {
+      padding: 0px 3px 0px 1px;
+      border-radius: 3px;
 }
 
 /*#endregion Card Item Component*/
@@ -372,7 +370,7 @@ $DarkGray: rgb(140, 140, 140);
 
 /*#region Overlay*/
 
-.title{
+.create-board .title{
       display: block;
       margin-bottom: 5px;
       font-weight: bold;

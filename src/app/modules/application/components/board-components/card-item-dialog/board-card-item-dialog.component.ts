@@ -61,6 +61,10 @@ export class CardItemDialogComponent {
       this.showTimeSheet = true;
   }
 
+  cons() {
+    console.log(this.card.watching)
+  }
+
   //#endregion
 
   //#region Functions - Name / Description
@@ -133,7 +137,6 @@ export class CardItemDialogComponent {
   }
 
   updateCheckitemProperties(event: {id: number, name?: string, checked?: boolean}, checklistId: number): void {
-    console.log(event)
     if (event === undefined) {
       this._store.dispatch(new AddCardItemChecklistItem({id: this.card._id, checklistId: checklistId}));
     } else {

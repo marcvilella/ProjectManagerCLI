@@ -5,11 +5,11 @@ import { Component, Input, OnInit } from '@angular/core';
       template: `<mat-icon mat-icon-button class="icon" [ngStyle]="styles" svgIcon="{{currentIcon}}"></mat-icon> `,
       styles: [`
             .icon{
-                  
-                  height: 24px; 
+
+                  height: 24px;
                   width: 24px;
             }
-            
+
             .icon:hover{
                   border-radius: 14px;
                   background: lightgray;
@@ -19,17 +19,21 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AnimatedIconComponent implements OnInit {
 
-      @Input() isChecked: boolean = false;
-      @Input() icons: string = '';
+      @Input() isChecked = false;
+      @Input() icons = '';
       @Input() styles: any = {};
 
       parsedIcons: string[];
 
       get currentIcon() {
-            if(this.isChecked)
+            if (this.isChecked === undefined) {
+                  console.log(this.isChecked)
+            }
+            if (this.isChecked) {
                   return this.parsedIcons[1];
-            else
+            } else {
                   return this.parsedIcons[0];
+            }
       }
 
       ngOnInit() {

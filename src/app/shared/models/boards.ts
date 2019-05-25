@@ -55,6 +55,7 @@ export interface ICardItem {
       cardListId: number;
 
       description: string;
+      watching: boolean;
       users: IUser[];
       priority: number;
       dueDate: IDueDate;

@@ -52,10 +52,10 @@
             <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'" (click)="$event.stopPropagation()">
               <mat-panel-title class="header-component-mat-content-expander-title">
                 <mat-icon svgIcon="star" class="icon"></mat-icon>
-                {{ 'APPLICATION.HUD.Boards-list.Shared' | translate }}
+                {{ 'APPLICATION.HUD.Boards-list.Project' | translate }}
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div *ngFor="let board of boardsShared$ | async">
+            <div *ngFor="let board of boardsProject$ | async">
               <board-menu-item [board]="board"></board-menu-item>
             </div>
           </mat-expansion-panel>

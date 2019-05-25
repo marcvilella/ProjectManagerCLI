@@ -50,7 +50,7 @@ export class ApplicationComponent {
   boardsRecent$: Observable<IBoard[]>;
   boardsStarred$: Observable<IBoard[]>;
   boardsPersonal$: Observable<IBoard[]>;
-  boardsShared$: Observable<IBoard[]>;
+  boardsProject$: Observable<IBoard[]>;
 
   boardSearcher: FormControl;
 
@@ -99,12 +99,16 @@ export class ApplicationComponent {
       //#region SVG
 
       iconRegistry.addSvgIcon(
+        'priority',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/priority-icon.svg')
+      );
+      iconRegistry.addSvgIcon(
         'visibility',
         sanitizer.bypassSecurityTrustResourceUrl('assets/svg/visibility-icon.svg')
       );
       iconRegistry.addSvgIcon(
-        'priority',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/priority-icon.svg')
+        'visibility-outlined',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/visibility-outlined-icon.svg')
       );
       iconRegistry.addSvgIcon(
         'visibility-off',
@@ -131,6 +135,10 @@ export class ApplicationComponent {
         sanitizer.bypassSecurityTrustResourceUrl('assets/svg/comment-icon.svg')
       );
       iconRegistry.addSvgIcon(
+        'comment-outlined',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/comment-outlined-icon.svg')
+      );
+      iconRegistry.addSvgIcon(
         'timeline',
         sanitizer.bypassSecurityTrustResourceUrl('assets/svg/timeline-icon.svg')
       );
@@ -151,6 +159,10 @@ export class ApplicationComponent {
         sanitizer.bypassSecurityTrustResourceUrl('assets/svg/check-icon.svg')
       );
       iconRegistry.addSvgIcon(
+        'check-outlined',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/check-outlined-icon.svg')
+      );
+      iconRegistry.addSvgIcon(
         'recent',
         sanitizer.bypassSecurityTrustResourceUrl('assets/svg/recent-icon.svg')
       );
@@ -169,6 +181,10 @@ export class ApplicationComponent {
       iconRegistry.addSvgIcon(
         'time',
         sanitizer.bypassSecurityTrustResourceUrl('assets/svg/time-icon.svg')
+      );
+      iconRegistry.addSvgIcon(
+        'time-outlined',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/time-outlined-icon.svg')
       );
       iconRegistry.addSvgIcon(
         'support',
@@ -263,7 +279,7 @@ export class ApplicationComponent {
     this.boardsStarred$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.starred && m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
     this.boardsRecent$ = this.boards$.pipe(map(boards => boards.filter(m => m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
     this.boardsPersonal$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.mode === 'private' && m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
-    this.boardsShared$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.mode === 'shared' && m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
+    this.boardsProject$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.mode === 'shared' && m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
   }
 
   logOut() {

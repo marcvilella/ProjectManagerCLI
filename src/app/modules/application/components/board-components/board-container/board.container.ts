@@ -70,23 +70,30 @@ export class BoardContainerComponent {
   getBoard() {
     return combineLatest(this.board$, this.cardlists$, this.carditems$, this.users$).pipe(map((result) => {
       if (result[0] === undefined) {
-        result[0] = {_id: 0, name: '', projectId: null, lists: new Array<ICardList>(), createdAt: new Date, modifiedAt: new Date, version: 1,
-                      settings: {mode: null, starred: false, colorDark: '', colorLight: '', users: null, role: null}};
-      } else {
-
-        if (result[3] !== undefined) {
-          result[0].settings.users = result[3];
-        }
-
-        result[1].forEach((cardList) => {
-          if (cardList.cards.length > 0) {
-            if (result[2].some(m => m.cardListId === cardList._id)) {
-              cardList.cards =  result[2].filter(m => m.cardListId === cardList._id);
-            }
-          }
-        });
-        result[0].lists = result[1];
+        return;
       }
+
+      if (result[3] !== undefined) {
+        result[0].settings.users = result[3];
+
+        result[2].forEach((cardItem) => {
+          if (cardItem.users.length > 0) {
+            const ids = cardItem.users.map(m => m._id);
+            if (cardItem.users.some(m => m._id !== undefined && m.fullname === undefined)) {
+                cardItem.users = result[3].filter(m => ids.some(n => n === m._id));
+            }
+      }
+        })
+      }
+
+      result[1].forEach((cardList) => {
+        if (cardList.cards.length > 0) {
+          if (result[2].some(m => m.cardListId === cardList._id)) {
+            cardList.cards =  result[2].filter(m => m.cardListId === cardList._id);
+          }
+        }
+      });
+      result[0].lists = result[1];
 
       return result[0];
     }));

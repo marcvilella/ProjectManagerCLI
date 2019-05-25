@@ -1,1 +1,7 @@
-<app-board [board]="getBoard() | async"></app-board>
+<div *ngIf="(getBoard() | async) as board; else loading">
+      <app-board [board]="board"></app-board>
+</div>
+      
+<ng-template #loading>
+      Loading stuff...
+</ng-template>

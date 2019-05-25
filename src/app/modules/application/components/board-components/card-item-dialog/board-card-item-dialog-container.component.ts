@@ -37,17 +37,17 @@ export class CardItemDialogContainerComponent {
       }
 
       getCard() {
-            return combineLatest(this.card$, this.comments$, this.data.users$).pipe(map((result) => {
+            return combineLatest(this.card$, this.comments$).pipe(map((result) => {
                   if (result[0] !== undefined) {
                         if (result[1] !== undefined && result[1].length > 0) {
                               result[0].messages = result[1];
                         }
-                        if (result[2] !== undefined && result[0].users.length > 0) {
-                              const ids = result[0].users.map(m => m._id);
-                              if (result[0].users.some(m => m._id !== undefined && m.fullname === undefined)) {
-                                    result[0].users = result[2].filter(m => ids.some(n => n === m._id));
-                              }
-                        }
+                        // if (result[2] !== undefined && result[0].users.length > 0) {
+                        //       const ids = result[0].users.map(m => m._id);
+                        //       if (result[0].users.some(m => m._id !== undefined && m.fullname === undefined)) {
+                        //             result[0].users = result[2].filter(m => ids.some(n => n === m._id));
+                        //       }
+                        // }
                   }
 
                   return result[0];

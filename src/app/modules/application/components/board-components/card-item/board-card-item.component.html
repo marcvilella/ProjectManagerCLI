@@ -1,8 +1,35 @@
 <mat-card class="card-item" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)">
-      <mat-card-content fxLayout="row" (click)="showCardContentDialog()">
-            <span class="title">{{card.name}}</span>
-            <div class="edit" *ngIf="showEditable">
-                  <mat-icon mat-icon-button svgIcon="edit" class="edit-icon" (click)="stopPropagation($event)" [matMenuTriggerFor]="cardOptions" (menuOpened)="menuChanged()" (menuClosed)="menuChanged()" ></mat-icon> 
+      <div class="priority" *ngIf="card.priority !== 0"  [style.background]="(card.priority !== undefined) ? priorities[card.priority].color : 'transparent'">&nbsp;</div>
+      <mat-card-content fxLayout="column" (click)="showCardContentDialog()">
+            <div fxLayout="row">
+                  <span class="title vertical-align-center" style="height: 24px">{{card.name}}</span>
+                  <button mat-icon-button *ngIf="showEditable" class="icon standalone-only-icon-button align-right" (click)="stopPropagation($event)" [matMenuTriggerFor]="cardOptions" (menuOpened)="menuChanged()" (menuClosed)="menuChanged()">
+                        <mat-icon mat-icon-button class="icon-size-small" svgIcon="edit"></mat-icon> 
+                  </button>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="10px">
+                  <div *ngIf="card.watching !== undefined && card.watching">
+                        <mat-icon class="icon-size-small" svgIcon="visibility-outlined"></mat-icon>
+                  </div>
+                  <div *ngIf="card.dueDate !== undefined && card.dueDate.date" class="finishable" [style.background]="dueDateColor" [style.color]="dueDateColor !== 'transparent' ? 'white' : 'black'">
+                        <mat-icon class="icon-size-small" svgIcon="time-outlined"></mat-icon> 
+                        {{ card.dueDate.date | date:'d MMMM' }}
+                  </div>
+                  <div *ngIf="card.attachments !== undefined && card.attachments.length > 0">
+                        <mat-icon class="icon-size-small" svgIcon="attachment"></mat-icon> 
+                        {{card.attachments.length}}
+                  </div>
+                  <div *ngIf="card.checklists !== undefined && card.checklists.length > 0" class="finishable" [style.background]="checkitemsColor" [style.color]="checkitemsColor !== 'transparent' ? 'white' : 'black'">
+                        <mat-icon class="icon-size-small" svgIcon="check-outlined"></mat-icon> 
+                        {{checkitemsStat}}
+                  </div>
+                  <div *ngIf="card.messages !== undefined && card.messages.length > 0">
+                        <mat-icon class="icon-size-small" svgIcon="comment-outlined"></mat-icon> 
+                        {{card.messages.length}}
+                  </div>
+                  <div fxLayout="row" fxLayoutGap="5px" *ngFor="let user of card.users">
+                        <ngx-avatar name="{{user.fullname}}" size="24" textSizeRatio="1.8"></ngx-avatar>
+                  </div>
             </div>
       </mat-card-content>
 </mat-card>      

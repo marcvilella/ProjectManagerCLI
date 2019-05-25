@@ -10,7 +10,7 @@ import { UpdateBoardStarred, DeleteBoard } from 'src/app/shared/store/actions/bo
 @Component({
   selector: 'board-menu-item',
   templateUrl: './board-menu-item.component.html',
-  styleUrls: ['../../../application.component.scss'],
+  styleUrls: ['../../../application.component.scss', '../../../styles/common.scss'],
   animations: [
     trigger('onConfigurationChange', [
       state('false',

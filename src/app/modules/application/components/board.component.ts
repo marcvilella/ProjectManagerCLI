@@ -47,8 +47,8 @@ export class BoardComponent {
 
             this.router.events.subscribe(event => {
                 if (event instanceof NavigationEnd) {
-                (<any>window).ga('set', 'page', event.urlAfterRedirects);
-                (<any>window).ga('send', 'pageview');
+                    (<any>window).ga('set', 'page', event.urlAfterRedirects);
+                    (<any>window).ga('send', 'pageview');
                 }
             });
     }
@@ -63,7 +63,7 @@ export class BoardComponent {
     }
 
     updateBoardName(): void {
-        console.log('name: ' + this.board.name + '     form: ' + this.boardTitleForm.value);
+        console.log(this.board.settings.starred)
         this.isBoardTitleEditable = false;
         if (this.boardTitleForm.valid && this.board.name !== this.boardTitleForm.value) {
             this._store.dispatch(new UpdateBoard({id: this.board._id, name: this.boardTitleForm.value}));

@@ -679,12 +679,8 @@ export function boardReducers (
             }
 
             case EBoardActions.DeleteCardItemChecklistItemSuccess: {
-                  console.log(action.payload.checkitemId)
                   state.carditems.entities[action.payload.id].checklists.forEach((checklist: ICheckList) => {
-                        console.log(checklist)
                         if (checklist.checkitems.some(m => m._id === action.payload.checkitemId)) {
-                              console.log(checklist.checkitems.length)
-                              console.log(checklist.checkitems.filter(m => m._id !== action.payload.checkitemId).length)
                               checklist.checkitems = checklist.checkitems.filter(m => m._id !== action.payload.checkitemId);
                         }
                   });

@@ -98,9 +98,6 @@ export class HighlightSearch implements PipeTransform {
             // this.markStart = `<span style="background-color: transparent; color: blue; font-weight: 600;">`;
             this.markStart = `<span class="highlight">`;
             this.markEnd = '</span>';
-
-            // this.markStart = `<mark>`;
-            // this.markEnd = '</mark>';
       }
 
       transform(value: any, args: any): any {
