@@ -9,33 +9,48 @@ import { IUser } from '../models/user';
 @Injectable()
 export class UsersService {
 
-  getCurrentUserSuccess$: Observable<IUser>;
-  getUsersFromBoardSuccess$: Observable<IUser[]>;
   getUserSuccess$: Observable<IUser>;
+  getCurrentUserSuccess$: Observable<IUser>;
+  getUsersByBoardSuccess$: Observable<IUser[]>;
+
+  updateUserBoardPermissionSuccess$: Observable<{id: number, userId: number, role: string}>;
 
   constructor(private socket: SocketService) {
 
-    // Every socket USERS event has it's own observable, will be used by ngrx effects
-    this.getCurrentUserSuccess$ = this.socket.listen(EUserActions.GetCurrentUserSuccess);
-    this.getUsersFromBoardSuccess$ = this.socket.listen(EUserActions.GetUsersFromBoardSuccess);
     this.getUserSuccess$ = this.socket.listen(EUserActions.GetUserSuccess);
+    this.getCurrentUserSuccess$ = this.socket.listen(EUserActions.GetCurrentUserSuccess);
+    this.getUsersByBoardSuccess$ = this.socket.listen(EUserActions.GetUsersByBoardSuccess);
+
+    this.updateUserBoardPermissionSuccess$ = this.socket.listen(EUserActions.UpdateUserBoardPermissionSuccess);
 
   }
 
-  // These methods will be called by ngrx effects (do not use directly in the components)
+  //#region Get
+
   getCurrentUser() {
     this.socket.emit(EUserActions.GetCurrentUser);
     return this.getCurrentUserSuccess$;
-  }
-
-  getUsersFromBoard(id: number) {
-    this.socket.emit(EUserActions.GetUsersFromBoard);
-    return this.getUsersFromBoardSuccess$;
   }
 
   getUser(id: number) {
     this.socket.emit(EUserActions.GetUser, id);
     return this.getUserSuccess$;
   }
+
+  getUsersByBoard(data: {id: number}) {
+    this.socket.emit(EUserActions.GetUsersByBoard, data);
+    return this.getUsersByBoardSuccess$;
+  }
+
+  //#endregion
+
+  //#region Update
+
+  updateUserBoardPermission(data: {id: number, userId: number, role: string}) {
+    this.socket.emit(EUserActions.UpdateUserBoardPermission, data);
+    return this.updateUserBoardPermissionSuccess$;
+  }
+
+  //#endregion
 
 }

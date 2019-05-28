@@ -1,5 +1,5 @@
 <div>
-  <h1 mat-dialog-title style="margin-bottom: 5px;">Upload Files</h1>
+  <h1 mat-dialog-title style="margin-bottom: 5px;">{{ 'APPLICATION.Common.Attachments.Uploading' | translate }}</h1>
 
   <!-- This is the content of the dialog, containing a list of the files to upload -->
   <mat-dialog-content>
@@ -17,7 +17,7 @@
 
   <!-- This are the actions of the dialog, containing the primary and the cancel button-->
   <mat-dialog-actions class="actions" *ngIf="error">
-    <button  mat-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button color="primary" (click)="upload()">Try again</button>
+    <button  mat-button mat-dialog-close>{{ 'APPLICATION.Common.Cancel' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="upload()">{{ 'APPLICATION.Common.Attachments.Try' | translate }}</button>
   </mat-dialog-actions>
 </div>

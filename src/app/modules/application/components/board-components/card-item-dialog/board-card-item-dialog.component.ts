@@ -61,10 +61,6 @@ export class CardItemDialogComponent {
       this.showTimeSheet = true;
   }
 
-  cons() {
-    console.log(this.card.watching)
-  }
-
   //#endregion
 
   //#region Functions - Name / Description

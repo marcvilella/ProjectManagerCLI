@@ -25,6 +25,10 @@ $buttonBackground: rgb(210, 210, 210);
       outline: 0;
 }
 
+.relative {
+      position: relative;
+}
+
 .no-vertical-alignment {
       vertical-align: unset !important;
 }
@@ -37,6 +41,10 @@ $buttonBackground: rgb(210, 210, 210);
 .vertical-align-center {
       display: inline-flex;
       align-items: center;
+}
+
+.content-centered {
+      justify-content: center;
 }
 
 .align-right {
@@ -132,6 +140,16 @@ $buttonBackground: rgb(210, 210, 210);
       overflow: hidden;
 }
 
+.size-34 {
+      font-size: 34px;
+      line-height: 34px;
+}
+
+.size-68 {
+      font-size: 68px;
+      line-height: 68px;
+}
+
 /* #endregion */
 
 /* #region Menu Content */
@@ -190,6 +208,12 @@ $buttonBackground: rgb(210, 210, 210);
       margin-left: -3px;
 }
 
+.standalone-only-icon-button{
+      line-height: unset;
+      align-items: center;
+      opacity: 0.7;
+}
+
 .standalone-only-icon-button:hover{
       border-radius: 50%;
       background: lightgray;
@@ -227,6 +251,37 @@ $buttonBackground: rgb(210, 210, 210);
 
 /* #endregion*/
 
+/* #region Card */
+
+.card-table-searcher {
+      padding: 10px;
+      border-radius: 30px;
+      background: white
+}
+
+.card-table-searcher input {
+      border: transparent;
+}
+
+.card-table-searcher input:focus {
+      outline:none;
+}
+
+.card-table {
+      padding: 6px 0px;
+      border-radius: 8px;
+}
+
+.card-table-count {
+      width: fit-content;
+      padding: 4px 8px;
+      border-radius: 4px;    
+      background-color: $applicationColor;
+      color: white; 
+}
+
+/* #endregion */
+
 /* #region DataTable */
 
 .input-padding {
@@ -255,6 +310,48 @@ $buttonBackground: rgb(210, 210, 210);
       background-color: transparent !important;
       border-top: transparent !important;
       border-right: transparent !important;
+}
+
+/* #endregion */
+
+/* #region Dialog */
+
+.dialog-toolbar {
+      height: 44px;
+      background: $toolbarColor;
+      padding: 0px 20px;
+}
+
+.dialog-toolbar .title{
+      width: 100%;
+      margin: auto 0px;
+      padding-left: 3px;
+      user-select: none;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+}
+
+.dialog-toolbar .title-textarea{
+      width: 100%;
+      height: 30px;
+      margin: auto 0px;
+      padding-left: 3px;
+      padding-bottom: 0px; 
+      font-weight: bold;
+      border: transparent;
+      resize: none;
+      overflow: hidden;
+}
+
+.dialog-toolbar .exit-icon-button {
+      width: fit-content;
+      height: fit-content;
+      margin: auto 0px;
+}
+
+.dialog-item {
+      padding: 0px 20px;
 }
 
 /* #endregion */
@@ -303,15 +400,22 @@ $buttonBackground: rgb(210, 210, 210);
 
       /* #endregion */
 
-      /* #region Attachment Avatar */
+      /* #region Avatar */
 
-      .attachment-menu {
-            // width: 275px;
-            max-width: 350px;
+      .avatar-role {
+            position: absolute;
+            right: -1px;
+            bottom: -8px;
       }
 
-      .attachment-menu .attachment-properties-centered {
-            justify-content: center;
+      .avatar-role .mat-icon {
+            width: 14px; 
+      }
+
+      .menu-content-small .admin {
+            position: absolute;
+            right: 10px;
+            top: -5px;
       }
 
       /* #endregion */
@@ -346,6 +450,67 @@ $buttonBackground: rgb(210, 210, 210);
 
 /* #endregion */
 
+/* #region Stats */
+
+.stats-card {
+      height: 250px;
+      padding: 0px 20px;
+}
+
+.stats-card .stats-header {
+      height: 50px;
+      display: flex;
+      place-content: center flex-start;
+      align-content: center;
+      justify-content: flex-start;
+      align-items: center;
+}
+
+.stats-card .stats-result {
+      height: 150px;
+      font-weight: 500;
+      padding-bottom: 17px;
+      place-content: center;
+      text-transform: uppercase;
+}
+
+.stats-card .stats-footer {
+      height: 50px;
+      font-weight: 500;
+      display: flex;
+      place-content: center flex-start;
+      align-content: center;
+      justify-content: flex-start;
+      align-items: center;
+}
+
+.chart-card {
+      height: 470px;
+      padding: 0px 20px;
+}
+
+.chart-card .chart-header {
+      height: 50px;
+      display: flex;
+      place-content: center space-between;
+      align-items: center;
+}
+
+.chart-card .chart-result {
+      height: 320px;
+      font-weight: 500;
+      padding-top: 25px;
+      place-content: center;
+      text-transform: uppercase;
+}
+
+.chart-card .chart-footer {
+      height: 100px;
+}
+
+
+/* #endregion */
+
 /* #region Scrollbar */
 
 ng-scrollbar {
@@ -361,4 +526,24 @@ ng-scrollbar {
 
 .highlight {
       background-color: transparent; color: blue; font-weight: 600;
+}
+
+::ng-deep .no-line .mat-form-field-underline {
+      display: none;
+}
+
+::ng-deep .mat-fit-content .mat-form-field-wrapper {
+      padding: 0;
+}
+
+::ng-deep .mat-fit-content .mat-form-field-infix {
+      border: none;
+      padding: 0;
+      display: inline-flex;
+      width: auto;}
+
+::ng-deep .mat-fit-content .mat-select-value {
+      display: flex;
+      max-width: none;
+      margin-right: 8px;
 }

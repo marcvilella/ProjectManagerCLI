@@ -9,12 +9,14 @@ import { IAppState } from '../state/app.state';
 import { IBoard, ICardList, ICardItem, IDueDate, IAttachment, ICheckList, ICheckItem } from '../../models/boards';
 import * as boardActions from '../actions/board.actions';
 import * as boardSelectors from '../selectors/board.selectors';
+import * as userActions from '../actions/user.actions';
 
 
 
 // Services
 import { BoardsService } from '../../services/boards.service';
 import { Router } from '@angular/router';
+import { IUser } from '../../models/user';
 
 @Injectable()
 export class BoardEffects {
@@ -49,6 +51,14 @@ export class BoardEffects {
                   return of(new boardActions.AddBoardSuccess({board: board}));
             })
       );
+
+      @Effect()
+      addBoardMember$: Observable<Action> = this._actions$.pipe(
+            ofType<boardActions.AddBoardMember>(boardActions.EBoardActions.AddBoardMember),
+            switchMap(action => this._boardsService.addBoardMember(action.payload)),
+            switchMap((user: IUser) => of(new userActions.GetUserSuccess(user)))
+      );
+
 
       @Effect()
       updateBoard$: Observable<Action> = this._actions$.pipe(

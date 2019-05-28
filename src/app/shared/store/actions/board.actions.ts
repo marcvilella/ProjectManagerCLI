@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 
 import { IBoard, ICardList, ICardItem, IDueDate, IAttachment, ICheckList, ICheckItem } from '../../models/boards';
+import { IUser } from '../../models/user';
 
 export enum EBoardActions {
       Failure = '[Board] Failure',
@@ -133,12 +134,12 @@ export class AddBoardSuccess implements Action {
 
 export class AddBoardMember implements Action {
       public readonly type = EBoardActions.AddBoardMember;
-      constructor(public payload: {id: number, userId: number}) {}
+      constructor(public payload: {id: number, email: number, optional?: string}) {}
 }
 
 export class AddBoardMemberSuccess implements Action {
       public readonly type = EBoardActions.AddBoardMemberSuccess;
-      constructor(public payload: {id: number, userId: number}) {}
+      constructor(public payload: IUser) {}
 }
 
 export class UpdateBoard implements Action {

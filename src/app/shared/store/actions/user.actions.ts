@@ -6,11 +6,13 @@ export enum EUserActions {
       Failure = '[User] Failure',
       GetCurrentUser = '[User] Get Current User',
       GetCurrentUserSuccess = '[User] Get Current User Success',
-      GetUsersFromBoard = '[User] Get Users from Board',
-      GetUsersFromBoardSuccess = '[User] Get Users from Board Success',
+      GetUsersByBoard = '[User] Get Users By Board',
+      GetUsersByBoardSuccess = '[User] Get Users By Board Success',
       GetUser = '[User] Get User',
-      GetUserSuccess = '[User] Get User Success'
+      GetUserSuccess = '[User] Get User Success',
 
+      UpdateUserBoardPermission = '[User] Update User Board Permission',
+      UpdateUserBoardPermissionSuccess = '[User] Update User Board Permission Success'
 }
 
 //#region Failure
@@ -22,34 +24,7 @@ export class Failure implements Action {
 
 //#endregion
 
-//#region Get Current User
-
-export class GetCurrentUser implements Action {
-      public readonly type = EUserActions.GetCurrentUser;
-}
-
-export class GetCurrentUserSuccess implements Action {
-      public readonly type = EUserActions.GetCurrentUserSuccess;
-      constructor(public payload: IUser) {}
-}
-
-//#endregion
-
-//#region Get Users from Board
-
-export class GetUsersFromBoard implements Action {
-      public readonly type = EUserActions.GetUsersFromBoard;
-      constructor(public payload: number) {}
-}
-
-export class GetUsersFromBoardSuccess implements Action {
-      public readonly type = EUserActions.GetUsersFromBoardSuccess;
-      constructor(public payload: IUser[]) {}
-}
-
-//#endregion
-
-//#region Get User
+//#region Get
 
 export class GetUser implements Action {
       public readonly type = EUserActions.GetUser;
@@ -61,14 +36,47 @@ export class GetUserSuccess implements Action {
       constructor(public payload: IUser) {}
 }
 
+export class GetCurrentUser implements Action {
+      public readonly type = EUserActions.GetCurrentUser;
+}
+
+export class GetCurrentUserSuccess implements Action {
+      public readonly type = EUserActions.GetCurrentUserSuccess;
+      constructor(public payload: IUser) {}
+}
+
+export class GetUsersByBoard implements Action {
+      public readonly type = EUserActions.GetUsersByBoard;
+      constructor(public payload: {id: number}) {}
+}
+
+export class GetUsersByBoardSuccess implements Action {
+      public readonly type = EUserActions.GetUsersByBoardSuccess;
+      constructor(public payload: IUser[]) {}
+}
+
+//#endregion
+
+//#region Update
+
+export class UpdateUserBoardPermission implements Action {
+      public readonly type = EUserActions.UpdateUserBoardPermission;
+      constructor(public payload: {id: number, userId: number, role: string}) {}
+}
+
+export class UpdateUserBoardPermissionSuccess implements Action {
+      public readonly type = EUserActions.UpdateUserBoardPermissionSuccess;
+      constructor(public payload: {id: number, userId: number, role: string}) {}
+}
+
 //#endregion
 
 export type UserActions =
       | Failure
-      | GetCurrentUser
-      | GetCurrentUserSuccess
-      | GetUsersFromBoard
-      | GetUsersFromBoardSuccess
-      | GetUser
-      | GetUserSuccess
+
+      | GetUser                     | GetUserSuccess
+      | GetCurrentUser              | GetCurrentUserSuccess
+      | GetUsersByBoard             | GetUsersByBoardSuccess
+
+      | UpdateUserBoardPermission   | UpdateUserBoardPermissionSuccess
       ;

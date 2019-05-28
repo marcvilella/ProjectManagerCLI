@@ -11,7 +11,7 @@ export function userReducers (
             //#region Requests
 
             case EUserActions.GetCurrentUser:
-            case EUserActions.GetUsersFromBoard:
+            case EUserActions.GetUsersByBoard:
             case EUserActions.GetUser: {
                   return {
                     ...state,
@@ -34,7 +34,20 @@ export function userReducers (
 
             //#endregion
 
-            //#region Successes
+            //#region Get
+
+            case EUserActions.GetUserSuccess: {
+                  if (action.payload.name !== undefined && action.payload.surname !== undefined) {
+                        action.payload.fullname = action.payload.name + ' ' + action.payload.surname;
+                  }
+                  return userAdapter.upsertOne(
+                        action.payload,
+                        {
+                        ...state,
+                        isLoading: false,
+                        error: null
+                  });
+            }
 
             case EUserActions.GetCurrentUserSuccess: {
                   action.payload.fullname = action.payload.name + ' ' + action.payload.surname;
@@ -47,8 +60,11 @@ export function userReducers (
                         error: null
                   });
             }
-            case EUserActions.GetUsersFromBoardSuccess: {
-                  action.payload.forEach((user: IUser) => user.fullname = user.name + ' ' + user.surname);
+            case EUserActions.GetUsersByBoardSuccess: {
+                  action.payload.forEach((user: IUser) => {
+                        if (user.name !== undefined && user.surname !== undefined) {
+                              user.fullname = user.name + ' ' + user.surname;
+                        }});
                   return userAdapter.upsertMany(
                         action.payload,
                         {
@@ -57,15 +73,21 @@ export function userReducers (
                         error: null
                   });
             }
-            case EUserActions.GetUserSuccess: {
-                  action.payload.fullname = action.payload.name + ' ' + action.payload.surname;
-                  return userAdapter.upsertOne(
-                        action.payload,
+
+            //#endregion
+
+            //#region Update
+
+            case EUserActions.UpdateUserBoardPermissionSuccess: {
+                  const index = state.entities[action.payload.userId].boards.findIndex(m => m._id === action.payload.id);
+                  state.entities[action.payload.userId].boards[index].settings.role = action.payload.role;
+                  return userAdapter.updateOne(
                         {
-                        ...state,
-                        isLoading: false,
-                        error: null
-                  });
+                              id: action.payload.id,
+                              changes: {}
+                        },
+                        state
+                  );
             }
 
             //#endregion

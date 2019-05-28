@@ -1,22 +1,16 @@
 <ng-scrollbar [compact]="true" [disableOnBreakpoints]="false" style="max-height: 90vh;">
       <div class="card-item-dialog" fxLayout="column" fxLayoutGap="10px">
             <div gdColumns="auto 24px 24px" gdGap="6px" class="dialog-toolbar">
-                  <div gdColumn="1" *ngIf="!IsChangingName" class="label" (click)="selectName()">{{card.name}}</div>
-                  <input gdColumn="1" *ngIf="IsChangingName" class="textarea" spellcheck="false" [formControl]="CardNameFormControl" (blur)="updateProperties()" autoSizeTextArea autoFocus>
-                  <button gdColumn="2" mat-icon-button class="edit"  matTooltip="{{ 'APPLICATION.Boards.CardDialog.Visibility-tooltip' | translate }}">
+                  <div gdColumn="1" *ngIf="!IsChangingName" class="title pointable" (click)="selectName()">{{card.name}}</div>
+                  <input gdColumn="1" *ngIf="IsChangingName" class="title-textarea" spellcheck="false" [formControl]="CardNameFormControl" (blur)="updateProperties()" autoSizeTextArea autoFocus>
+                  <button gdColumn="2" mat-icon-button class="standalone-only-icon-button exit-icon-button vertical-centered-margin"  matTooltip="{{ 'APPLICATION.Boards.CardDialog.Visibility-tooltip' | translate }}">
                         <animated-icon [isChecked]="card.watching" [icons]="'visibility-off,visibility'"></animated-icon>
                   </button>
-                  <button gdColumn="3" mat-icon-button class="edit">
+                  <button gdColumn="3" mat-icon-button class="standalone-only-icon-button exit-icon-button">
                         <mat-icon mat-icon-button svgIcon="menu" [matMenuTriggerFor]="cardActions"></mat-icon> 
                   </button>
-                  <mat-menu #cardActions="matMenu">
-                        <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Move' | translate }}</button>
-                        <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Copy' | translate }}</button>
-                        <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Archive' | translate }}</button>
-                        <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Share' | translate }}</button>
-                  </mat-menu> 
             </div>
-            <div fxLayout="row wrap" fxLayoutGap="14px" class="item last-child-right">
+            <div fxLayout="row wrap" fxLayoutGap="14px" class="dialog-item last-child-right">
                   <div gdRows="2" gdGap="5px" class="fit-height-content">
                         <span gdRow="1" class="subtitle">{{ 'APPLICATION.Boards.CardDialog.Members' | translate }}</span>
                         <common-members-selector gdRow="2" [users]="users" [selectedUsers]="card.users" (userSelected)="selectUser($event)" (userDeleted)="deleteUser($event)"></common-members-selector>
@@ -44,7 +38,7 @@
                         </button>
                   </div>
             </div>
-            <div class="item" fxLayout="column" fxLayoutGap="5px">
+            <div class="dialog-item" fxLayout="column" fxLayoutGap="5px">
                   <div fxLayout="row" fxLayoutGap="10px">
                         <mat-icon svgIcon="description"></mat-icon>
                         <span class="title">{{ 'APPLICATION.Boards.CardDialog.Description' | translate }}</span>
@@ -58,7 +52,7 @@
                   </div>
             </div>
 
-            <div class="item" fxLayout="column" fxLayoutGap="5px">
+            <div class="dialog-item" fxLayout="column" fxLayoutGap="5px">
                   <div fxLayout="row" fxLayoutGap="10px">
                         <mat-icon svgIcon="comment"></mat-icon>
                         <span class="title">{{ 'APPLICATION.Boards.CardDialog.AddComment' | translate }}</span>
@@ -77,13 +71,20 @@
                   </div>
             </div>
 
-            <timesheet-weekly-insert class="item" *ngIf="card.worksegments !== undefined || showTimeSheet === true" [worksegments]="card.worksegments"></timesheet-weekly-insert>
+            <timesheet-weekly-insert class="dialog-item" *ngIf="card.worksegments !== undefined || showTimeSheet === true" [worksegments]="card.worksegments"></timesheet-weekly-insert>
 
-            <div *ngFor="let checklist of card.checklists" class="item">
+            <div *ngFor="let checklist of card.checklists" class="dialog-item">
                   <common-checklist [checklist]="checklist" [users]="card.users" (propertiesChanged)="updateChecklistProperties($event, checklist._id)" 
                                     (updateCheckitem)="updateCheckitemProperties($event, checklist._id)"></common-checklist>
             </div>
 
-            <common-activity-viewer class="item" [messages]="card.messages" [users]="users" [selectedUser]="selectedUser"></common-activity-viewer>
+            <common-activity-viewer class="dialog-item" [messages]="card.messages" [users]="users" [selectedUser]="selectedUser"></common-activity-viewer>
       </div>
 </ng-scrollbar>
+
+<mat-menu #cardActions="matMenu">
+      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Move' | translate }}</button>
+      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Copy' | translate }}</button>
+      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Archive' | translate }}</button>
+      <button mat-menu-item>{{ 'APPLICATION.Boards.CardActions.Share' | translate }}</button>
+</mat-menu> 

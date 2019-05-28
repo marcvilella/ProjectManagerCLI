@@ -8,8 +8,10 @@ export interface IUser {
     email: string;
     company: string;
     position: string;
+    phone: string;
     password: string;
-    role: string;
     image: string;
     boards: IBoard[];
+
+    tempRole: string;
 }

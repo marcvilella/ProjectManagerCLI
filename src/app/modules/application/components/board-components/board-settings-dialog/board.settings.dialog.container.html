@@ -1,0 +1,7 @@
+<div *ngIf="(getBoard() | async) as board; else loading">
+      <board-settings-dialog [board]="board"></board-settings-dialog>
+</div>
+
+<ng-template #loading>
+      Loading stuff...
+</ng-template>

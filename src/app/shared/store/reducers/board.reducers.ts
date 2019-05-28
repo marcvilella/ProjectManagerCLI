@@ -317,8 +317,13 @@ export function boardReducers (
                   action.payload.cardItems.forEach((card: ICardItem) => {
                         card.createdAt = new Date(card.createdAt);
                         card.modifiedAt = new Date(card.modifiedAt);
-                        if (card.dueDate !== undefined && card.dueDate.date !== undefined) {
-                              card.dueDate.date = new Date(card.dueDate.date);
+                        if (card.dueDate !== undefined) {
+                              if (card.dueDate.date !== undefined) {
+                                    card.dueDate.date = new Date(card.dueDate.date);
+                              }
+                              if (card.dueDate.completedAt !== undefined) {
+                                    card.dueDate.completedAt = new Date(card.dueDate.completedAt);
+                              }
                         }
                         if (card.attachments !== undefined) {
                               card.attachments.forEach((attachment: IAttachment) => {
@@ -347,8 +352,13 @@ export function boardReducers (
             case EBoardActions.GetCardItemSuccess: {
                   action.payload.cardItem.createdAt = new Date(action.payload.cardItem.createdAt);
                   action.payload.cardItem.modifiedAt = new Date(action.payload.cardItem.modifiedAt);
-                        if (action.payload.cardItem.dueDate !== undefined && action.payload.cardItem.dueDate.date !== undefined) {
-                              action.payload.cardItem.dueDate.date = new Date(action.payload.cardItem.dueDate.date);
+                        if (action.payload.cardItem.dueDate !== undefined) {
+                              if (action.payload.cardItem.dueDate.date !== undefined) {
+                                    action.payload.cardItem.dueDate.date = new Date(action.payload.cardItem.dueDate.date);
+                              }
+                              if (action.payload.cardItem.dueDate.completedAt !== undefined) {
+                                    action.payload.cardItem.dueDate.completedAt = new Date(action.payload.cardItem.dueDate.completedAt);
+                              }
                         }
                         if (action.payload.cardItem.attachments !== undefined) {
                               action.payload.cardItem.attachments.forEach((attachment: IAttachment) => {
@@ -373,6 +383,8 @@ export function boardReducers (
             }
 
             case EBoardActions.AddCardItemSuccess: {
+                  action.payload.cardItem.createdAt = new Date(action.payload.cardItem.createdAt);
+                  action.payload.cardItem.modifiedAt = new Date(action.payload.cardItem.modifiedAt);
                   return {
                         ...state,
                         cardlists: cardListAdapter.updateOne(
@@ -525,7 +537,12 @@ export function boardReducers (
                               {
                                     id: action.payload.id,
                                     changes: {
-                                          dueDate: {date: new Date(action.payload.dueDate.date), done: action.payload.dueDate.done, remindAt: action.payload.dueDate.remindAt}
+                                          dueDate: {
+                                                date: new Date(action.payload.dueDate.date),
+                                                done: action.payload.dueDate.done,
+                                                remindAt: action.payload.dueDate.remindAt,
+                                                completedAt: action.payload.dueDate.completedAt !== undefined ? new Date(action.payload.dueDate.completedAt) : undefined
+                                          }
                                     }
                               },
                               state.carditems

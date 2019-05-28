@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayoutGap="3px" style="max-width: 240px;">
-      <div fxFlex="36px" class="radius" *ngFor="let user of selectedUsers" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)">
-            <ngx-avatar name="{{user.fullname}}" size="36" textSizeRatio="3"></ngx-avatar>
+      <div fxFlex="36px" *ngFor="let user of selectedUsers">
+            <common-member-avatar [user]="user"></common-member-avatar>
       </div>
       <button mat-button [ngClass]="(selectedUsers.length !== 0) ? 'only-icon-button' : 'icon-button'" [matMenuTriggerFor]="membersselector">
             <div *ngIf="selectedUsers.length !== 0">
@@ -18,7 +18,7 @@
             <input matInput spellcheck="false" class="search-textarea" placeholder="{{ 'APPLICATION.Common.Members.Search-input' | translate }}" [formControl]="searchFormControl" (input)="userSearcherUpdated()" autoFocus/>
             <div>
                   <div *ngFor="let user of filteredUsers">
-                        <mat-card class="menu-item-pointable" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)" (click)="selectUser(user._id)">
+                        <mat-card class="menu-item-pointable" (click)="selectUser(user._id)">
                               <mat-card-content fxLayout="row" fxLayoutGap="7px">
                                     <ngx-avatar name="{{user.fullname}}" size="36" textSizeRatio="3"></ngx-avatar>
                                     <div fxLayout="column" class="user-properties-centered">

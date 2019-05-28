@@ -91,7 +91,20 @@ $hoverBackground: rgb(224, 224, 224);
       line-height: normal;
 }
 
+.toolbar .avatars {
+      margin-left: 10px;
+      margin-right: 15px !important;
+}
+
 /*#endregion Toolbar*/
+
+/*#region Board Settings Dialog*/
+
+.board-settings-dialog .tab-padding {
+      padding: 20px;
+}
+
+/*#endregion*/
 
 /*#region Card List Component*/
 
@@ -211,73 +224,11 @@ $cardItemDialogWidth: 810px;
 $cardItemDialogLeftAvatar: 34px;
 $DarkGray: rgb(140, 140, 140);
 
-.card-item-dialog .dialog-toolbar {
-      background: $DarkGray;
-      // margin: -10px -20px 10px -20px;
-      padding: 10px 20px 0px 20px;
-}
-
-.card-item-dialog .title{
-      display: block;
-      margin-top: 2px;
-      margin-bottom: 5px;
-      font-weight: bold;
-}
-
 .card-item-dialog .last-child-right div:last-child{
       margin-left: auto;
 }
 
-.card-item-dialog .subtitle{
-      margin: 0 auto;
-      font-size: 12px;
-      letter-spacing: .03em;
-      text-transform: uppercase;
-}
-
-.card-item-dialog .label{
-      cursor: pointer; 
-      height: 27px;
-      width: 100%;
-      margin: 2px 3px 4px 0px; 
-      padding-left: 3px;
-      user-select: none;
-      font-weight: bold;
-      overflow: hidden;
-      text-overflow: ellipsis;
-}
-
-.card-item-dialog .textarea{
-      width: 100%;
-      margin-right: 3px;
-      margin-left: 0px;
-      margin-bottom: 7px; 
-      padding-left: 3px;
-      padding-bottom: 0px; 
-      font-weight: bold;
-      border: transparent;
-      resize: none;
-      overflow: hidden;
-}
-
-.card-item-dialog .edit{
-      line-height: unset;
-      width: 24px;
-      height: 27px;
-      align-items: center;
-      opacity: 0.7;
-}
-
-.card-item-dialog .edit:hover{
-      background: lightgray;
-      opacity: 0.9;
-}
-
-.card-item-dialog .item {
-      padding: 0px 20px;
-}
-
-.card-item-dialog .item .label{
+.card-item-dialog .dialog-item .label{
       cursor: pointer; 
       height: 27px;
       width: 100%;
@@ -291,7 +242,7 @@ $DarkGray: rgb(140, 140, 140);
       text-overflow: ellipsis;
 }
 
-.card-item-dialog .item .textarea{
+.card-item-dialog .dialog-item .textarea{
       width: 100%;
       padding-left: 5px;
       border: black;
@@ -301,7 +252,7 @@ $DarkGray: rgb(140, 140, 140);
       font-weight: normal;
 }
 
-.card-item-dialog .item .button{
+.card-item-dialog .dialog-item .button{
       display: inline-block;
       width: fit-content;
       padding-left: 3px;

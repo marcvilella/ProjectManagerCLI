@@ -1,0 +1,257 @@
+<ng-scrollbar [compact]="true" [disableOnBreakpoints]="false" style="max-height: 90vh;">
+      <div class="board-settings-dialog" fxLayout="column">
+            <div gdColumns="auto 24px" gdGap="6px" class="dialog-toolbar">
+                  <div gdColumn="1" class="title vertical-centered-margin">{{ 'APPLICATION.Boards.SettingsDialog.BoardSettings' | translate }}: {{board.name}}</div>
+                  <button mat-dialog-close gdColumn="2" mat-icon-button class="standalone-only-icon-button exit-icon-button">
+                        <mat-icon mat-icon-button svgIcon="close"></mat-icon> 
+                  </button>
+            </div>
+            <mat-tab-group>
+                  <mat-tab label="{{ 'APPLICATION.Boards.SettingsDialog.Home' | translate }}">
+                        <ng-template matTabContent>
+                              <div class="tab-padding" fxLayout="column" fxLayoutGap="10px">
+
+                                    <!-- First line of stats -->
+                                    <div fxLayout="row" fxLayoutGap="10px">
+
+                                          <!-- Due tasks -->
+                                          <mat-card fxFlex="25%" class="stats-card" style="padding: 0px 20px">
+                                                <div class="stats-header">
+                                                      <mat-form-field class="mat-fit-content no-line">
+                                                            <mat-select [(value)]="daylyTasks">
+                                                                  <mat-option value="-1">{{ 'APPLICATION.Common.Date.Yesterday' | translate }}</mat-option>
+                                                                  <mat-option value="0">{{ 'APPLICATION.Common.Date.Today' | translate }}</mat-option>
+                                                                  <mat-option value="1">{{ 'APPLICATION.Common.Date.Tomorrow' | translate }}</mat-option>
+                                                            </mat-select>
+                                                      </mat-form-field>   
+                                                </div>
+                                                <div fxLayout="column" class="stats-result vertical-align-center">
+                                                      <span class="size-68" [style.color]="'lightblue'">{{getDueTasks('dueTasks')}}</span>
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.DueTasks' | translate }}
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="stats-footer">
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.Completed' | translate }}: {{getDueTasks('dueTasksCompleted')}}
+                                                </div>
+                                          </mat-card>
+
+                                          <!-- Overdue -->
+                                          <mat-card fxFlex="25%" class="stats-card">
+                                                <div class="stats-header">
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.Overdue' | translate }} 
+                                                </div>
+                                                <div fxLayout="column" class="stats-result vertical-align-center">
+                                                      <span class="size-68" [style.color]="'red'">{{getDueTasks('overdue')}}</span>
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.Tasks' | translate }}
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="stats-footer">
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.YesterdayOverdue' | translate }}: {{getDueTasks('overdueYesterday')}}
+                                                </div>
+                                          </mat-card>
+
+                                          <!-- Open tasks -->
+                                          <mat-card fxFlex="25%" class="stats-card">
+                                                <div class="stats-header">
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.Tasks' | translate }} 
+                                                </div>
+                                                <div fxLayout="column" class="stats-result vertical-align-center">
+                                                      <span class="size-68" [style.color]="'orange'">{{getDueTasks('open')}}</span>
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.Open' | translate }}
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="stats-footer">
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.CompletedToday' | translate }}: {{getDueTasks('completedToday')}}
+                                                </div>
+                                          </mat-card>
+
+                                          <!-- Undefined -->
+                                          <mat-card fxFlex="25%" class="stats-card">
+                                                <div class="stats-header">
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.Undefined' | translate }} 
+                                                </div>
+                                                <div fxLayout="column" class="stats-result vertical-align-center">
+                                                      <span class="size-68" [style.color]="'orange'">{{getDueTasks('undefined')}}</span>
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.Tasks' | translate }}
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="stats-footer">
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.Undefined-message' | translate }}
+                                                </div>
+                                          </mat-card>
+                                    </div>
+
+                                    <!-- Last line -->
+                                    <div fxLayout="row" fxLayoutGap="10px">
+
+                                          <!-- Weekly resume -->
+                                          <mat-card fxFlex="50%" class="chart-card">
+                                                <div class="chart-header">
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.WeeklyOverview' | translate }} 
+
+                                                      <mat-form-field class="mat-fit-content no-line">
+                                                            <mat-select [(value)]="weeklyOverview" (selectionChange)="setWeeklyOverviewData(weeklyOverview)">                                                                  
+                                                                  <mat-option value="0">{{ 'APPLICATION.Boards.SettingsDialog.Stats.ThisWeek' | translate }}</mat-option>
+                                                                  <mat-option value="1">{{ 'APPLICATION.Boards.SettingsDialog.Stats.LastWeek' | translate }}</mat-option>
+                                                                  <mat-option value="2">{{ 'APPLICATION.Boards.SettingsDialog.Stats.2WeeksAgo' | translate }}</mat-option>
+                                                            </mat-select>
+                                                      </mat-form-field>   
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="chart-result">
+                                                      <p-chart class="parent-size" type="bar" [data]="weeklyOverviewData" [options]="weeklyOverviewOptions"></p-chart>
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div fxLayout="row" class="chart-footer">
+                                                      <div fxFlex="50%" fxLayout="column" class="vertical-align-center vertical-centered-margin">
+                                                            <span class="size-34">{{getTotalValue(weeklyOverviewData.datasets[0].data)}}</span>
+                                                            {{ 'APPLICATION.Boards.SettingsDialog.Stats.Created' | translate }}
+                                                      </div>
+                                                      <mat-divider [vertical]="true"></mat-divider>
+                                                      <div fxFlex="50%" fxLayout="column" class="vertical-align-center vertical-centered-margin">
+                                                            <span class="size-34">{{getTotalValue(weeklyOverviewData.datasets[1].data)}}</span>
+                                                            {{ 'APPLICATION.Boards.SettingsDialog.Stats.Closed' | translate }}
+                                                      </div>
+                                                </div>
+                                          </mat-card>
+
+                                          <!-- Task Distribution -->
+                                          <mat-card fxFlex="50%" class="chart-card">
+                                                <div class="chart-header">
+                                                      {{ 'APPLICATION.Boards.SettingsDialog.Stats.TaskDistribution' | translate }} 
+
+                                                      <div fxLayout="row" fxLayoutGap="10px">
+                                                            <mat-form-field class="mat-fit-content no-line">
+                                                                  <mat-select [(value)]="taskDistributionType" (selectionChange)="setTaskDistributionDate(taskDistribution, taskDistributionType)">
+                                                                        <mat-option value="priority">{{ 'APPLICATION.Boards.SettingsDialog.Stats.Priority' | translate }}</mat-option>
+                                                                        <mat-option value="category" disabled>{{ 'APPLICATION.Boards.SettingsDialog.Stats.Category' | translate }}</mat-option>
+                                                                  </mat-select>
+                                                            </mat-form-field>  
+
+                                                            <mat-form-field class="mat-fit-content no-line">
+                                                                  <mat-select [(value)]="taskDistribution" (selectionChange)="setTaskDistributionDate(taskDistribution, taskDistributionType)">
+                                                                        <mat-option value="none">{{ 'APPLICATION.Boards.SettingsDialog.Stats.AllTime' | translate }}</mat-option>
+                                                                        <mat-option value="0">{{ 'APPLICATION.Boards.SettingsDialog.Stats.ThisWeek' | translate }}</mat-option>
+                                                                        <mat-option value="1">{{ 'APPLICATION.Boards.SettingsDialog.Stats.LastWeek' | translate }}</mat-option>
+                                                                        <mat-option value="2">{{ 'APPLICATION.Boards.SettingsDialog.Stats.2WeeksAgo' | translate }}</mat-option>
+                                                                  </mat-select>
+                                                            </mat-form-field>   
+                                                      </div>
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="chart-result">
+                                                      <p-chart class="parent-size" type="doughnut" [data]="taskDistributionData" [options]="taskDistributionOptions"></p-chart>
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div fxLayout="row" class="chart-footer">
+                                                      <div fxFlex="50%" fxLayout="column" class="vertical-align-center vertical-centered-margin">
+                                                            <span class="size-34">{{getTotalValue(taskDistributionData.datasets[0].data)}}</span>
+                                                            {{ 'APPLICATION.Boards.SettingsDialog.Stats.Created' | translate }}
+                                                      </div>
+                                                      <mat-divider [vertical]="true"></mat-divider>
+                                                      <div fxFlex="50%" fxLayout="column" class="vertical-align-center vertical-centered-margin">
+                                                            <span class="size-34">{{taskDistributionClosed}}</span>
+                                                            {{ 'APPLICATION.Boards.SettingsDialog.Stats.Closed' | translate }}
+                                                      </div>
+                                                </div>
+                                          </mat-card>
+                        
+                                    </div>
+
+                              </div>
+                        </ng-template>
+                  </mat-tab>
+                  <mat-tab label="{{ 'APPLICATION.Boards.SettingsDialog.TeamMembers' | translate }}">
+                        <ng-template matTabContent>
+                              <div class="tab-padding" fxLayout="column" fxLayoutGap="10px">
+
+                                    <div fxLayout="row">
+                                          <div fxLayout="row" fxLayoutGap="5px" class="card-table-searcher mat-elevation-z1">
+                                                <mat-icon svgIcon="search"></mat-icon>
+                                                <input (keyup)="applyFilter($event.target.value)" placeholder="{{ 'APPLICATION.Boards.SettingsDialog.Search' | translate }}"/>
+                                          </div>
+                                          <button mat-raised-button class="align-right" [matMenuTriggerFor]="membersAdder">
+                                                {{ 'APPLICATION.Boards.SettingsDialog.NewMember.Add' | translate }}
+                                          </button>
+                                    </div>
+
+                                    <mat-card class="card-table">
+                                          <table mat-table #matTable class="parent-size" [dataSource]="dataSource">
+                                                
+                                                <!-- Avatar Column -->
+                                                <ng-container matColumnDef="avatar">
+                                                      <mat-header-cell fxFlex="90px" *matHeaderCellDef></mat-header-cell>
+                                                      <mat-cell fxFlex="90px" *matCellDef="let user">
+                                                            <ngx-avatar name="{{user.fullname}}" size="40"></ngx-avatar> 
+                                                      </mat-cell>
+                                                </ng-container>
+                                                
+                                                <!-- Name Column -->
+                                                <ng-container matColumnDef="name">
+                                                      <mat-header-cell *matHeaderCellDef>{{ 'APPLICATION.Boards.SettingsDialog.Name' | translate }}</mat-header-cell>
+                                                      <mat-cell *matCellDef="let user">
+                                                            {{user.fullname}} 
+                                                      </mat-cell>
+                                                </ng-container>
+                                                
+                                                <!-- Company Column -->
+                                                <ng-container matColumnDef="company">
+                                                      <mat-header-cell *matHeaderCellDef>{{ 'APPLICATION.Boards.SettingsDialog.Company' | translate }}</mat-header-cell>
+                                                      <mat-cell *matCellDef="let user"> {{user.company}} </mat-cell>
+                                                </ng-container>
+                                                
+                                                <!-- Position Column -->
+                                                <ng-container matColumnDef="position">
+                                                      <mat-header-cell *matHeaderCellDef>{{ 'APPLICATION.Boards.SettingsDialog.Position' | translate }}</mat-header-cell>
+                                                      <mat-cell *matCellDef="let user"> {{user.position}} </mat-cell>
+                                                </ng-container>
+
+                                                 <!-- Email Column -->
+                                                 <ng-container matColumnDef="email">
+                                                      <mat-header-cell *matHeaderCellDef>{{ 'APPLICATION.Boards.SettingsDialog.Email' | translate }}</mat-header-cell>
+                                                      <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+                                                </ng-container>
+
+                                                <!-- Phone Column -->
+                                                <ng-container matColumnDef="phone">
+                                                      <mat-header-cell *matHeaderCellDef>{{ 'APPLICATION.Boards.SettingsDialog.Phone' | translate }}</mat-header-cell>
+                                                      <mat-cell *matCellDef="let user"> {{user.phone}} </mat-cell>
+                                                </ng-container>
+                                                
+                                                <!-- Permission Column -->
+                                                <ng-container matColumnDef="permission">
+                                                      <mat-header-cell *matHeaderCellDef>{{ 'APPLICATION.Boards.SettingsDialog.Permissions.Permission' | translate }}</mat-header-cell>
+                                                      <mat-cell *matCellDef="let user">
+                                                            <mat-form-field *ngIf="user.tempRole !== undefined" class="block">
+                                                                  <mat-select [(value)]="user.tempRole" (selectionChange)="changeUserPermission($event, user._id)" [disabled]="changeUserPermissionDisabled(user.tempRole)">
+                                                                        <mat-option value="manager">{{ 'APPLICATION.Boards.SettingsDialog.Permissions.ProjectManager' | translate }}</mat-option>
+                                                                        <mat-option value="admin">{{ 'APPLICATION.Boards.SettingsDialog.Permissions.Administrator' | translate }}</mat-option>
+                                                                        <mat-option value="member">{{ 'APPLICATION.Boards.SettingsDialog.Permissions.Member' | translate }}</mat-option>
+                                                                  </mat-select>
+                                                            </mat-form-field>
+                                                            <span *ngIf="user.tempRole === undefined">{{ 'APPLICATION.Boards.SettingsDialog.Permissions.Pending' | translate }}</span>
+                                                      </mat-cell>
+                                                </ng-container>
+                                                
+                                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>      
+                                          </table>
+                                    </mat-card>
+
+                                    <div class="card-table-count align-right">
+                                          {{board.settings.users.length}} {{ 'APPLICATION.Boards.SettingsDialog.Members' | translate }}
+                                    </div>
+                              </div>
+                        </ng-template>
+                  </mat-tab>
+            </mat-tab-group>
+      </div>
+</ng-scrollbar>
+
+<mat-menu #membersAdder="matMenu">
+      <div class="menu-content-small" fxLayout="column" fxLayoutGap="8px" (click)="stopPropagation($event)">
+            <input matInput class="textarea" spellcheck="false" placeholder="{{ 'APPLICATION.Boards.SettingsDialog.NewMember.Email' | translate }}" [formControl]="emailFormControl" autoFocus/>
+            <textarea matInput class="textarea" [formControl]="optionalFormControl" placeholder="{{ 'APPLICATION.Boards.SettingsDialog.NewMember.Message' | translate }}"></textarea>
+            <button mat-raised-button color='primary' (click)="addUser()">{{ 'APPLICATION.Boards.SettingsDialog.NewMember.Send' | translate }}</button>
+      </div>
+</mat-menu> 

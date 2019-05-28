@@ -7,17 +7,17 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 
 import { IAppState } from 'src/app/shared/store/state/app.state';
-import { IColor, Colors } from '../../../shared/models/colors';
+import { IColor, Colors } from '../../../../../shared/models/colors';
 import { AddBoard } from 'src/app/shared/store/actions/board.actions';
 import { IUser } from 'src/app/shared/models/user';
 import { selectCurrentUser } from 'src/app/shared/store/selectors/user.selectors';
 
 @Component({
     selector: 'board-create',
-    templateUrl: '../views/board.create.html',
-    styleUrls: ['../styles/board.component.scss']
+    templateUrl: './board.create.dialog.html',
+    styleUrls: ['../../../styles/board.component.scss']
 })
-export class BoardCreateDialog {
+export class BoardCreateDialogComponent {
 
   //#region Members
 
@@ -33,7 +33,7 @@ export class BoardCreateDialog {
 
   constructor(
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<BoardCreateDialog>,
+    public dialogRef: MatDialogRef<BoardCreateDialogComponent>,
     private router: Router,
     private _store: Store<IAppState>,
     private boardData: BoardCreateDataService) {
@@ -44,7 +44,7 @@ export class BoardCreateDialog {
         take(1),
       ).subscribe();
 
-      const board = this.dialog.open(BoardCardDialog, {
+      const board = this.dialog.open(BoardCardDialogComponent, {
         position: {top: '370px'},
         panelClass: 'noborder-dialog-container',
         hasBackdrop: false,
@@ -126,9 +126,9 @@ export class BoardCreateDialog {
       {{title}}
     </div>
   </div>`,
-  styleUrls: ['../styles/board.component.scss']
+  styleUrls: ['../../../styles/board.component.scss']
 })
-export class BoardCardDialog {
+export class BoardCardDialogComponent {
 
   title: string;
   color: IColor;

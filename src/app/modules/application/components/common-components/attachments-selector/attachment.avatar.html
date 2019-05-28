@@ -1,9 +1,9 @@
 <ngx-avatar name="{{Attachment.dataType}}" size="36" textSizeRatio="3" [round]="false" matTooltip="{{Attachment.name}}" [matMenuTriggerFor]="attachmentOptions"></ngx-avatar>
 
 <mat-menu #attachmentOptions="matMenu" style="max-width: 350px">
-      <div class="menu-content-small attachment-menu pointable" fxLayout="row" fxLayoutGap="8px" (click)="openAttachment(); stopPropagation($event)">
+      <div class="menu-content-small pointable" fxLayout="row" fxLayoutGap="8px" (click)="openAttachment(); stopPropagation($event)">
             <ngx-avatar name="{{Attachment.dataType}}" size="60" textSizeRatio="4" [round]="false"></ngx-avatar>
-            <div fxLayout="column" class="attachment-properties-centered">
+            <div fxLayout="column" class="content-centered">
                   <span class="text bold break">{{Attachment.name}}</span>
                   <span class="sub-text">{{Attachment.date | timeAgo}}</span>
             </div>

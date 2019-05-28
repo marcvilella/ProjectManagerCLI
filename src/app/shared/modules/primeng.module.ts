@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { ChartModule } from 'primeng/chart';
+
 
 @NgModule({
       imports: [
@@ -10,7 +12,8 @@ import { ContextMenuModule } from 'primeng/contextmenu';
       exports: [
             TableModule,
             BreadcrumbModule,
-            ContextMenuModule
+            ContextMenuModule,
+            ChartModule
       ]
 })
 export class PrimeNgModule { }

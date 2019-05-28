@@ -29,7 +29,7 @@ import { DashboardComponent } from './components/dashboard.component';
 import { CalendarComponent } from './components/calendar.component';
 import { BoardComponent } from './components/board.component';
 import { BoardMenuItemComponent } from './components/application-components/board-menu-item-component/board-menu-item.component';
-import { BoardCreateDialog, BoardCardDialog, BoardCreateDataService } from './components/board.create.component';
+import { BoardCreateDialogComponent, BoardCardDialogComponent, BoardCreateDataService } from './components/board-components/board-creator-dialog/board.create.dialog.component';
 import { BoardContainerComponent } from './components/board-components/board-container/board.container';
 import { BoardCardListComponent } from './components/board-components/card-list/board-card-list.component';
 import { BoardCardItemComponent } from './components/board-components/card-item/board-card-item.component';
@@ -44,6 +44,10 @@ import { CheckListComponent } from './components/common-components/checklist/che
 import { TimesheetWeeklyInsertComponent } from './components/timesheet-components/timesheet-weekly-insert/timesheet.weekly.insert.component';
 import { ActivityViewerComponent } from './components/common-components/activity/activity.viewer.component';
 import { ActivityMessageComponent } from './components/common-components/activity/activity.message.component';
+import { CardItemDialogContainerComponent } from './components/board-components/card-item-dialog/board-card-item-dialog-container.component';
+import { MemberAvatarComponent } from './components/common-components/members-selector/member.avatar.component';
+import { BoardSettingsDialogComponent } from './components/board-components/board-settings-dialog/board.settings.dialog.component';
+import { BoardSettingsDialogContainerComponent } from './components/board-components/board-settings-dialog/board.settings.dialog.container.component';
 
 // Directives
 import { AutoFocusDirective, ClickOutsideDirective, ClickInsideDirective, AutoSizeInputDirective, AutoSizeTextAreaDirective } from 'src/app/shared/modules/directives';
@@ -53,7 +57,7 @@ import { MyDatePipe, TimeAgoPipe, NumberPipe, HighlightSearch } from 'src/app/sh
 
 // Animations
 import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
-import { CardItemDialogContainerComponent } from './components/board-components/card-item-dialog/board-card-item-dialog-container.component';
+import { BoardHomeComponent } from './components/board-components/board-home/board.home.component';
 
 @NgModule({
   declarations: [
@@ -74,14 +78,17 @@ import { CardItemDialogContainerComponent } from './components/board-components/
 
     // #region Board
 
+    BoardHomeComponent,
+    BoardCardDialogComponent,
     BoardComponent,
-    BoardCreateDialog,
-    BoardCardDialog,
+    BoardSettingsDialogContainerComponent,
+    BoardSettingsDialogComponent,
+    BoardCreateDialogComponent,
     BoardContainerComponent,
     BoardCardListComponent,
     BoardCardItemComponent,
-    CardItemDialogComponent,
     CardItemDialogContainerComponent,
+    CardItemDialogComponent,
 
     // #endregion Board
 
@@ -95,6 +102,7 @@ import { CardItemDialogContainerComponent } from './components/board-components/
 
     DatepickerComponent,
     MembersSelectorComponent,
+    MemberAvatarComponent,
     AttachmentsSelectorComponent,
     AttachmentsAvatarComponent,
     AttachmentUploadDialogComponent,
@@ -131,8 +139,9 @@ import { CardItemDialogContainerComponent } from './components/board-components/
     // #endregion
   ],
   entryComponents: [
-    BoardCreateDialog,
-    BoardCardDialog,
+    BoardSettingsDialogContainerComponent,
+    BoardCreateDialogComponent,
+    BoardCardDialogComponent,
     CardItemDialogContainerComponent,
     AttachmentUploadDialogComponent
   ],

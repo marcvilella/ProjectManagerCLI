@@ -1,6 +1,6 @@
 <mat-card class="card-item" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)">
       <div class="priority" *ngIf="card.priority !== 0"  [style.background]="(card.priority !== undefined) ? priorities[card.priority].color : 'transparent'">&nbsp;</div>
-      <mat-card-content fxLayout="column" (click)="showCardContentDialog()">
+      <mat-card-content fxLayout="column" (click)="showCardContentDialog()" [routerLink]="['./', card._id]">
             <div fxLayout="row">
                   <span class="title vertical-align-center" style="height: 24px">{{card.name}}</span>
                   <button mat-icon-button *ngIf="showEditable" class="icon standalone-only-icon-button align-right" (click)="stopPropagation($event)" [matMenuTriggerFor]="cardOptions" (menuOpened)="menuChanged()" (menuClosed)="menuChanged()">

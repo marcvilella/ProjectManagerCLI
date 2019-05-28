@@ -65,7 +65,8 @@ export class DatepickerComponent implements OnChanges {
             this.changedDueDate.emit({
                   date: this.dueDate.date,
                   remindAt: this.dueDate.remindAt,
-                  done: checked
+                  done: checked,
+                  completedAt: checked ? moment().seconds(0).milliseconds(0).utc().toDate() : undefined
             });
             this.setButtonColor(checked);
       }

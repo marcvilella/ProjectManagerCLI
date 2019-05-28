@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 import { CardItemDialogContainerComponent } from '../card-item-dialog/board-card-item-dialog-container.component';
 import { selectUsersByBoardId } from 'src/app/shared/store/selectors/user.selectors';
 import { IUser } from 'src/app/shared/models/user';
+import { GetUsersByBoard } from 'src/app/shared/store/actions/user.actions';
 
 @Component({
   selector: 'board-container',
@@ -38,12 +39,12 @@ export class BoardContainerComponent {
     public dialog: MatDialog
     ) {
 
-    this.activeRoute.queryParams.subscribe(params => {
-
+    this.activeRoute.params.subscribe(params => {
       if (this.currentBoardId !== params.id) {
         this.currentBoardId = params.id;
 
         this._store.dispatch(new GetBoard({id: this.currentBoardId}));
+        this._store.dispatch(new GetUsersByBoard({id: this.currentBoardId}));
         this.board$ = this._store.pipe(select(selectBoardsById(this.currentBoardId)));
         this.cardlists$ = this._store.pipe(select(selectSelectedCardLists));
         this.carditems$ = this._store.pipe(select(selectSelectedCardItems));
@@ -57,10 +58,11 @@ export class BoardContainerComponent {
           panelClass: 'noborder-dialog-container',
           data: { id: params.card, users$: this.users$ }
         }).beforeClosed().subscribe(() => {
-          this.router.navigate(['.'], {
-            relativeTo: this.activeRoute,
-            queryParams: {id : this.currentBoardId},
-          });
+          // this.router.navigate(['.'], {
+          //   relativeTo: this.activeRoute,
+          //   queryParams: {id : this.currentBoardId},
+          // });
+          this.router.navigate(['../'], { relativeTo: this.activeRoute });
         });
 
       }
@@ -70,7 +72,7 @@ export class BoardContainerComponent {
   getBoard() {
     return combineLatest(this.board$, this.cardlists$, this.carditems$, this.users$).pipe(map((result) => {
       if (result[0] === undefined) {
-        return;
+        return result[0];
       }
 
       if (result[3] !== undefined) {
@@ -83,7 +85,7 @@ export class BoardContainerComponent {
                 cardItem.users = result[3].filter(m => ids.some(n => n === m._id));
             }
       }
-        })
+        });
       }
 
       result[1].forEach((cardList) => {

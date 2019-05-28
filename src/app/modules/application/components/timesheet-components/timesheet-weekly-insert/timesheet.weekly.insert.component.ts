@@ -13,6 +13,24 @@ import { IWorkSegment } from 'src/app/shared/models/timesheet';
 })
 export class TimesheetWeeklyInsertComponent implements OnInit {
 
+      //#region Members
+
+      @Input() worksegments: IWorkSegment[];
+
+      localWorkSegments: IWorkSegment[];
+      weekCols: IColumn[];
+      weekData: IRow[];
+      selectedDataRow: IRow;
+
+      contextItems: MenuItem[];
+
+      startWeek: string;
+      currentWeek: number;
+      showWeek: number;
+
+      dateTransformer: MyDatePipe;
+      hasChanges: boolean;
+
       //#endregion
 
       //#region Constructor
@@ -32,24 +50,6 @@ export class TimesheetWeeklyInsertComponent implements OnInit {
                   { label: 'Delete Row', icon: 'pi pi-times', command: (event) => this.hasChanges = false }
               ];
       }
-
-      //#region Members
-
-      @Input() worksegments: IWorkSegment[];
-
-      localWorkSegments: IWorkSegment[];
-      weekCols: IColumn[];
-      weekData: IRow[];
-      selectedDataRow: IRow;
-
-      contextItems: MenuItem[];
-
-      startWeek: string;
-      currentWeek: number;
-      showWeek: number;
-
-      dateTransformer: MyDatePipe;
-      hasChanges: boolean;
 
       ngOnInit() {
 

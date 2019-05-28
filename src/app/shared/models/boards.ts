@@ -69,6 +69,7 @@ export interface IDueDate {
       date: Date;
       remindAt: number;
       done: boolean;
+      completedAt?: Date;
 }
 
 export interface IAttachment {

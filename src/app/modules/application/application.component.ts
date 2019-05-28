@@ -13,8 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { IAppState } from '../../shared/store/state/app.state';
 import { GetCurrentUser } from '../../shared/store/actions/user.actions';
 import { selectAllUsersItems, selectCurrentUser } from '../../shared/store/selectors/user.selectors';
-import { IUser } from '../../shared/models/user'; 
-import { BoardCreateDialog } from './components/board.create.component';
+import { IUser } from '../../shared/models/user';
+import { BoardCreateDialogComponent } from './components/board-components/board-creator-dialog/board.create.dialog.component';
 import { selectAllBoardsItems } from 'src/app/shared/store/selectors/board.selectors';
 import { GetBoards, GetBoard } from 'src/app/shared/store/actions/board.actions';
 import { IBoard } from 'src/app/shared/models/boards';
@@ -75,14 +75,13 @@ export class ApplicationComponent {
         this.router.navigate(['../auth/log-in']);
       }
 
-      // this.user = new User(decoded.sub, decoded.name, decoded.surname, decoded.name + ' ' + decoded.surname, decoded.email, '', decoded.role, '');
       this._store.pipe(select(selectCurrentUser())).subscribe((user: IUser) => {
         if (user !== undefined) {
           this.user = user;
         } else {
           this.user = {
-            _id: decoded.sub, name: decoded.name, surname: decoded.surname, fullname: decoded.name + ' ' + decoded.surname, email: decoded.email, role: decoded.role,
-            image: null, boards: null , company: null, position: null, password: null
+            _id: decoded.sub, name: decoded.name, surname: decoded.surname, fullname: decoded.name + ' ' + decoded.surname, email: decoded.email,
+            phone: null, image: null, boards: null , company: null, position: null, password: null, tempRole: null
           };
         }
       });
@@ -101,6 +100,14 @@ export class ApplicationComponent {
       iconRegistry.addSvgIcon(
         'priority',
         sanitizer.bypassSecurityTrustResourceUrl('assets/svg/priority-icon.svg')
+      );
+      iconRegistry.addSvgIcon(
+        'search',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/search-icon.svg')
+      );
+      iconRegistry.addSvgIcon(
+        'close',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/close-icon.svg')
       );
       iconRegistry.addSvgIcon(
         'visibility',
@@ -246,6 +253,10 @@ export class ApplicationComponent {
         'next',
         sanitizer.bypassSecurityTrustResourceUrl('assets/svg/next-icon.svg')
       );
+      iconRegistry.addSvgIcon(
+        'project',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/svg/project-icon.svg')
+      );
 
       //#endregion
 
@@ -269,7 +280,7 @@ export class ApplicationComponent {
   }
 
   openDialog(): void {
-    this.dialog.open(BoardCreateDialog, {
+    this.dialog.open(BoardCreateDialogComponent, {
       position: {top: '40px'},
       panelClass: 'form-dialog-container'
     });

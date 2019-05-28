@@ -143,6 +143,52 @@
 				"AddComment": "Add Comment",
 				"AddComment-input": "Write a comment to the card activity...",
 				"Activity": "Activity"
+			},
+			"SettingsDialog": {
+				"BoardSettings": "Board Settings",
+				"Home": "Home",
+				"TeamMembers": "Team Members",
+				"Stats": {
+					"DueTasks": "Due Tasks",
+					"Completed": "Completed",
+					"Overdue": "Overdue",
+					"Tasks": "Tasks",
+					"YesterdayOverdue": "Yesterday's overdue",
+					"Open": "Open",
+					"CompletedToday": "Completed today",
+					"Undefined": "Undefined",
+					"Undefined-message": "Try to keep all cards up to date",
+					"WeeklyOverview": "Weekly Overview",
+					"TaskDistribution": "Task Distribution",
+					"AllTime": "All time",
+					"ThisWeek": "This week",
+					"LastWeek": "Last week",
+					"2WeeksAgo": "2 weeks ago",
+					"Created": "Created",
+					"Closed": "Closed",
+					"Priority": "Priority",
+					"Category": "Category"
+				},
+				"Search": "Search for a member",
+				"NewMember": {
+					"Add": "Add new member",
+					"Email": "Email address",
+					"Message": "Optional message",
+					"Send": "Send"
+				},
+				"Name": "Name",
+				"Company": "Company",
+				"Position": "Position",
+				"Email": "Email",
+				"Phone": "Phone",
+				"Permissions": {
+					"Permission": "Permission",
+					"Administrator": "Administrator",
+					"ProjectManager": "Project Manager",
+					"Member": "Member",
+					"Pending": "Pending (Member)"
+				},
+				"Members": "Members"
 			}
 		},
 		"Timesheets": {
@@ -182,12 +228,22 @@
 					"12hBefore": "12 hour before",
 					"1dBefore": "1 day before",
 					"2dBefore": "2 day before"
-				}
+				},
+				"Monday": "Monday",
+				"Tuesday": "Tuesday",
+				"Wednesday": "Wednesday",
+				"Thursday": "Thursday",
+				"Friday": "Friday",
+				"Saturday": "Saturday",
+				"Sunday": "Sunday"
 			},
 			"Members": {
 				"No-Members": "No Members",
 				"Search-input": "Search members...",
-				"Position-not-defined": "Position not defined"
+				"Position-not-defined": "Position not defined",
+				"Admin": "Admin",
+				"Manager": "Manager",
+				"Member": "Member"
 			},
 			"Attachments": {
 				"No-Attachments": "No Attachments",
@@ -197,7 +253,9 @@
 				"Link-save": "Save Link",
 				"Name": "Name",
 				"Link": "Link",
-				"Remove-text": "Remove this attachment?"
+				"Remove-text": "Remove this attachment?",
+				"Uploading": "Uploading",
+				"Try": "Try again"
 			},
 			"Priority": {
 				"No-Priority": "Not Applicable",

@@ -3,17 +3,20 @@ import { Router, NavigationEnd } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { moveItemInArray, CdkDragDrop, transferArrayItem} from '@angular/cdk/drag-drop';
 import { Store } from '@ngrx/store';
+import { MatDialog } from '@angular/material';
 
 import { IBoard, ICardItem, ICardList } from 'src/app/shared/models/boards';
 import { IAppState } from 'src/app/shared/store/state/app.state';
 import { UpdateBoard, UpdateBoardStarred, AddCardList, UpdateCardListPosition,
     UpdateCardItemPosition, SaveBoardState, MoveCardListItems } from 'src/app/shared/store/actions/board.actions';
+import { BoardSettingsDialogContainerComponent } from './board-components/board-settings-dialog/board.settings.dialog.container.component';
+
 
 
 @Component({
     selector: 'app-board',
     templateUrl: '../views/board.html',
-    styleUrls: ['../styles/board.component.scss', '../../../app.component.scss'],
+    styleUrls: ['../styles/board.component.scss', '../styles/common.scss', '../../../app.component.scss'],
 })
 export class BoardComponent {
 
@@ -37,20 +40,22 @@ export class BoardComponent {
 
     constructor(
         private router: Router,
-        private _store: Store<IAppState>) {
-            this.settings = false;
-            this.isBoardTitleEditable = false;
-            this.isNewCardListAddible = false;
+        public dialog: MatDialog,
+        private _store: Store<IAppState>
+    ) {
+        this.settings = false;
+        this.isBoardTitleEditable = false;
+        this.isNewCardListAddible = false;
 
-            this.boardTitleForm = new FormControl('', Validators.required);
-            this.newCardListFormControl = new FormControl('', Validators.required);
+        this.boardTitleForm = new FormControl('', Validators.required);
+        this.newCardListFormControl = new FormControl('', Validators.required);
 
-            this.router.events.subscribe(event => {
-                if (event instanceof NavigationEnd) {
-                    (<any>window).ga('set', 'page', event.urlAfterRedirects);
-                    (<any>window).ga('send', 'pageview');
-                }
-            });
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                (<any>window).ga('set', 'page', event.urlAfterRedirects);
+                (<any>window).ga('send', 'pageview');
+            }
+        });
     }
 
     //#endregion
@@ -63,7 +68,6 @@ export class BoardComponent {
     }
 
     updateBoardName(): void {
-        console.log(this.board.settings.starred)
         this.isBoardTitleEditable = false;
         if (this.boardTitleForm.valid && this.board.name !== this.boardTitleForm.value) {
             this._store.dispatch(new UpdateBoard({id: this.board._id, name: this.boardTitleForm.value}));
@@ -72,6 +76,16 @@ export class BoardComponent {
 
     changeStarredStatus(): void {
         this._store.dispatch(new UpdateBoardStarred({id: this.board._id, starred: !this.board.settings.starred}));
+    }
+
+    openSettings(): void {
+        this.dialog.open(BoardSettingsDialogContainerComponent, {
+            position: {top: '5vh'},
+            width: '65%',
+            minWidth: '1100px',
+            panelClass: 'noborder-dialog-container',
+            data: { id: this.board._id }
+        })
     }
 
     //#endregion

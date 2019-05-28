@@ -5,6 +5,7 @@ import { SocketService } from './socket.service';
 import { EBoardActions } from '../store/actions/board.actions';
 
 import { IBoard, ICardList, ICardItem, IDueDate, IAttachment, ICheckList, ICheckItem } from '../models/boards';
+import { IUser } from '../models/user';
 
 @Injectable()
 export class BoardsService {
@@ -14,6 +15,7 @@ export class BoardsService {
   getBoardsSuccess$: Observable<IBoard[]>;
   getBoardSuccess$: Observable<IBoard>;
   addBoardSuccess$: Observable<IBoard>;
+  addBoardMemberSuccess$: Observable<IUser>;
   updateBoardSuccess$: Observable<IBoard>;
   updateBoardStarredSuccess$: Observable<IBoard>;
   deleteBoardSuccess$: Observable<number>;
@@ -56,6 +58,7 @@ export class BoardsService {
     this.getBoardsSuccess$ = this.socket.listen(EBoardActions.GetBoardsSuccess);
     this.getBoardSuccess$ = this.socket.listen(EBoardActions.GetBoardSuccess);
     this.addBoardSuccess$ = this.socket.listen(EBoardActions.AddBoardSuccess);
+    this.addBoardMemberSuccess$ = this.socket.listen(EBoardActions.AddBoardMemberSuccess);
     this.updateBoardSuccess$ = this.socket.listen(EBoardActions.UpdateBoardSuccess);
     this.updateBoardStarredSuccess$ = this.socket.listen(EBoardActions.UpdateBoardStarredSuccess);
     this.deleteBoardSuccess$ = this.socket.listen(EBoardActions.DeleteBoardSuccess);
@@ -108,6 +111,11 @@ export class BoardsService {
   addBoard(data: {board: IBoard}) {
     this.socket.emit(EBoardActions.AddBoard, data.board);
     return this.addBoardSuccess$;
+  }
+
+  addBoardMember(data: {id: number, email: number, optional?: string}) {
+    this.socket.emit(EBoardActions.AddBoard, data);
+    return this.addBoardMemberSuccess$;
   }
 
   updateBoard(data: {id: number, name?: string, mode?: string, colorLight?: string, colorDark?: string}) {

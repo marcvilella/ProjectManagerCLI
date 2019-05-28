@@ -1,0 +1,26 @@
+<div class="relative radius pointable" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)" [matMenuTriggerFor]="userViewer" matTooltip="{{user.fullname}}">
+      <ngx-avatar name="{{user.fullname}}" size="{{size}}" textSizeRatio="{{textRadio}}"></ngx-avatar>
+      <div class="avatar-role" *ngIf="boardId !== undefined">
+            <mat-icon svgIcon="project" *ngIf="user.tempRole === 'manager'"></mat-icon> 
+            <mat-icon svgIcon="settings" *ngIf="user.tempRole === 'admin'" ></mat-icon> 
+      </div>
+</div>
+<mat-menu #userViewer="matMenu">
+      <div class="menu-content-small relative" fxLayout="row" fxLayoutGap="8px" (click)="stopPropagation($event)">
+            <ngx-avatar name="{{user.fullname}}" size="60" textSizeRatio="2.5" [round]="false"></ngx-avatar>
+            <div fxLayout="column" class="content-centered">
+                  <span class="text">{{user.fullname}}</span>
+                  <div class="sub-text" fxLayout="row" fxLayoutGap="6px">
+                        <span class="bold">{{user.company}}</span>
+                        <span class="italic" *ngIf="user.position !== undefined">{{user.position}}</span>
+                        <span class="italic" *ngIf="user.position === undefined">{{ 'APPLICATION.Common.Members.Position-not-defined' | translate }}</span>
+                  </div>
+            </div>
+            <div class="admin" *ngIf="boardId !== undefined">
+                  <span class="sub-text" *ngIf="user.tempRole === 'manager'">{{ 'APPLICATION.Common.Members.Manager' | translate }}</span>
+                  <span class="sub-text" *ngIf="user.tempRole === 'admin'">{{ 'APPLICATION.Common.Members.Admin' | translate }}</span>
+                  <span class="sub-text" *ngIf="user.tempRole === 'member'">{{ 'APPLICATION.Common.Members.Member' | translate }}</span>
+            </div>
+      </div>
+</mat-menu> 
+      

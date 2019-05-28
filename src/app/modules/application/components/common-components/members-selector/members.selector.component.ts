@@ -1,7 +1,6 @@
-import { Component, Input, Renderer2, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IUser } from 'src/app/shared/models/user';
-import { ICardItem } from 'src/app/shared/models/boards';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -38,9 +37,7 @@ export class MembersSelectorComponent implements OnInit {
 
       //#region Constructor
 
-      constructor(
-            private renderer2: Renderer2
-      ) {}
+      constructor() {}
 
       ngOnInit() {
             this.searchFormControl = new FormControl('');
@@ -69,16 +66,4 @@ export class MembersSelectorComponent implements OnInit {
       }
 
       //#endregion
-
-      //#region Enter and Out
-
-      cardenter (event: MouseEvent): void {
-            this.renderer2.addClass(event.target, 'mat-elevation-z5');
-      }
-
-      cardleave (event: MouseEvent): void {
-            this.renderer2.removeClass(event.target, 'mat-elevation-z5');
-      }
-
-    //#endregion
 }

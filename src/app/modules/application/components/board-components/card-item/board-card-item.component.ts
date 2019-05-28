@@ -71,11 +71,12 @@ export class BoardCardItemComponent implements OnChanges {
   //#region Functions
 
   showCardContentDialog(): void {
-    this.router.navigate(['.'], {
-      relativeTo: this.activeRoute,
-      queryParams: {card : this.card._id},
-      queryParamsHandling: 'merge'
-    });
+    // this.router.navigate(['.'], {
+    //   relativeTo: this.activeRoute,
+    //   queryParams: {card : this.card._id},
+    //   queryParamsHandling: 'merge'
+    // });
+    // this.router.navigate([`../edit/${this.card._id}`], { relativeTo: this.router });
   }
 
   stopPropagation($event: MouseEvent): void {
