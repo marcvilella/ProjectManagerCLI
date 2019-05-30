@@ -1,8 +1,8 @@
-<div fxLayout="row wrap" fxLayoutGap="4px" style="max-width: 240px;">
-      <div fxFlex="36px" *ngFor="let attachment of attachments">
-            <common-attachment-avatar [attachment]="attachment" (updatedProperties)="updateAttachmentProperties($event)" (delete)="deleteAttachment($event)"></common-attachment-avatar>
+<div fxLayout="row wrap" fxLayoutGap="4px grid" style="max-width: 240px;">
+      <div *ngFor="let attachment of attachments">
+            <common-attachment-avatar fxFlex="36px" [attachment]="attachment" (updatedProperties)="updateAttachmentProperties($event)" (delete)="deleteAttachment($event)"></common-attachment-avatar>
       </div>
-      <button mat-button [ngClass]="(attachments.length !== 0) ? 'only-icon-button' : 'icon-button'" [matMenuTriggerFor]="attachmentsselector">
+      <button mat-button [ngClass]="(attachments.length !== 0) ? 'only-icon-button' : 'icon-button'" style="height: 36px;" [matMenuTriggerFor]="attachmentsselector">
             <div *ngIf="attachments.length !== 0">
                   <mat-icon svgIcon="add" class="no-vertical-alignment"></mat-icon>   
             </div>

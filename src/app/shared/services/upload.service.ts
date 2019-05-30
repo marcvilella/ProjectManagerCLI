@@ -56,4 +56,27 @@ export class UploadService {
     // return the map of progress.observables
     return status;
   }
+
+  public download(value: string, type: string) {
+    const params = 'value=' + value + '&type=' + type;
+
+    this.http.get(environment.server.url + '/api/download?' + params, {responseType: 'blob' as 'json'}).subscribe(
+      (response: any) => {
+        console.log(response);
+        const dataType = response.type;
+        const binaryData = [];
+        binaryData.push(response);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+        if (value) {
+            downloadLink.setAttribute('download', value);
+        }
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 }

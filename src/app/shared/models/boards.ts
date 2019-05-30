@@ -78,6 +78,7 @@ export interface IAttachment {
       userName?: string;
       name: string;
       dataType: string;
+      reqType: string;
       value: string;
       date: Date;
 }

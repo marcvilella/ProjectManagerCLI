@@ -13,7 +13,7 @@ const applicationRoutes: Routes = [
         {path: '', component: DashboardComponent},
         {path: 'dashboard', redirectTo: '',  pathMatch: 'full'},
         {path: 'calendar', component: CalendarComponent},
-        {path: 'board', component: BoardHomeComponent},
+        {path: 'boards', component: BoardHomeComponent},
         {path: 'board/:id/:card', component: BoardContainerComponent},
         {path: 'board/:id', component: BoardContainerComponent}
     ]},

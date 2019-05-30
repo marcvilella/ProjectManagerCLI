@@ -99,6 +99,20 @@
 		},
 		"Dashoard": {},
 		"Boards": {
+			"BoardHome": {
+				"Boards": "Boards",
+				"Search": "Search for a board",
+				"AddNewBoard": "Add new board",
+				"Name": "Name",
+				"Mode": {
+					"Mode": "Mode",
+					"Project": "Project based",
+					"Board": "Board based"
+				},
+				"Starred": "Starred",
+				"CreationDate": "Creation Date",
+				"ModificationDate": "Modification Date"
+			},
 			"AddCard": "Add another card...",
 			"AddList": "Add another list...",
 			"AddList-input": "Enter the list title...",
@@ -280,6 +294,14 @@
 				"NoComments": "There are no comments yet",
 				"Edited": "Edited",
 				"Remove-text": "Remove this message?"
+			},
+			"DataTable": {
+				"itemsPerPage": "Items per page:",
+				"firstPage": "First page",
+				"previousPage": "Previous page",
+				"nextPage": "Next page",
+				"lastPage": "Last page",
+				"of": "of"
 			}
 		}
 	},

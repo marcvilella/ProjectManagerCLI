@@ -1,0 +1,72 @@
+<div class="board-home">
+
+      <div class="board-home-header"></div>
+
+      <div class="board-home-content" fxLayout="column" fxLayoutGap="20px">
+
+            <div fxLayout="row wrap" class="layout-center-spacing">
+                  <div class="board-home-title layout-center-spacing" fxLayout="row" fxLayoutGap="10px" >
+                        <mat-icon svgIcon="todo" style="width: 34px; height: 34px;"></mat-icon>
+                        <span class="size-24">{{ 'APPLICATION.Boards.BoardHome.Boards' | translate }}</span>
+                  </div>
+                  <div fxFlex="350px" fxLayout="row" fxLayoutGap="5px" class=" card-table-searcher mat-elevation-z1">
+                        <mat-icon svgIcon="search"></mat-icon>
+                        <input style="width: 88%;" (keyup)="applyFilter($event.target.value)" placeholder="{{ 'APPLICATION.Boards.BoardHome.Search' | translate }}"/>
+                  </div>
+                  <button mat-raised-button (click)="createNewBoard()">
+                        {{ 'APPLICATION.Boards.BoardHome.AddNewBoard' | translate }}
+                  </button>
+            </div>
+
+            <mat-card class="card-table">
+                  <table mat-table #matTable class="parent-size" [dataSource]="dataSource" matSort>
+                        
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'APPLICATION.Boards.BoardHome.Name' | translate }}</mat-header-cell>
+                              <mat-cell *matCellDef="let board">
+                                    {{board.name}} 
+                              </mat-cell>
+                        </ng-container>
+                        
+                        <!-- Mode Column -->
+                        <ng-container matColumnDef="mode">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'APPLICATION.Boards.BoardHome.Mode.Mode' | translate }}</mat-header-cell>
+                              <mat-cell *matCellDef="let board">
+                                    <span *ngIf="board.settings.mode === 'board'">{{ 'APPLICATION.Boards.BoardHome.Mode.Board' | translate }}</span> 
+                                    <span *ngIf="board.settings.mode === 'project'">{{ 'APPLICATION.Boards.BoardHome.Mode.Project' | translate }}</span> 
+                              </mat-cell>
+                        </ng-container>
+
+                        <!-- Creation Column -->
+                        <ng-container matColumnDef="createdAt">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'APPLICATION.Boards.BoardHome.CreationDate' | translate }}</mat-header-cell>
+                              <mat-cell *matCellDef="let board"> {{board.createdAt | date:'d MMMM'}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Modification Column -->
+                        <ng-container matColumnDef="modifiedAt">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'APPLICATION.Boards.BoardHome.ModificationDate' | translate }}</mat-header-cell>
+                              <mat-cell *matCellDef="let board"> {{board.modifiedAt}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Starred Column -->
+                        <ng-container matColumnDef="starred">
+                              <mat-header-cell fxFlex="70px" *matHeaderCellDef mat-sort-header>{{ 'APPLICATION.Boards.BoardHome.Starred' | translate }}</mat-header-cell>
+                              <mat-cell fxFlex="70px" *matCellDef="let board">
+                                    <mat-icon *ngIf="board.settings.starred" svgIcon="star" style="width: 34px; height: 34px; color: #dede00;"></mat-icon>
+                                    <mat-icon *ngIf="!board.settings.starred" svgIcon="star-border" style="width: 34px; height: 30px; color: #dede00;"></mat-icon>
+                              </mat-cell>
+                        </ng-container>
+                        
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;" class="noOutline" [routerLink]="['../board', row._id]" matRipple></mat-row>      
+                  </table>
+                  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </mat-card>
+
+            <div class="card-table-count align-right">
+                  {{dataSource.data.length}} {{ 'APPLICATION.Boards.BoardHome.Boards' | translate }}
+            </div>
+      </div>
+</div>

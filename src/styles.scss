@@ -42,6 +42,10 @@ button.mat-menu-item {
     height: auto;
 }
 
+.noOutline:focus {
+    outline: 0;
+}
+
 /*#endregion */
 
 /*#region Dialog Classes*/

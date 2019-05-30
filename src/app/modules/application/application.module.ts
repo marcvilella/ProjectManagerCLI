@@ -5,10 +5,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 
 // Modules
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AvatarModule } from 'ngx-avatar';
 import { SharedLazyModule } from '../../shared/modules/shared-lazy.module';
-import { MaterialDesignModule } from '../../shared/modules/material-design.module';
+import { MaterialDesignModule, getTranslatePaginatorIntl } from '../../shared/modules/material-design.module';
 import { PrimeNgModule } from 'src/app/shared/modules/primeng.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -58,6 +58,7 @@ import { MyDatePipe, TimeAgoPipe, NumberPipe, HighlightSearch } from 'src/app/sh
 // Animations
 import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
 import { BoardHomeComponent } from './components/board-components/board-home/board.home.component';
+import { MatPaginatorIntl } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -169,7 +170,9 @@ import { BoardHomeComponent } from './components/board-components/board-home/boa
     SocketService,
     BoardsService,
     BoardCreateDataService,
-    UploadService
+    UploadService,
+    {provide: MatPaginatorIntl, useFactory: getTranslatePaginatorIntl, deps: [TranslateService]}
+
   ]
 })
 export class ApplicationModule { }

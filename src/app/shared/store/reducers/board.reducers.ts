@@ -101,6 +101,10 @@ export function boardReducers (
             //#region Board
 
             case EBoardActions.GetBoardsSuccess: {
+                  action.payload.boards.forEach((board: IBoard) => {
+                        board.createdAt = new Date(board.createdAt);
+                        board.modifiedAt = new Date(board.modifiedAt);
+                  })
                   return {
                         ...state,
                         boards: boardAdapter.upsertMany(
@@ -113,6 +117,8 @@ export function boardReducers (
                   };
             }
             case EBoardActions.GetBoardSuccess: {
+                  action.payload.board.createdAt = new Date(action.payload.board.createdAt);
+                  action.payload.board.modifiedAt = new Date(action.payload.board.modifiedAt);
                   return {
                         ...state,
                         boards: boardAdapter.updateOne(
@@ -130,6 +136,8 @@ export function boardReducers (
             }
 
             case EBoardActions.AddBoardSuccess: {
+                  action.payload.board.createdAt = new Date(action.payload.board.createdAt);
+                  action.payload.board.modifiedAt = new Date(action.payload.board.modifiedAt);
                   return {
                         ...state,
                         boards: boardAdapter.addOne(
@@ -154,7 +162,7 @@ export function boardReducers (
                                     changes: {
                                           name: action.payload.board.name,
                                           settings: action.payload.board.settings,
-                                          modifiedAt: action.payload.board.modifiedAt
+                                          modifiedAt: new Date(action.payload.board.modifiedAt)
                                     }
                               },
                               {

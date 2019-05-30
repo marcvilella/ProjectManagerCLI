@@ -98,6 +98,38 @@ $hoverBackground: rgb(224, 224, 224);
 
 /*#endregion Toolbar*/
 
+/* #region Board Home */
+
+.board-home {
+      height: 100%;
+      background: $cardBackground;
+}
+
+.board-home .board-home-header {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 200px;
+      background: #039be5;
+}
+
+.board-home .board-home-title {
+      z-index: 1;
+      color: white;
+}
+
+.board-home .board-home-search {
+      width: 300px;
+}
+
+.board-home .board-home-content {
+      padding: 50px 30px;
+}
+
+/* #endregion */
+
 /*#region Board Settings Dialog*/
 
 .board-settings-dialog .tab-padding {

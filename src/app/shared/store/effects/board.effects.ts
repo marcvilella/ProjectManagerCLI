@@ -47,7 +47,7 @@ export class BoardEffects {
             ofType<boardActions.AddBoard>(boardActions.EBoardActions.AddBoard),
             switchMap(action => this._boardsService.addBoard(action.payload)),
             switchMap((board: IBoard) => {
-                  this.router.navigate(['/app/board'], {queryParams: {id : board._id}});
+                  this.router.navigate(['/app/board/' + board._id]);
                   return of(new boardActions.AddBoardSuccess({board: board}));
             })
       );

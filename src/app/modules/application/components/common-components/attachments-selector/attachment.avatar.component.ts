@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { IAttachment } from 'src/app/shared/models/boards';
+import { UploadService } from 'src/app/shared/services/upload.service';
 
 @Component({
       selector: 'common-attachment-avatar',
@@ -26,7 +27,7 @@ export class AttachmentsAvatarComponent implements OnInit {
 
       //#region Constructor
 
-      constructor() {
+      constructor(private uploadService: UploadService) {
             this.canReturn = false;
       }
 
@@ -43,6 +44,8 @@ export class AttachmentsAvatarComponent implements OnInit {
       openAttachment(): void {
             if (this.attachment.dataType === ' l i n k') {
                   window.open(this.attachment.value, '_blank');
+            } else {
+                  this.uploadService.download(this.attachment.value, this.attachment.reqType);
             }
 
             this.canReturn = true;
