@@ -23,11 +23,15 @@ export class AttachmentsAvatarComponent implements OnInit {
       linkFormControl: FormControl;
       nameFormControl: FormControl;
 
+      imageBlobUrl: any;
+
       //#endregion
 
       //#region Constructor
 
-      constructor(private uploadService: UploadService) {
+      constructor(
+            private uploadService: UploadService
+      ) {
             this.canReturn = false;
       }
 

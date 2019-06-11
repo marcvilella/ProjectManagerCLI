@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+import { FilePreviewDialogComponent } from 'src/app/modules/application/components/common-components/attachments-selector/file.preview.dialog.component';
 
 @Injectable()
 export class UploadService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    public dialog: MatDialog
+  ) {}
 
-  public upload(
+  upload(
     destination: 'cardAttachment' | 'projectAttachment' | 'avatar',
     destId: number,
     files: Set<File>
@@ -57,7 +63,7 @@ export class UploadService {
     return status;
   }
 
-  public download(value: string, type: string) {
+  download(value: string, type: string) {
     const params = 'value=' + value + '&type=' + type;
 
     this.http.get(environment.server.url + '/api/download?' + params, {responseType: 'blob' as 'json'}).subscribe(
@@ -73,6 +79,22 @@ export class UploadService {
         }
         document.body.appendChild(downloadLink);
         downloadLink.click();
+
+        let url;
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+          url = reader.result;
+          console.log(url)
+          this.dialog.open(FilePreviewDialogComponent, {
+            panelClass: 'noborder-dialog-container',
+            data: { url: url }
+        })
+        }, false);
+
+        if (response) {
+          console.log(2)
+          reader.readAsDataURL(response);
+        }
       },
       error => {
         console.log(error);

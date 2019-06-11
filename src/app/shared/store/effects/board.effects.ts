@@ -101,13 +101,19 @@ export class BoardEffects {
 
       @Effect()
       getCardListsSuccess$: Observable<Action> = this._boardsService.getCardListsSuccess$.pipe(
-            switchMap(cardlists => of(new boardActions.GetCardListsSuccess({cardLists: cardlists}))
-      ));
+            switchMap(cardlists => of(new boardActions.GetCardListsSuccess({cardLists: cardlists})))
+      );
 
       @Effect()
       addCardList$: Observable<Action> = this._actions$.pipe(
             ofType<boardActions.AddCardList>(boardActions.EBoardActions.AddCardList),
             switchMap(action => this._boardsService.addCardList(action.payload)),
+            // switchMap((cardlist: ICardList) => of(new boardActions.AddCardListSuccess({cardList: cardlist})))
+            switchMap(() => of())
+      );
+
+      @Effect()
+      addCardListSuccess$: Observable<Action> = this._boardsService.addCardListSuccess$.pipe(
             switchMap((cardlist: ICardList) => of(new boardActions.AddCardListSuccess({cardList: cardlist})))
       );
 

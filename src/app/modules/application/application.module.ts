@@ -59,6 +59,7 @@ import { MyDatePipe, TimeAgoPipe, NumberPipe, HighlightSearch } from 'src/app/sh
 import { AnimatedIconComponent } from 'src/app/shared/modules/animated.icons';
 import { BoardHomeComponent } from './components/board-components/board-home/board.home.component';
 import { MatPaginatorIntl } from '@angular/material';
+import { FilePreviewDialogComponent } from './components/common-components/attachments-selector/file.preview.dialog.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { MatPaginatorIntl } from '@angular/material';
     AttachmentsSelectorComponent,
     AttachmentsAvatarComponent,
     AttachmentUploadDialogComponent,
+    FilePreviewDialogComponent,
     PrioritySelectorComponent,
     CheckListComponent,
     ActivityViewerComponent,
@@ -144,7 +146,8 @@ import { MatPaginatorIntl } from '@angular/material';
     BoardCreateDialogComponent,
     BoardCardDialogComponent,
     CardItemDialogContainerComponent,
-    AttachmentUploadDialogComponent
+    AttachmentUploadDialogComponent,
+    FilePreviewDialogComponent
   ],
   imports: [
     CommonModule,

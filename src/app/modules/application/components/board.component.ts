@@ -85,7 +85,7 @@ export class BoardComponent {
             minWidth: '1100px',
             panelClass: 'noborder-dialog-container',
             data: { id: this.board._id }
-        })
+        });
     }
 
     //#endregion
