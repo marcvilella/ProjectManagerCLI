@@ -25,8 +25,8 @@ export class CardItemDialogContainerComponent {
       comments$: Observable<IMessage[]>;
 
       constructor(
-      private _store: Store<IAppState>,
-      @Inject(MAT_DIALOG_DATA) public data: { id: number, users$: Observable<IUser[]> }
+            private _store: Store<IAppState>,
+            @Inject(MAT_DIALOG_DATA) public data: { id: number, users$: Observable<IUser[]> }
       ) {
             this._store.dispatch(new GetCardItem({id: data.id}));
 
@@ -36,7 +36,7 @@ export class CardItemDialogContainerComponent {
             this.comments$ = this._store.pipe(select(selectMessagesByCardId(data.id)));
       }
 
-      getCard() {
+      getCard(): Observable<ICardItem> {
             return combineLatest(this.card$, this.comments$).pipe(map((result) => {
                   if (result[0] !== undefined) {
                         if (result[1] !== undefined && result[1].length > 0) {

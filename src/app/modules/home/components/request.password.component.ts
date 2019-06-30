@@ -11,8 +11,8 @@ import { LanguagesList } from '../../../shared/models/languages';
 import { AuthDialog } from './auth.dialog.component';
 
 @Component({
-    selector: 'request-password-reset',
-    templateUrl: '../views/request.password.reset.html',
+    selector: 'request-password',
+    templateUrl: '../views/request.password.html',
     styleUrls: ['../home.component.scss', '../../../app.component.scss'],
     animations: [
         buttonLabelTranslateX,
@@ -20,7 +20,7 @@ import { AuthDialog } from './auth.dialog.component';
     ]
 })
 
-export class RequestPasswordResetComponent {
+export class RequestPasswordComponent {
 
     //#region Properties
 

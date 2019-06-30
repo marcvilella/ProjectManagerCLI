@@ -22,8 +22,12 @@
             "Slogan-title":"Ayudando a las PYMES a trabajar más eficientemente",
             "Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
 			"WarningDialog": {
-				"Title": "Verificando su cuenta",
+				"Title": "Verificando tu cuenta",
 				"Content": "Cuenta verificada"
+			"RequestDialog": {
+				"Title": "Verifica tu cuenta",
+				"Content": "Necesitas verificar tu cuenta. Por favor, comprueba tu email. \nSi nohas recibido ningún email, haz click en el siguiente link para reenviar un email de verificación.",
+				"Url":" Envía email de verificación"				
 			}
         },
 		"SignUp": {
@@ -35,15 +39,16 @@
 			"ConfirmPassword": "Confirmar contraseña",
 			"AcceptTerms-text": "Aceptar las",
 			"AcceptTerms-link": "condiciones de uso",
-			"Password-error": "La longitud tiene que ser entre 8 y 20 carácteres",
+			"Email-error": "Dirección email en uso",
+			"Password-error": "La longitud tiene que ser entre 8 y 20 carácteres",														  
 			"ConfirmPassword-error": "Las contraseñas no coinciden",
 			"SignUpButton": "REGISTRARSE",
 			"LogInRedirect": "Inicia sesión con tu cuenta de ProjectManager",
 			"Slogan-title":"Ayudando a las PYMES a trabajar más eficientemente",
 			"Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
 			"WarningDialog": {
-				"Title": "Hola",
-				"Content": "Por favor, verifique su cuenta."
+				"Title": "Verifica tu cuenta",
+				"Content": "Estás a un paso de empezar a administrar tus tareas. \nRecibirás un email de verificación. "
 			}
         },
 		"RequestPasswordReset": {
@@ -57,7 +62,7 @@
 			"Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
 			"WarningDialog": {
 				"Title": "Recuperación de la cuenta",
-				"Content": "Hello {{ Name }}"
+				"Content": "Estás a un paso de empezar a administrar tus tareas. \nRecibirás un email de verificación. "
 			}
 		},
 		"PasswordReset": {
@@ -70,8 +75,8 @@
 			"Slogan-title": "Ayudando a las PYMES a trabajar más eficientemente",
 			"Slogan-subtitle": "CRM, gestión de proyectos y facturación en una única y sencilla herramienta",
 			"WarningDialog": {
-				"Title": "Account recovery",
-				"Content": "Hello {{ Name }}"
+				"Content": " La contraseña se ha cambiado correctamente. "
+			
 			}
 		}
     },
@@ -79,6 +84,14 @@
 		"HUD": {
 			"Dashboard": "Panel",
 			"Boards": "Tarjetas",
+			"Boards-list":{
+				"Find-hint": "Buscar pizarra por nombre...",
+				"Starred": "Pizarras destacadas",
+				"Recent": "Pizarras recientes",
+				"Personal": "Pizarras personales",
+				"Project": "Pizarra de proyectos",
+				"Create": "Crear nueva pizarra..."
+			},  
 			"Profile": "Perfil",
 			"Activity": "Actividades",
 			"Projects": "Proyectos",
@@ -86,7 +99,22 @@
 		},
 		"Dashoard": {},
 		"Boards": {
-			"AddCard": "Añadir tarjeta...",
+			"BoardHome": {
+				"Boards": "Pizarras",
+				"Search": "Buscar por pizarra",
+				"AddNewBoard": "Añadir nueva pizarra",
+				"Name": "Nombre",
+				"Mode": {
+					"Mode": "Modo",
+					"Project": "Basado en proyectos",
+					"Board": "Independiente"
+				},
+				"Starred": "Destacadas",
+				"CreationDate": "Fecha de creación",
+				"ModificationDate": "Fecha de modificación"
+			"AddCard": "Añadir otra tarjeta...",
+			"AddList": "Añadir otra lista...",
+			"AddList-input": "Introduce un título a la lista...",															  
 			"ListActions": {
 				"CopyList": "Copiar lista...",
 				"MoveList": "Añadir lista...",
@@ -106,11 +134,180 @@
 				},
 				"ArchiveList": "Archivar esta lista",
 				"DeleteList": "Eliminar esta lista"
+					},
+			"CardActions": {
+				"ChangeMembers": "Cambiar miembros",
+				"Move": "Mover",
+				"Copy": "Copiar",
+				"ChangeDate": "Cambiar fecha límite",
+				"Archive": "Archivar",
+				"Share": "Compartir"
+			},
+			"CardDialog": {
+				"Visibility-tooltip": "Suscribir cambios de tarjeta.",
+				"Members": "Miembros",
+				"DueDate": "Fecha límite",
+				"Attachments": "Attachments",
+				"Priority": "Prioridad",
+				"Timesheet": "Seguimiento horario",
+				"Checklist": "Checklist",
+				"Description": "Descripción",
+				"Description-input": "Añadir información detallada...",
+				"AddComment": "Añadir comentario",
+				"AddComment-input": "Escribe un comentario en la tarjeta de actividad...",
+				"Activity": "Actividad"
+			},
+			"SettingsDialog": {
+				"BoardSettings": "Configuración de pizarra",
+				"Home": "Home",
+				"TeamMembers": "Miembros de equipo",
+				"Stats": {
+					"DueTasks": "Tareas a vencer",
+					"Completed": "Completadas",
+					"Overdue": "Vencidas",
+					"Tasks": "Tareas",
+					"YesterdayOverdue": "Vencidas de ayer",
+					"Open": "Abiertas",
+					"CompletedToday": "Completadas hoy",
+					"Undefined": "Indefinidas",
+					"Undefined-message": "Intenta mantener las tarjetas al día",
+					"WeeklyOverview": "Resumen semanal",
+					"TaskDistribution": "Distribución de tareas",
+					"AllTime": "Siempre",
+					"ThisWeek": "Esta semana",
+					"LastWeek": "Última semana",
+					"2WeeksAgo": "Hace dos semanas",
+					"Created": "Creadas",
+					"Closed": "Cerradas",
+					"Priority": "Prioridad",
+					"Category": "Categoría"
+				},
+				"Search": "Buscar un miembro",
+				"NewMember": {
+					"Add": "Añadir nuevo miembro",
+					"Email": "Email ",
+					"Message": "Mensaje opcional",
+					"Send": "Enviar"
+				},
+				"Name": "Nombre",
+				"Company": "Compañía",
+				"Position": "Posición",
+				"Email": "Email",
+				"Phone": "Móvil",
+				"Permissions": {
+					"Permission": "Permiso",
+					"Administrator": "Administrador",
+					"ProjectManager": "Project Manager",
+					"Member": "Miembro",
+					"Pending": "Pendiente (Miembro)"
+				},
+				"Members": "Miembros"
+			}
+		},
+		"Timesheets": {
+			"Timesheet": "Seguimiento horario"
+		},
+		"Common": {
+			"Save": "Guardar",
+			"Update": "Actualizar",
+			"Remove": "Quitar",
+			"Delete": "Eliminar",
+			"Cancel": "Cancelar",
+			"Time": {
+				"lessMin": "Menos de un minuto",
+				"Mins": "Hace minutos",
+				"Hours": "Hace horas",
+				"Days": "Hace días",
+				"Helper": ""
+			},
+			"Date": {
+				"No-Date": "Sin fecha",
+				"Date": "Fecha",
+				"Time": "Tiempo",
+				"Today": "Hoy",
+				"Tomorrow": "Mañana",
+				"Yesterday": "Ayer",
+				"At": "A la(s)",
+				"Reminder": {
+					"Set": "Poner recordatorio",
+					"None": "Ninguno",
+					"AtDueTime": "A fecha límite",
+					"5mBefore": "5 minutos antes",
+					"15mBefore": "15 minutos antes",
+					"30mBefore": "30 minutos antes",
+					"1hBefore": "1 hora antes",
+					"2hBefore": "2 horas antes",
+					"6hBefore": "6 horas antes",
+					"12hBefore": "12 horas antes",
+					"1dBefore": "1 día antes",
+					"2dBefore": "2 días antes"
+				},
+				"Monday": "Lunes",
+				"Tuesday": "Martes",
+				"Wednesday": "Miércoles",
+				"Thursday": "Jueves",
+				"Friday": "Viernes",
+				"Saturday": "Sábado",
+				"Sunday": "Domingo"
+			},
+			"Members": {
+				"No-Members": "Sin miembros",
+				"Search-input": "Buscar miembros...",
+				"Position-not-defined": "Posición sin definir",
+				"Admin": "Admin",
+				"Manager": "Manager",
+				"Member": "Miembro"
+			},
+			"Attachments": {
+				"No-Attachments": "Sin fichero adjunto",
+				"File": "Archivo",
+				"ProjectManager": "ProjectManager",
+				"Link-input": "Inserta el link aquí...",
+				"Link-save": "Guardar Link",
+				"Name": "Nombre",
+				"Link": "Link",
+				"Remove-text": "Quitar este archivo?",
+				"Uploading": "Subiendo",
+				"Try": "Inténtalo otra vez"
+			},
+			"Priority": {
+				"No-Priority": "No aplicable",
+				"Low": "Bajo",
+				"Moderate": "Moderado",
+				"High": "Alto",
+				"Critical": "Crítico",
+				"Immediate": "Immediato"
+			},
+			"Checklist": {
+				"Checklist": "Checklist",
+				"AddChecklist": "Añadir nueva checklist",
+				"AddCheckitem": "Añadir nuevo item",
+				"HideCompleted": "Ocultar items completados",
+				"ShowCompleted": "Mostrar items completados,
+				"Remove-text": "Quitar esta checklist y todos sus items?",
+				"NewTask": "Nueva tarea"
+			},
+			"Activity": {
+				"Messages": "Mensajes",
+				"CardActivitiy": "Actividad de tarjeta",
+				"NoComments": "No hay comentarios por el momento",
+				"Edited": "Editados",
+				"Remove-text": "Quitar mensaje?"
+			},
+			"DataTable": {
+				"itemsPerPage": "Items por página:",
+				"firstPage": "Primera página",
+				"previousPage": "Página anterior",
+				"nextPage": "Próxima página",
+				"lastPage": "Última página",
+				"of": "de"
 			}
 		}
 	},
-	"SERVER":{
-		"Internal-error": "No se ha podido contactar con el servidor, por favor, contacte con atención al cliente",
-		"Parameter-missing": "Por favor, rellene todos los campos"
+	"SERVER": {
+		"Internal-error": "Internal server error, please conctact our support service",
+		"Token-PasswordReset-error": "Token used has expired, restart the password reset process",
+		"Token-LogIn-error": "Token used has expired, please log in again",
+		"Parameter-missing": "Please, fill up all parameters"
 	}
 }

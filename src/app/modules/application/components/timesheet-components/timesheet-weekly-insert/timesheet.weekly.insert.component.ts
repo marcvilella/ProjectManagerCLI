@@ -52,8 +52,8 @@ export class TimesheetWeeklyInsertComponent implements OnInit {
       }
 
       ngOnInit() {
-
-            if (this.worksegments !== undefined) {
+            console.log(this.worksegments)
+            if (this.worksegments !== undefined && this.worksegments.length > 0) {
                   this.localWorkSegments = this.helper.deepCopy(this.worksegments);
             } else {
                   this.localWorkSegments = new Array<IWorkSegment>();

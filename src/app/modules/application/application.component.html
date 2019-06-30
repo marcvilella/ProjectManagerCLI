@@ -29,7 +29,7 @@
           <mat-expansion-panel expanded="true">
             <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'" (click)="$event.stopPropagation()">
               <mat-panel-title class="header-component-mat-content-expander-title">
-                <mat-icon svgIcon="star" class="icon"></mat-icon>
+                <mat-icon svgIcon="time" class="icon"></mat-icon>
                 {{ 'APPLICATION.HUD.Boards-list.Recent' | translate }}
               </mat-panel-title>
             </mat-expansion-panel-header>
@@ -40,18 +40,18 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'" (click)="$event.stopPropagation()">
               <mat-panel-title class="header-component-mat-content-expander-title">
-                <mat-icon svgIcon="star" class="icon"></mat-icon>
-                {{ 'APPLICATION.HUD.Boards-list.Personal' | translate }}
+                <mat-icon svgIcon="todo" class="icon"></mat-icon>
+                {{ 'APPLICATION.HUD.Boards-list.Board' | translate }}
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div *ngFor="let board of boardsPersonal$ | async">
+            <div *ngFor="let board of boardsBoard$ | async">
               <board-menu-item [board]="board"></board-menu-item>
             </div>
           </mat-expansion-panel>
           <mat-expansion-panel>
             <mat-expansion-panel-header [collapsedHeight]="'36px'" [expandedHeight]="'36px'" (click)="$event.stopPropagation()">
               <mat-panel-title class="header-component-mat-content-expander-title">
-                <mat-icon svgIcon="star" class="icon"></mat-icon>
+                <mat-icon svgIcon="project" class="icon"></mat-icon>
                 {{ 'APPLICATION.HUD.Boards-list.Project' | translate }}
               </mat-panel-title>
             </mat-expansion-panel-header>

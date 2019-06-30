@@ -49,7 +49,7 @@ export class ApplicationComponent {
   boards$: Observable<IBoard[]>;
   boardsRecent$: Observable<IBoard[]>;
   boardsStarred$: Observable<IBoard[]>;
-  boardsPersonal$: Observable<IBoard[]>;
+  boardsBoard$: Observable<IBoard[]>;
   boardsProject$: Observable<IBoard[]>;
 
   boardSearcher: FormControl;
@@ -289,8 +289,8 @@ export class ApplicationComponent {
   boardSearcherUpdated() {
     this.boardsStarred$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.starred && m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
     this.boardsRecent$ = this.boards$.pipe(map(boards => boards.filter(m => m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
-    this.boardsPersonal$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.mode === 'private' && m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
-    this.boardsProject$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.mode === 'shared' && m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
+    this.boardsBoard$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.mode === 'board' && m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
+    this.boardsProject$ = this.boards$.pipe(map(boards => boards.filter(m => m.settings.mode === 'project' && m.name.match(new RegExp(this.boardSearcher.value, 'i')))));
   }
 
   logOut() {

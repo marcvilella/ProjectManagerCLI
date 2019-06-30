@@ -1,4 +1,6 @@
-<mat-card class="board-item" [style.background]="board.settings.colorLight" (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)" (click)="openBoard()">
+<mat-card class="board-item" [style.background]="board.settings.colorLight" 
+      (mouseenter)='cardenter($event)' (mouseleave)="cardleave($event)"
+      [routerLink]="['../app/board', board._id]">
       <mat-card-content fxLayout="row">
             <span class="title vertical-align-center">{{board.name}}</span>
             <div class="configuration" [style.visibility]="showConfiguration ? 'visible' : 'hidden'" [style.background]="board.settings.colorDark" [@onConfigurationChange]="showConfiguration" (click)="$event.stopPropagation();">

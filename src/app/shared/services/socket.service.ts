@@ -44,21 +44,18 @@ export class SocketService {
       }
 
       disconnect() {
-            console.log('disconnect')
+            console.log('disconnect');
             this.socket.disconnect();
             this.connected$.next(false);
       }
 
-      emit(event: string, data?: any) {
+      emit(event: string, data?: any): void {
 
             if (data !== undefined) {
+                  data.timestamp = this.helper.generateRandom();
                   switch (event.substring(1, event.indexOf(']', 1))) {
                         case 'Board':
-                        data.timestamp = this.helper.generateRandom();
                         addBoardTimestamp(event, data.timestamp);
-                        break;
-                        default:
-                        data.timestamp = this.helper.generateRandom();
                         break;
                   }
             }
@@ -72,7 +69,7 @@ export class SocketService {
             this.socket.emit(event, data);
       }
 
-      public listen(event: string): Observable<any> {
+      listen(event: string): Observable<any> {
             return new Observable<any>( observer => {
 
                   if (this.socket !== undefined) {

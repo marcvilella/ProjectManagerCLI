@@ -19,8 +19,8 @@
 			"ForgotPassword": "Forgot password?",
 			"Trial-text": "Do not you have an account?",
 			"Trial-link": "Get a free trial account",
-			"Slogan-title": "Helping PYMES to work more efficiently",
-			"Slogan-subtitle": "CRM, project manager and billing in a single application",
+			"Slogan-title": "Helping to work more efficiently",
+			"Slogan-subtitle": "Project management and administration in a single application",
 			"WarningDialog": {
 				"Title": "Verifying your account",
 				"Content": "Account verified"
@@ -45,8 +45,8 @@
 			"ConfirmPassword-error": "The passwords do not match",
 			"SignUpButton": "SIGN UP",
 			"LogInRedirect": "Log in into your ProjectManager account",
-			"Slogan-title": "Helping PYMES to work more efficiently",
-			"Slogan-subtitle": "CRM, project manager and billing in a single application",
+			"Slogan-title": "Helping to work more efficiently",
+			"Slogan-subtitle": "Project management and administration in a single application",
 			"WarningDialog": {
 				"Title": "Verify your account",
 				"Content": "You are one step away from starting to manage your tasks. \nYou will receive a verification email."
@@ -59,8 +59,8 @@
 			"FullName-input": "Enter your full name",
 			"RequestPasswordResetButton": "RESTORE PASSWORD",
 			"LogInRedirect": "Return to log in",
-			"Slogan-title": "Helping PYMES to work more efficiently",
-			"Slogan-subtitle": "CRM, project manager and billing in a single application",
+			"Slogan-title": "Helping to work more efficiently",
+			"Slogan-subtitle": "Project management and administration in a single application",
 			"WarningDialog": {
 				"Title": "Account recovery",
 				"Content": "You are one step away from starting to manage your tasks. \nYou will receive a verification email."
@@ -73,8 +73,8 @@
 			"ConfirmPassword": "Confirm password",
 			"ConfirmPassword-error": "The passwords do not match",
 			"PasswordResetButton": "RESTORE PASSWORD",
-			"Slogan-title": "Helping PYMES to work more efficiently",
-			"Slogan-subtitle": "CRM, project manager and billing in a single application",
+			"Slogan-title": "Helping to work more efficiently",
+			"Slogan-subtitle": "Project management and administration in a single application",
 			"WarningDialog": {
 				"Content": "Password changed succesfully."
 			}
@@ -88,8 +88,8 @@
 				"Find-hint": "Find boards by name...",
 				"Starred": "Starred Boards",
 				"Recent": "Recent Boards",
-				"Personal": "Personal Boards",
-				"Project": "Project Boards",
+				"Board": "Board Based",
+				"Project": "Project Based",
 				"Create": "Create new board..."
 			},
 			"Profile": "Profile",
@@ -112,6 +112,18 @@
 				"Starred": "Starred",
 				"CreationDate": "Creation Date",
 				"ModificationDate": "Modification Date"
+			},
+			"BoardCreator": {
+				"Title": "Board Creator",
+				"Board-input": "Type board title",
+				"Mode-input": "Select mode",
+				"Mode": {
+					"Project": "Project based",
+					"Project-description": "Bind this board to a Project...",
+					"Board": "Board based",
+					"Board-description": "The board is only for task management."
+				},
+				"Color": "Select a board color"
 			},
 			"AddCard": "Add another card...",
 			"AddList": "Add another list...",
@@ -209,6 +221,7 @@
 			"Timesheet": "Timesheet"
 		},
 		"Common": {
+			"Create": "Create",
 			"Save": "Save",
 			"Update": "Update",
 			"Remove": "Remove",

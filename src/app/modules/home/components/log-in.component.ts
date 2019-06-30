@@ -115,13 +115,11 @@ export class LogInComponent {
 
         this.userAuth.logIn(this.emailFormControl.value, this.passwordFormControl.value).subscribe(
             response => {
-                this.request = false;
                 this.userAuth.setToken(response.token);
                 this.router.navigate(['../app']);
             },
             error => {
                 this.request = false;
-
                 switch (error.status) {
                     case 400:
                         // this.passwordFormControl.reset();
@@ -147,6 +145,9 @@ export class LogInComponent {
                         this.snackBar.open(this.translate.instant('SERVER.Internal-error'), '', {duration: 5000});
                     break;
                 }
+            },
+            () => {
+                this.request = false;
             }
         );
     }

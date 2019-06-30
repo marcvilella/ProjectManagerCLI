@@ -1,5 +1,4 @@
 import { Component, Input, Renderer2, OnChanges } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
 
@@ -30,9 +29,7 @@ export class BoardCardItemComponent implements OnChanges {
 
   constructor(
     private _store: Store<IAppState>,
-    private renderer2: Renderer2,
-    private router: Router,
-    private activeRoute: ActivatedRoute
+    private renderer2: Renderer2
   ) {
     this.showEditable = false;
     this.isMenuOpen = false;
@@ -69,15 +66,6 @@ export class BoardCardItemComponent implements OnChanges {
   }
 
   //#region Functions
-
-  showCardContentDialog(): void {
-    // this.router.navigate(['.'], {
-    //   relativeTo: this.activeRoute,
-    //   queryParams: {card : this.card._id},
-    //   queryParamsHandling: 'merge'
-    // });
-    // this.router.navigate([`../edit/${this.card._id}`], { relativeTo: this.router });
-  }
 
   stopPropagation($event: MouseEvent): void {
     $event.stopPropagation();

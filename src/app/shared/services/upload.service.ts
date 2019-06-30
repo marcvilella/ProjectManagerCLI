@@ -69,31 +69,34 @@ export class UploadService {
     this.http.get(environment.server.url + '/api/download?' + params, {responseType: 'blob' as 'json'}).subscribe(
       (response: any) => {
         console.log(response);
-        const dataType = response.type;
-        const binaryData = [];
-        binaryData.push(response);
-        const downloadLink = document.createElement('a');
-        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
-        if (value) {
-            downloadLink.setAttribute('download', value);
-        }
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
 
-        let url;
-        const reader = new FileReader();
-        reader.addEventListener('load', () => {
-          url = reader.result;
-          console.log(url)
-          this.dialog.open(FilePreviewDialogComponent, {
-            panelClass: 'noborder-dialog-container',
-            data: { url: url }
-        })
-        }, false);
+        if (!type.startsWith('image')) {
+          const dataType = response.type;
+          const binaryData = [];
+          binaryData.push(response);
+          const downloadLink = document.createElement('a');
+          downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+          if (value) {
+              downloadLink.setAttribute('download', value);
+          }
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+        } else {
+          let url;
+          const reader = new FileReader();
+          reader.addEventListener('load', () => {
+            url = reader.result;
+            console.log(url)
+            this.dialog.open(FilePreviewDialogComponent, {
+              panelClass: 'noborder-dialog-container',
+              data: { url: url }
+          })
+          }, false);
 
-        if (response) {
-          console.log(2)
-          reader.readAsDataURL(response);
+          if (response) {
+            console.log(2)
+            reader.readAsDataURL(response);
+          }
         }
       },
       error => {

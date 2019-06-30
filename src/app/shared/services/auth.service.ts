@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthURLs } from '../models/config';
 import { environment } from 'src/environments/environment';
 import { SocketService } from './socket.service';
+import { Observable } from 'rxjs';
 
 @Injectable()// {
       // we declare that this service should be created
@@ -37,35 +38,35 @@ export class AuthService {
       signUp(name: string, surname: string, email: string, company: string, language: string, password: string) {
             const params = {'name': name, 'surname': surname, 'email': email, 'company': company, 'password': password, 'language': language};
 
-            return this.http.post(environment.server.url + AuthURLs.authUrl + AuthURLs.signUp, params);
+            return this.http.post(environment.server.url + AuthURLs.base + AuthURLs.signUp, params);
       }
 
-      logIn(email: string, password: string) {
+      logIn(email: string, password: string): Observable<{token: string, user: JSON}> {
             const params = {'email': email, 'password': password};
 
-            return this.http.post<response>(environment.server.url + AuthURLs.authUrl + AuthURLs.logIn, params);
+            return this.http.post<{token: string, user: JSON}>(environment.server.url + AuthURLs.base + AuthURLs.logIn, params);
       }
 
       logOut(id: number) {
             const params = {'id': id};
 
-            return this.http.post(environment.server.url + AuthURLs.authUrl + AuthURLs.logOut, params);
+            return this.http.post(environment.server.url + AuthURLs.base + AuthURLs.logOut, params);
       }
 
       verifyEmail(token: string) {
-            return this.http.get(environment.server.url + AuthURLs.authUrl + AuthURLs.verifyEmail + '?code=' + token);
+            return this.http.get(environment.server.url + AuthURLs.base + AuthURLs.verifyEmail + '?code=' + token);
       }
 
       requestResetPassword(fullname: string, email: string) {
             const params = {'fullname': fullname, 'email': email};
 
-            return this.http.post(environment.server.url + AuthURLs.authUrl + AuthURLs.passwordResetRequest, params);
+            return this.http.post(environment.server.url + AuthURLs.base + AuthURLs.passwordResetRequest, params);
       }
 
       setResetPassword(token: string, password: string) {
             const params = {'token': token, 'password': password};
 
-            return this.http.post(environment.server.url + AuthURLs.authUrl + AuthURLs.passwordReset, params);
+            return this.http.post(environment.server.url + AuthURLs.base + AuthURLs.passwordReset, params);
       }
 
 }

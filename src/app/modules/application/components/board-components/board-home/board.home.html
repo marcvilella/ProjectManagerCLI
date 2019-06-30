@@ -41,13 +41,13 @@
                         <!-- Creation Column -->
                         <ng-container matColumnDef="createdAt">
                               <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'APPLICATION.Boards.BoardHome.CreationDate' | translate }}</mat-header-cell>
-                              <mat-cell *matCellDef="let board"> {{board.createdAt | date:'d MMMM'}} </mat-cell>
+                              <mat-cell *matCellDef="let board"> {{board.createdAt | date:'d MMMM yyyy'}} </mat-cell>
                         </ng-container>
 
                         <!-- Modification Column -->
                         <ng-container matColumnDef="modifiedAt">
                               <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'APPLICATION.Boards.BoardHome.ModificationDate' | translate }}</mat-header-cell>
-                              <mat-cell *matCellDef="let board"> {{board.modifiedAt}} </mat-cell>
+                              <mat-cell *matCellDef="let board"> {{board.modifiedAt | date:'d MMMM yyyy'}} </mat-cell>
                         </ng-container>
 
                         <!-- Starred Column -->

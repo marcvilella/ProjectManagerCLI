@@ -58,7 +58,7 @@ export class BoardCreateDialogComponent {
 
       this._store.pipe(select(selectCurrentUser())).subscribe((user: IUser) => this.user = user);
       this.boardTitleFormControl = new FormControl('');
-      this.privacyMode = 'private';
+      this.privacyMode = 'board';
       this.listColors = Colors;
       this.selectedColor = this.listColors[0];
 
@@ -119,8 +119,8 @@ export class BoardCreateDialogComponent {
   template: `
   <div fxLayout="row" class="create-board">
     <div [style.background]="color.colorDark" class="darkComponent">
-      <mat-icon *ngIf="mode == 'private'" svgIcon="private"></mat-icon>
-      <mat-icon *ngIf="mode == 'shared'" svgIcon="shared"></mat-icon>
+      <mat-icon *ngIf="mode == 'board'" svgIcon="todo"></mat-icon>
+      <mat-icon *ngIf="mode == 'project'" svgIcon="project"></mat-icon>
     </div>
     <div [style.background]="color.colorLight" class="lightComponent">
       {{title}}
@@ -158,7 +158,7 @@ export class BoardCreateDataService {
   Title = this.titleSource.asObservable();
   private colorSource = new BehaviorSubject(this.defaultColor);
   Color = this.colorSource.asObservable();
-  private modeSource = new BehaviorSubject('private');
+  private modeSource = new BehaviorSubject('board');
   Mode = this.modeSource.asObservable();
 
   constructor() { }

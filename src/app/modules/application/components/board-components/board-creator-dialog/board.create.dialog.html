@@ -1,26 +1,26 @@
 <div class="create-board">
 
-      <span class="title">Creator</span>
+      <span class="title">{{ 'APPLICATION.Boards.BoardCreator.Title' | translate }}</span>
 
       <mat-divider></mat-divider>
 
       <form class="form" (submit)="createBoard()" autocomplete="off">
             <mat-form-field class="block-component"> 
-                  <input matInput placeholder="Type board title" [formControl]="boardTitleFormControl" (input)="titleChanged()"/>
+                  <input matInput placeholder="{{ 'APPLICATION.Boards.BoardCreator.Board-input' | translate }}" [formControl]="boardTitleFormControl" (input)="titleChanged()"/>
             </mat-form-field>
             <mat-form-field class="block-component">
-                  <mat-select #mySelect placeholder="Select privacy" [(value)]="privacyMode" (selectionChange)="modeChanged()" style="min-width: auto;">
-                        <mat-option value="private" class="select-option">
-                              <div class="title">Private</div>
-                              <div class="description" *ngIf="mySelect.panelOpen">Only board members can see this board.</div>
+                  <mat-select #mySelect placeholder="{{ 'APPLICATION.Boards.BoardCreator.Mode-input' | translate }}" [(value)]="privacyMode" (selectionChange)="modeChanged()" style="min-width: auto;">
+                        <mat-option value="board" class="select-option">
+                              <div class="title">{{ 'APPLICATION.Boards.BoardCreator.Mode.Board' | translate }}</div>
+                              <div class="description" *ngIf="mySelect.panelOpen">{{ 'APPLICATION.Boards.BoardCreator.Mode.Board-description' | translate }}</div>
                         </mat-option>
-                        <mat-option value="shared" class="select-option">
-                              <div class="title">Shared</div>
-                              <div class="description" *ngIf="mySelect.panelOpen">Anyone with the board link can see this board.<br>Only board members can edit.</div>
+                        <mat-option value="project" class="select-option" disabled>
+                              <div class="title">{{ 'APPLICATION.Boards.BoardCreator.Mode.Project' | translate }}</div>
+                              <div class="description" *ngIf="mySelect.panelOpen">{{ 'APPLICATION.Boards.BoardCreator.Mode.Project-description' | translate }}</div>
                         </mat-option>
                   </mat-select>
             </mat-form-field>
-            <span class=placeholder>Select a board color</span>
+            <span class=placeholder>{{ 'APPLICATION.Boards.BoardCreator.Color' | translate }}</span>
             <mat-grid-list cols="4">
                   <mat-grid-tile *ngFor="let color of listColors" class="grid-element" (click)="colorChanged(color)">
                         <div class="color-dot" [style.background]="color.colorLight">
@@ -30,7 +30,7 @@
             </mat-grid-list>
             <br>
             <button class="button" mat-raised-button color="primary" [disabled]="boardTitleFormControl.value == ''" >
-                  Create
+                  {{ 'APPLICATION.Common.Create' | translate }}
             </button>
       </form>
 </div>

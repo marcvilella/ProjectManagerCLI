@@ -3,9 +3,9 @@ import { FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { buttonLabelTranslateX, buttonSpinnerTranslateX, computeButtonTranslateX } from '../../../shared/modules/animations'
-import { AuthService } from '../../../shared/services/auth.service'
-import { MatSnackBar, MatDialog } from '@angular/material'
+import { buttonLabelTranslateX, buttonSpinnerTranslateX, computeButtonTranslateX } from '../../../shared/modules/animations';
+import { AuthService } from '../../../shared/services/auth.service';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { LanguagesList } from '../../../shared/models/languages';
 import { AuthDialog } from './auth.dialog.component';
@@ -20,15 +20,15 @@ import { AuthDialog } from './auth.dialog.component';
     ]
 })
 
-export class SignUpComponent{
+export class SignUpComponent {
 
     //#region Properties
 
-    languageSelected: string;    
+    languageSelected: string;
     languages = LanguagesList;
 
     //#endregion
-    
+
     //#region FormControls
     nameFormControl = new FormControl('', [Validators.required]);
     surnameFormControl = new FormControl('', [Validators.required]);
@@ -38,7 +38,7 @@ export class SignUpComponent{
         Validators.pattern(/^[a-z0-9](\.?[a-z0-9_-]){0,}@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$/)
     ]);
     companyFormControl = new FormControl('', [Validators.required]);
-    passwordFormControl = new FormControl('',[
+    passwordFormControl = new FormControl('', [
         Validators.required,
         Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[_!@#\$%\^&\*])(?=.{8,20})/)
     ]);
@@ -46,9 +46,9 @@ export class SignUpComponent{
             Validators.required,
             matchingPasswordsValidator(this.passwordFormControl)
     ]);
-    termsAccepted:boolean;
+    termsAccepted: boolean;
 
-    request: boolean = false;
+    request = false;
     @ViewChild('buttonLabel') buttonLabel: ElementRef;
     labelTransform: number;
     spinnerPadding: number;
@@ -68,57 +68,60 @@ export class SignUpComponent{
     }
 
     //#endregion
-    
+
     //#region Functions
 
-    termsChange(){
-        if(this.termsAccepted == null)
+    termsChange() {
+        if (this.termsAccepted == null) {
             this.termsAccepted = true;
-        else
+        } else {
             this.termsAccepted = !this.termsAccepted;
-    }    
+        }
+    }
 
-    onSubmit(){
+    onSubmit() {
 
-        if(this.termsAccepted == null)
+        if (this.termsAccepted == null) {
             this.termsAccepted = false;
+        }
 
-        if(!this.nameFormControl.valid || !this.surnameFormControl.valid || !this.companyFormControl.valid || !this.emailFormControl.valid || !this.passwordFormControl.valid || !this.confirmPasswordFormControl.valid || !this.termsAccepted)
+        if (!this.nameFormControl.valid || !this.surnameFormControl.valid || !this.companyFormControl.valid || !this.emailFormControl.valid || !this.passwordFormControl.valid || !this.confirmPasswordFormControl.valid || !this.termsAccepted) {
             return;
+        }
 
-        //Update current width and trigger animation
-        let widths = computeButtonTranslateX(320, this.buttonLabel.nativeElement.clientWidth)
+        // Update current width and trigger animation
+        const widths = computeButtonTranslateX(320, this.buttonLabel.nativeElement.clientWidth);
         this.labelTransform = widths[0];
         this.spinnerPadding = widths[1];
 
-        //Trigger animation
-        this.request = true;        
+        // Trigger animation
+        this.request = true;
 
         this.userAuth.signUp( this.nameFormControl.value, this.surnameFormControl.value, this.emailFormControl.value, this.companyFormControl.value, this.languages.find(m => m.file == this.languageSelected).file, this.passwordFormControl.value ).subscribe(
             response => {
                 this.request = false;
 
-                //Sign Up Dialog for confirmation email
+                // Sign Up Dialog for confirmation email
                 this.dialog.open(AuthDialog, {
                     width: '500px',
                     data: {
                         mode: 0,
-                        title: this.translate.instant("HOME.SignUp.WarningDialog.Title"),
-                        content: this.translate.instant("HOME.SignUp.WarningDialog.Content")
+                        title: this.translate.instant('HOME.SignUp.WarningDialog.Title'),
+                        content: this.translate.instant('HOME.SignUp.WarningDialog.Content')
                     }
                 }).afterClosed().subscribe(
-                    () => {this.router.navigate(['../auth/log-in'])
+                    () => {this.router.navigate(['../auth/log-in']);
                 });
             },
             error => {
                 this.request = false;
 
-                switch(error.status){
+                switch (error.status) {
                     case 400:
-                        //Delete data of the wrong field and select it, also show error
-                        if( JSON.parse(error._body).message.charAt(0) == 1)
+                        // Delete data of the wrong field and select it, also show error
+                        if ( JSON.parse(error._body).message.charAt(0) == 1) {
                             this.emailFormControl.setErrors({pattern: true});
-                        else{
+                        } else {
                             this.passwordFormControl.setErrors({pattern: true});
                             this.confirmPasswordFormControl.reset();
                             this.confirmPasswordFormControl.setErrors(null);
@@ -128,27 +131,27 @@ export class SignUpComponent{
                         this.emailFormControl.setErrors({notUnique: true});
                     break;
                     case 409:
-                        //All parameters needed
-                        this.snackBar.open(this.translate.instant("SERVER.Parameter-missing"), "", {duration: 5000});
-                    break; 
+                        // All parameters needed
+                        this.snackBar.open(this.translate.instant('SERVER.Parameter-missing'), '', {duration: 5000});
+                    break;
                     default:
-                        this.snackBar.open(this.translate.instant("SERVER.Internal-error"), "", {duration: 5000});
+                        this.snackBar.open(this.translate.instant('SERVER.Internal-error'), '', {duration: 5000});
                     break;
                 }
             }
-        )
+        );
     }
 
-    onLanguageChange(lang: string){
-        localStorage.setItem('language', lang)
-        this.translate.use(lang)
+    onLanguageChange(lang: string) {
+        localStorage.setItem('language', lang);
+        this.translate.use(lang);
     }
 
     //#endregion
 
 }
 
-function matchingPasswordsValidator( passwordToCompare:FormControl ): ValidatorFn {
+function matchingPasswordsValidator( passwordToCompare: FormControl ): ValidatorFn {
     return (control: FormControl): { [key: string]: boolean } | null => {
         if (control.value !== passwordToCompare.value) {
             return { 'errorMatchingPasswords': true };

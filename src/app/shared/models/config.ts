@@ -1,6 +1,6 @@
 export enum AuthURLs {
 
-      authUrl = '/api/auth/',
+      base = '/api/auth/',
 
       signUp = 'signup',
       logIn = 'login',

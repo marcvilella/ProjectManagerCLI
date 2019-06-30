@@ -15,7 +15,7 @@ import { HomeComponent } from './home.component';
 import { SignUpComponent } from './components/sign-up.component';
 import { LogInComponent } from './components/log-in.component';
 import { PasswordResetComponent } from './components/password.reset.component';
-import { RequestPasswordResetComponent } from './components/request.password.reset.component';
+import { RequestPasswordComponent } from './components/request.password.component';
 import { AuthDialog } from './components/auth.dialog.component';
 
 
@@ -25,7 +25,7 @@ import { AuthDialog } from './components/auth.dialog.component';
     SignUpComponent,
     LogInComponent,
     PasswordResetComponent,
-    RequestPasswordResetComponent,
+    RequestPasswordComponent,
     AuthDialog
   ],
   imports: [

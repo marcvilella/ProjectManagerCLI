@@ -1,5 +1,6 @@
 // Directive
-import { Directive, Input, ElementRef, AfterContentInit, Output, EventEmitter, HostListener, AfterContentChecked,OnChanges, SimpleChanges, OnDestroy, NgZone } from '@angular/core';
+import { Directive, Input, ElementRef, AfterContentInit, Output, EventEmitter, HostListener,
+         AfterContentChecked, OnChanges, SimpleChanges, OnDestroy, NgZone } from '@angular/core';
 import { ReplaySubject, fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
@@ -10,15 +11,9 @@ export class AutoFocusDirective implements AfterContentInit  {
     @Input() public appAutoFocus: boolean;
 
     public constructor(private el: ElementRef) {}
-  
+
     public ngAfterContentInit() {
         this.el.nativeElement.focus();
-        
-        //   setTimeout(() => {
-
-        //       this.el.nativeElement.focus();
-
-        //   }, 100);
     }
 }
 
@@ -26,9 +21,9 @@ export class AutoFocusDirective implements AfterContentInit  {
     selector: '[clickOutside]'
 })
 export class ClickOutsideDirective {
-    constructor(private _elementRef : ElementRef) {
+    constructor(private _elementRef: ElementRef) {
     }
- 
+
     @Output()
     public clickOutside = new EventEmitter<MouseEvent>();
 
@@ -49,9 +44,9 @@ export class ClickOutsideDirective {
     selector: '[clickInside]'
 })
 export class ClickInsideDirective {
-    constructor(private _elementRef : ElementRef) {
+    constructor(private _elementRef: ElementRef) {
     }
- 
+
     @Output()
     public clickInside = new EventEmitter<MouseEvent>();
 
@@ -90,7 +85,7 @@ export class AutoSizeInputDirective implements AfterContentChecked, OnChanges {
 
     constructor(public element: ElementRef) {
     }
-  
+
     ngAfterContentChecked(): void {
         this.adjustWidth();
     }
@@ -248,7 +243,7 @@ export class AutoSizeTextAreaDirective implements OnDestroy, OnChanges, AfterCon
 
         if (!this.textAreaEl) {
             if (this.retries >= this.MAX_LOOKUP_RETRIES) {
-                //console.warn('ngx-autosize: textarea not found');
+                // console.warn('ngx-autosize: textarea not found');
 
             } else {
                 this.retries++;

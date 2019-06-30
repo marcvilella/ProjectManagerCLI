@@ -62,10 +62,6 @@ ngOnInit() {
 
 //#region Functions
 
-openBoard(): void {
-  this.router.navigate(['../app/board'], {queryParams: {id : this.board._id}});
-}
-
 changeStarredStatus(): void {
   this._store.dispatch(new UpdateBoardStarred({id: this.board._id, starred: !this.board.settings.starred}));
 }

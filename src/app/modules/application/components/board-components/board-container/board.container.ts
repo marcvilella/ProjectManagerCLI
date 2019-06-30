@@ -55,13 +55,10 @@ export class BoardContainerComponent {
         this.dialog.open(CardItemDialogContainerComponent, {
           position: {top: '5vh'},
           width: '850px',
+          minHeight: '150px',
           panelClass: 'noborder-dialog-container',
           data: { id: params.card, users$: this.users$ }
         }).beforeClosed().subscribe(() => {
-          // this.router.navigate(['.'], {
-          //   relativeTo: this.activeRoute,
-          //   queryParams: {id : this.currentBoardId},
-          // });
           this.router.navigate(['../'], { relativeTo: this.activeRoute });
         });
 
@@ -69,7 +66,7 @@ export class BoardContainerComponent {
     });
   }
 
-  getBoard() {
+  getBoard(): Observable<IBoard> {
     return combineLatest(this.board$, this.cardlists$, this.carditems$, this.users$).pipe(map((result) => {
       if (result[0] === undefined) {
         return result[0];
